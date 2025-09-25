@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Memories - Enhanced Gallery</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Additional styles for enhanced gallery */
+      .gallery-controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .filter-btn {
+        background: rgba(25, 25, 40, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--light-text);
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(
+          135deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+      }
+
+      .filter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .gallery-stats {
+        text-align: center;
+        margin: 15px 0;
+        color: var(--muted-text);
+        font-size: 0.9rem;
+      }
+
+      .image-counter {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        z-index: 2;
+      }
+
+      .gallery-item {
+        position: relative;
+      }
+
+      .zoom-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 2;
+      }
+
+      .gallery-item:hover .zoom-icon {
+        opacity: 1;
+      }
+
+      .modal-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        z-index: 1002;
+        font-size: 1.5rem;
+      }
+
+      .modal-nav:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .modal-prev {
+        left: 20px;
+      }
+
+      .modal-next {
+        right: 20px;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .modal-action-btn {
+        background: rgba(25, 25, 40, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--light-text);
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+
+      .modal-action-btn:hover {
+        background: rgba(40, 40, 60, 0.9);
+        transform: translateY(-2px);
+      }
+
+      .fullscreen-btn {
+        position: absolute;
+        top: 15px;
+        right: 60px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 2;
+      }
+
+      .gallery-item:hover .fullscreen-btn {
+        opacity: 1;
+      }
+
+      /* Fullscreen mode */
+      .modal.fullscreen .modal-content {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .modal.fullscreen #modal-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 0;
+      }
+
+      .modal.fullscreen .modal-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        margin: 0;
+      }
+
+      .modal.fullscreen .close {
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.fullscreen .modal-nav {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+
+      /* Loading animation */
+      .gallery-item.loading {
+        background: linear-gradient(
+          90deg,
+          #2a2a4a 25%,
+          #3a3a5a 50%,
+          #2a2a4a 75%
+        );
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Favorites feature */
+      .favorite-btn {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 2;
+        cursor: pointer;
+      }
+
+      .gallery-item:hover .favorite-btn {
+        opacity: 1;
+      }
+
+      .favorite-btn.active {
+        color: var(--primary-pink);
+        opacity: 1;
+      }
+
+      /* Download button */
+      .download-btn {
+        position: absolute;
+        top: 60px;
+        left: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 2;
+        cursor: pointer;
+      }
+
+      .gallery-item:hover .download-btn {
+        opacity: 1;
+      }
+
+      /* Enhanced animations */
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .gallery-item {
+        animation: slideIn 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .gallery-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .gallery-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .gallery-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .gallery-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .gallery-item:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .gallery-item:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background animations -->
+    <div id="hearts-container"></div>
+    <div id="petals-container"></div>
+
+    <!-- Music controls -->
+    <div id="music-controls">
+      <button id="music-toggle">♪</button>
+      <audio id="background-music" loop>
+        <source src="assets/music/romantic.mp3" type="audio/mpeg" />
+      </audio>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+      <div class="content fade-in">
+        <h1 class="page-title">Our Memories Gallery</h1>
+
+        <div class="gallery-stats">
+          <span id="image-count">6</span> precious moments •
+          <span id="favorite-count">0</span> favorites
+        </div>
+
+        <div class="gallery-controls">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="favorites">Favorites</button>
+          <button class="filter-btn" data-filter="recent">Recent</button>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item" data-index="0" data-date="2023-05-15">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me1.jpeg" alt="Our first meeting" />
+            <div class="image-counter">1/6</div>
+          </div>
+          <div class="gallery-item" data-index="1" data-date="2023-07-22">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me2.jpeg" alt="Beach sunset" />
+            <div class="image-counter">2/6</div>
+          </div>
+          <div class="gallery-item" data-index="2" data-date="2023-09-10">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me3.jpeg" alt="Mountain hike" />
+            <div class="image-counter">3/6</div>
+          </div>
+          <div class="gallery-item" data-index="3" data-date="2023-11-05">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me4.jpeg" alt="Coffee date" />
+            <div class="image-counter">4/6</div>
+          </div>
+          <div class="gallery-item" data-index="4" data-date="2024-01-20">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me5.jpeg" alt="Winter wonderland" />
+            <div class="image-counter">5/6</div>
+          </div>
+          <div class="gallery-item" data-index="5" data-date="2024-03-14">
+            <div class="favorite-btn" title="Add to favorites">❤</div>
+            <div class="download-btn" title="Download image">↓</div>
+            <div class="zoom-icon" title="View larger">🔍</div>
+            <div class="fullscreen-btn" title="Fullscreen">⛶</div>
+            <img src="assets/me6.jpeg" alt="Spring picnic" />
+            <div class="image-counter">6/6</div>
+          </div>
+        </div>
+
+        <a href="surprise.html" class="btn glow-btn">A Little Surprise 🎁</a>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="image-modal" class="modal">
+      <span class="close">&times;</span>
+      <div class="modal-nav modal-prev">‹</div>
+      <div class="modal-nav modal-next">›</div>
+      <div class="modal-content">
+        <img id="modal-img" src="" alt="Enlarged image" />
+        <div class="modal-caption" id="modal-caption"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-action-btn" id="modal-favorite">
+          Add to Favorites
+        </button>
+        <button class="modal-action-btn" id="modal-download">Download</button>
+        <button class="modal-action-btn" id="modal-fullscreen">
+          Fullscreen
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Enhanced Gallery Functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize gallery
+        initGallery();
+
+        // Set up music controls
+        setupMusicToggle();
+
+        // Create background animations
+        createBackgroundAnimations();
+      });
+
+      function initGallery() {
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        const modal = document.getElementById("image-modal");
+        const modalImg = document.getElementById("modal-img");
+        const modalCaption = document.getElementById("modal-caption");
+        const closeBtn = document.querySelector(".close");
+        const prevBtn = document.querySelector(".modal-prev");
+        const nextBtn = document.querySelector(".modal-next");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const favoriteBtns = document.querySelectorAll(".favorite-btn");
+        const downloadBtns = document.querySelectorAll(".download-btn");
+        const fullscreenBtns = document.querySelectorAll(".fullscreen-btn");
+        const modalFavoriteBtn = document.getElementById("modal-favorite");
+        const modalDownloadBtn = document.getElementById("modal-download");
+        const modalFullscreenBtn = document.getElementById("modal-fullscreen");
+        const imageCount = document.getElementById("image-count");
+        const favoriteCount = document.getElementById("favorite-count");
+
+        let currentImageIndex = 0;
+        let favorites =
+          JSON.parse(localStorage.getItem("galleryFavorites")) || [];
+        let autoSlideInterval;
+
+        // Update favorite counts
+        updateFavoriteCounts();
+
+        // Set up image loading
+        preloadImages();
+
+        // Filter functionality
+        filterBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Update active filter button
+            filterBtns.forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+
+            const filter = this.getAttribute("data-filter");
+            filterGallery(filter);
+          });
+        });
+
+        // Favorite functionality
+        favoriteBtns.forEach((btn, index) => {
+          // Check if this image is already favorited
+          if (favorites.includes(index)) {
+            btn.classList.add("active");
+            btn.innerHTML = "♥";
+          }
+
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            toggleFavorite(index, this);
+          });
+        });
+
+        // Download functionality
+        downloadBtns.forEach((btn, index) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            downloadImage(index);
+          });
+        });
+
+        // Fullscreen functionality
+        fullscreenBtns.forEach((btn, index) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            openModal(index);
+            toggleFullscreen();
+          });
+        });
+
+        // Modal favorite button
+        modalFavoriteBtn.addEventListener("click", function () {
+          toggleFavorite(currentImageIndex);
+          // Update the button in the modal view
+          const favoriteBtn = document.querySelector(
+            `.gallery-item[data-index="${currentImageIndex}"] .favorite-btn`
+          );
+          if (favoriteBtn) {
+            if (favorites.includes(currentImageIndex)) {
+              favoriteBtn.classList.add("active");
+              favoriteBtn.innerHTML = "♥";
+              modalFavoriteBtn.textContent = "Remove from Favorites";
+            } else {
+              favoriteBtn.classList.remove("active");
+              favoriteBtn.innerHTML = "❤";
+              modalFavoriteBtn.textContent = "Add to Favorites";
+            }
+          }
+        });
+
+        // Modal download button
+        modalDownloadBtn.addEventListener("click", function () {
+          downloadImage(currentImageIndex);
+        });
+
+        // Modal fullscreen button
+        modalFullscreenBtn.addEventListener("click", function () {
+          toggleFullscreen();
+        });
+
+        // Open modal on image click
+        galleryItems.forEach((item) => {
+          item.addEventListener("click", function () {
+            const index = parseInt(this.getAttribute("data-index"));
+            openModal(index);
+          });
+        });
+
+        // Close modal
+        closeBtn.addEventListener("click", closeModal);
+
+        // Navigate modal
+        prevBtn.addEventListener("click", showPrevImage);
+        nextBtn.addEventListener("click", showNextImage);
+
+        // Keyboard navigation
+        document.addEventListener("keydown", function (e) {
+          if (modal.style.display === "block") {
+            if (e.key === "Escape") {
+              if (modal.classList.contains("fullscreen")) {
+                toggleFullscreen();
+              } else {
+                closeModal();
+              }
+            }
+            if (e.key === "ArrowLeft") showPrevImage();
+            if (e.key === "ArrowRight") showNextImage();
+          }
+        });
+
+        // Modal click outside to close
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        function openModal(index) {
+          currentImageIndex = index;
+          const img = galleryItems[index].querySelector("img");
+          modalImg.src = img.src;
+          modalCaption.textContent = img.alt;
+          modal.style.display = "block";
+
+          // Update modal favorite button state
+          if (favorites.includes(index)) {
+            modalFavoriteBtn.textContent = "Remove from Favorites";
+          } else {
+            modalFavoriteBtn.textContent = "Add to Favorites";
+          }
+
+          // Start auto-sliding
+          startAutoSlide();
+        }
+
+        function closeModal() {
+          modal.style.display = "none";
+          clearInterval(autoSlideInterval);
+
+          // Exit fullscreen if active
+          if (modal.classList.contains("fullscreen")) {
+            toggleFullscreen();
+          }
+        }
+
+        function showNextImage() {
+          currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+          const img = galleryItems[currentImageIndex].querySelector("img");
+          modalImg.src = img.src;
+          modalCaption.textContent = img.alt;
+
+          // Update modal favorite button state
+          if (favorites.includes(currentImageIndex)) {
+            modalFavoriteBtn.textContent = "Remove from Favorites";
+          } else {
+            modalFavoriteBtn.textContent = "Add to Favorites";
+          }
+
+          // Restart auto-slide timer
+          startAutoSlide();
+        }
+
+        function showPrevImage() {
+          currentImageIndex =
+            (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+          const img = galleryItems[currentImageIndex].querySelector("img");
+          modalImg.src = img.src;
+          modalCaption.textContent = img.alt;
+
+          // Update modal favorite button state
+          if (favorites.includes(currentImageIndex)) {
+            modalFavoriteBtn.textContent = "Remove from Favorites";
+          } else {
+            modalFavoriteBtn.textContent = "Add to Favorites";
+          }
+
+          // Restart auto-slide timer
+          startAutoSlide();
+        }
+
+        function startAutoSlide() {
+          clearInterval(autoSlideInterval);
+          autoSlideInterval = setInterval(showNextImage, 5000);
+        }
+
+        function toggleFavorite(index, element = null) {
+          if (favorites.includes(index)) {
+            // Remove from favorites
+            favorites = favorites.filter((fav) => fav !== index);
+            if (element) {
+              element.classList.remove("active");
+              element.innerHTML = "❤";
+            }
+          } else {
+            // Add to favorites
+            favorites.push(index);
+            if (element) {
+              element.classList.add("active");
+              element.innerHTML = "♥";
+            }
+          }
+
+          // Save to localStorage
+          localStorage.setItem("galleryFavorites", JSON.stringify(favorites));
+
+          // Update counts
+          updateFavoriteCounts();
+
+          // If we're filtering by favorites, update the gallery
+          const activeFilter = document
+            .querySelector(".filter-btn.active")
+            .getAttribute("data-filter");
+          if (activeFilter === "favorites") {
+            filterGallery("favorites");
+          }
+        }
+
+        function updateFavoriteCounts() {
+          favoriteCount.textContent = favorites.length;
+        }
+
+        function downloadImage(index) {
+          const img = galleryItems[index].querySelector("img");
+          const link = document.createElement("a");
+          link.href = img.src;
+          link.download = `memory-${index + 1}.jpg`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+
+        function toggleFullscreen() {
+          modal.classList.toggle("fullscreen");
+          if (modal.classList.contains("fullscreen")) {
+            modalFullscreenBtn.textContent = "Exit Fullscreen";
+          } else {
+            modalFullscreenBtn.textContent = "Fullscreen";
+          }
+        }
+
+        function filterGallery(filter) {
+          galleryItems.forEach((item) => {
+            const index = parseInt(item.getAttribute("data-index"));
+
+            switch (filter) {
+              case "all":
+                item.style.display = "block";
+                break;
+              case "favorites":
+                if (favorites.includes(index)) {
+                  item.style.display = "block";
+                } else {
+                  item.style.display = "none";
+                }
+                break;
+              case "recent":
+                // Show only the 3 most recent images (based on data-date attribute)
+                const dates = Array.from(galleryItems).map((item) =>
+                  item.getAttribute("data-date")
+                );
+                const sortedDates = [...dates].sort().reverse();
+                const recentDates = sortedDates.slice(0, 3);
+
+                if (recentDates.includes(item.getAttribute("data-date"))) {
+                  item.style.display = "block";
+                } else {
+                  item.style.display = "none";
+                }
+                break;
+            }
+          });
+
+          // Update image count
+          const visibleItems = document.querySelectorAll(
+            '.gallery-item[style="display: block"]'
+          );
+          imageCount.textContent = visibleItems.length;
+        }
+
+        function preloadImages() {
+          galleryItems.forEach((item) => {
+            const img = item.querySelector("img");
+            const tempImg = new Image();
+
+            tempImg.onload = function () {
+              item.classList.remove("loading");
+            };
+
+            tempImg.onerror = function () {
+              item.classList.remove("loading");
+              // You could add a placeholder image here
+              console.error("Failed to load image:", img.src);
+            };
+
+            tempImg.src = img.src;
+          });
+        }
+      }
+
+      // Music controls (from original script)
+      function setupMusicToggle() {
+        const musicToggle = document.getElementById("music-toggle");
+        const backgroundMusic = document.getElementById("background-music");
+
+        if (musicToggle && backgroundMusic) {
+          // Check if music was playing before
+          const wasPlaying = localStorage.getItem("musicPlaying") === "true";
+          if (wasPlaying) {
+            backgroundMusic.play();
+            musicToggle.textContent = "♫";
+          }
+
+          musicToggle.addEventListener("click", () => {
+            if (backgroundMusic.paused) {
+              backgroundMusic.play();
+              musicToggle.textContent = "♫";
+              localStorage.setItem("musicPlaying", "true");
+            } else {
+              backgroundMusic.pause();
+              musicToggle.textContent = "♪";
+              localStorage.setItem("musicPlaying", "false");
+            }
+          });
+        }
+      }
+
+      // Background animations (from original script)
+      function createBackgroundAnimations() {
+        const heartsContainer = document.getElementById("hearts-container");
+        const petalsContainer = document.getElementById("petals-container");
+
+        // Create floating hearts
+        for (let i = 0; i < 15; i++) {
+          createFloatingElement("💖", heartsContainer, "heart");
+        }
+
+        // Create falling petals
+        for (let i = 0; i < 20; i++) {
+          createFloatingElement("🌹", petalsContainer, "petal");
+        }
+
+        function createFloatingElement(emoji, container, className) {
+          const element = document.createElement("div");
+          element.className = className;
+          element.textContent = emoji;
+
+          // Random position
+          const left = Math.random() * 100;
+          element.style.left = `${left}%`;
+
+          // Random size
+          const size = 0.5 + Math.random() * 1.5;
+          element.style.fontSize = `${size}rem`;
+
+          // Random animation duration and delay
+          const duration = 15 + Math.random() * 20;
+          const delay = Math.random() * 5;
+          element.style.animationDuration = `${duration}s`;
+          element.style.animationDelay = `${delay}s`;
+
+          container.appendChild(element);
+        }
+      }
+    </script>
+  </body>
+</html>
