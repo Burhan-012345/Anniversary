@@ -179,13 +179,7 @@
       }
 
       .modal.fullscreen .modal-caption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px;
-        margin: 0;
+        display: none; /* Hide caption in fullscreen mode */
       }
 
       .modal.fullscreen .close {
@@ -313,6 +307,11 @@
       .gallery-item:nth-child(6) {
         animation-delay: 0.6s;
       }
+      
+      /* Hide the modal caption */
+      .modal-caption {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -350,7 +349,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me1.jpeg" alt="Our first meeting" />
+            <img src="assets/me1.jpeg" alt="" />
             <div class="image-counter">1/6</div>
           </div>
           <div class="gallery-item" data-index="1" data-date="2023-07-22">
@@ -358,7 +357,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me2.jpeg" alt="Beach sunset" />
+            <img src="assets/me2.jpeg" alt="" />
             <div class="image-counter">2/6</div>
           </div>
           <div class="gallery-item" data-index="2" data-date="2023-09-10">
@@ -366,7 +365,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me3.jpeg" alt="Mountain hike" />
+            <img src="assets/me3.jpeg" alt="" />
             <div class="image-counter">3/6</div>
           </div>
           <div class="gallery-item" data-index="3" data-date="2023-11-05">
@@ -374,7 +373,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me4.jpeg" alt="Coffee date" />
+            <img src="assets/me4.jpeg" alt="" />
             <div class="image-counter">4/6</div>
           </div>
           <div class="gallery-item" data-index="4" data-date="2024-01-20">
@@ -382,7 +381,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me5.jpeg" alt="Winter wonderland" />
+            <img src="assets/me5.jpeg" alt="" />
             <div class="image-counter">5/6</div>
           </div>
           <div class="gallery-item" data-index="5" data-date="2024-03-14">
@@ -390,7 +389,7 @@
             <div class="download-btn" title="Download image">↓</div>
             <div class="zoom-icon" title="View larger">🔍</div>
             <div class="fullscreen-btn" title="Fullscreen">⛶</div>
-            <img src="assets/me6.jpeg" alt="Spring picnic" />
+            <img src="assets/me6.jpeg" alt="" />
             <div class="image-counter">6/6</div>
           </div>
         </div>
@@ -405,7 +404,7 @@
       <div class="modal-nav modal-prev">‹</div>
       <div class="modal-nav modal-next">›</div>
       <div class="modal-content">
-        <img id="modal-img" src="" alt="Enlarged image" />
+        <img id="modal-img" src="" alt="" />
         <div class="modal-caption" id="modal-caption"></div>
       </div>
       <div class="modal-actions">
@@ -575,7 +574,6 @@
           currentImageIndex = index;
           const img = galleryItems[index].querySelector("img");
           modalImg.src = img.src;
-          modalCaption.textContent = img.alt;
           modal.style.display = "block";
 
           // Update modal favorite button state
@@ -603,7 +601,6 @@
           currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
           const img = galleryItems[currentImageIndex].querySelector("img");
           modalImg.src = img.src;
-          modalCaption.textContent = img.alt;
 
           // Update modal favorite button state
           if (favorites.includes(currentImageIndex)) {
@@ -621,7 +618,6 @@
             (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
           const img = galleryItems[currentImageIndex].querySelector("img");
           modalImg.src = img.src;
-          modalCaption.textContent = img.alt;
 
           // Update modal favorite button state
           if (favorites.includes(currentImageIndex)) {
