@@ -85,7 +85,7 @@
         top: 0;
       }
 
-      /* Background Animations - Optimized */
+      /* Background Animations - Enhanced */
       #hearts-container,
       #petals-container {
         position: fixed;
@@ -100,8 +100,7 @@
       .heart,
       .petal {
         position: absolute;
-        opacity: 0.7;
-        animation: floatElegant 20s infinite linear;
+        opacity: 0;
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         will-change: transform;
       }
@@ -110,15 +109,17 @@
         font-size: 1.2rem;
         color: var(--primary-pink);
         text-shadow: 0 0 10px rgba(233, 30, 99, 0.7);
+        animation: floatHeart 20s infinite linear;
       }
 
       .petal {
         font-size: 1rem;
         color: var(--primary-purple);
         text-shadow: 0 0 10px rgba(156, 39, 176, 0.7);
+        animation: floatPetal 25s infinite linear;
       }
 
-      @keyframes floatElegant {
+      @keyframes floatHeart {
         0% {
           transform: translateY(100vh) rotate(0deg);
           opacity: 0;
@@ -131,6 +132,23 @@
         }
         100% {
           transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes floatPetal {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(0.8);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(-360deg) scale(1.2);
           opacity: 0;
         }
       }
@@ -185,6 +203,33 @@
         opacity: 0;
         transform: translateY(20px);
         animation: fadeInUp 1s forwards 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .content::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(233, 30, 99, 0.1) 0%,
+          transparent 70%
+        );
+        z-index: -1;
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       @keyframes fadeInUp {
@@ -366,6 +411,44 @@
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        animation: fadeInMessage 0.5s ease forwards;
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      #love-message p:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      #love-message p:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      #love-message p:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      #love-message p:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      #love-message p:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      #love-message p:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+      #love-message p:nth-child(7) {
+        animation-delay: 0.7s;
+      }
+      #love-message p:nth-child(8) {
+        animation-delay: 0.8s;
+      }
+      #love-message p:nth-child(9) {
+        animation-delay: 0.9s;
+      }
+
+      @keyframes fadeInMessage {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
 
       #love-message p::before {
@@ -501,7 +584,33 @@
         display: none;
       }
 
-      /* Responsive Design */
+      /* Enhanced floating particles */
+      .floating-particle {
+        position: fixed;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0;
+        animation: floatParticle 15s infinite linear;
+      }
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Enhanced responsive design */
       @media (max-width: 768px) {
         .page-title {
           font-size: 2.8rem;
@@ -574,9 +683,37 @@
         }
 
         .heart,
-        .petal {
+        .petal,
+        .floating-particle {
           animation: none;
           opacity: 0.3;
+        }
+      }
+
+      /* Enhanced visual effects */
+      .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 100;
+        animation: sparkle 1.5s ease-out forwards;
+      }
+
+      @keyframes sparkle {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
         }
       }
     </style>
@@ -698,7 +835,7 @@
         // Setup surprise page interactions
         setupSurprisePage();
 
-        // Background Animations - Optimized
+        // Background Animations - Enhanced
         function createBackgroundAnimations() {
           // Create fewer elements for better performance
           const heartCount = window.innerWidth < 768 ? 8 : 12;
@@ -713,6 +850,9 @@
           for (let i = 0; i < petalCount; i++) {
             createFloatingElement("🌹", petalsContainer, "petal");
           }
+
+          // Create additional floating particles for enhanced effect
+          createFloatingParticles();
         }
 
         function createFloatingElement(emoji, container, className) {
@@ -736,6 +876,27 @@
           element.style.animationDelay = `${delay}s`;
 
           container.appendChild(element);
+        }
+
+        // Create additional floating particles for enhanced visual effect
+        function createFloatingParticles() {
+          const particleCount = window.innerWidth < 768 ? 15 : 25;
+          const particles = ["✦", "✧", "❀", "✿", "❁", "✽", "✾", "❃"];
+
+          for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement("div");
+            particle.className = "floating-particle";
+            particle.textContent =
+              particles[Math.floor(Math.random() * particles.length)];
+            particle.style.color = Math.random() > 0.5 ? "#ff9ec6" : "#c084fc";
+            particle.style.fontSize = `${0.5 + Math.random() * 1}rem`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${20 + Math.random() * 30}s`;
+            particle.style.animationDelay = `${Math.random() * 10}s`;
+            particle.setAttribute("aria-hidden", "true");
+
+            document.body.appendChild(particle);
+          }
         }
 
         // Music Toggle with error handling
@@ -803,6 +964,9 @@
 
         // Separate function for revealing love message
         function revealLoveMessage() {
+          // Create sparkle effect on button
+          createSparkleEffect(revealBtn);
+
           // Hide the button with animation
           revealBtn.style.transform = "scale(0)";
           revealBtn.style.opacity = "0";
@@ -835,8 +999,40 @@
             // Add a small heart animation
             createHeartAnimation(message);
 
+            // Create sparkle effect
+            createSparkleEffect(message);
+
             // Announce to screen readers
             announceToScreenReader("Mini message: " + text);
+          }
+        }
+
+        // Create sparkle effect
+        function createSparkleEffect(element) {
+          const rect = element.getBoundingClientRect();
+          const sparkleCount = 8;
+
+          for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+
+            // Position sparkles around the element
+            const angle = (i / sparkleCount) * Math.PI * 2;
+            const distance = 40;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+
+            sparkle.style.left = rect.left + rect.width / 2 + x + "px";
+            sparkle.style.top = rect.top + rect.height / 2 + y + "px";
+
+            document.body.appendChild(sparkle);
+
+            // Remove sparkle after animation
+            setTimeout(() => {
+              if (sparkle.parentNode) {
+                sparkle.parentNode.removeChild(sparkle);
+              }
+            }, 1500);
           }
         }
 
@@ -982,45 +1178,60 @@
           heart.style.fontSize = "1.5rem";
           heart.style.zIndex = "9999";
           heart.style.pointerEvents = "none";
-          heart.style.opacity = "1";
-          heart.style.transition = "all 1s ease-out";
-          heart.style.transform = "translateY(0) scale(1)";
-          heart.setAttribute("aria-hidden", "true");
+          heart.style.animation = "heartFloat 2s ease-out forwards";
+
+          // Add animation keyframes
+          const style = document.createElement("style");
+          style.textContent = `
+            @keyframes heartFloat {
+              0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+              }
+              100% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+              }
+            }
+          `;
+          document.head.appendChild(style);
 
           document.body.appendChild(heart);
 
-          // Animate
+          // Remove after animation completes
           setTimeout(() => {
-            heart.style.transform = "translateY(-50px) scale(1.5)";
-            heart.style.opacity = "0";
-          }, 10);
-
-          // Remove after animation
-          setTimeout(() => {
-            if (heart.parentNode) {
-              heart.parentNode.removeChild(heart);
-            }
-          }, 1000);
+            document.body.removeChild(heart);
+          }, 2000);
         }
 
         // Handle window resize for responsive adjustments
-        let resizeTimeout;
         window.addEventListener("resize", function () {
-          clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(function () {
-            // Recreate background animations with appropriate count
-            heartsContainer.innerHTML = "";
-            petalsContainer.innerHTML = "";
-            createBackgroundAnimations();
-          }, 250);
+          // Update confetti canvas size
+          if (confettiCanvas) {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+          }
         });
 
-        // Clean up on page unload
-        window.addEventListener("beforeunload", function () {
-          if (backgroundMusic) {
-            backgroundMusic.pause();
-            backgroundMusic.currentTime = 0;
-          }
+        // Add a subtle parallax effect to background elements
+        document.addEventListener("mousemove", function (e) {
+          const hearts = document.querySelectorAll(".heart");
+          const petals = document.querySelectorAll(".petal");
+
+          // Apply subtle parallax effect
+          hearts.forEach((heart) => {
+            const speed = 0.5;
+            const x = (e.clientX * speed) / 100;
+            const y = (e.clientY * speed) / 100;
+            heart.style.transform = `translate(${x}px, ${y}px)`;
+          });
+
+          petals.forEach((petal) => {
+            const speed = 0.3;
+            const x = (e.clientX * speed) / 100;
+            const y = (e.clientY * speed) / 100;
+            petal.style.transform = `translate(${x}px, ${y}px)`;
+          });
         });
       });
     </script>
