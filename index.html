@@ -458,58 +458,47 @@
         transition: width 0.1s linear;
       }
 
-      /* Enhanced Modals */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(5px);
-      }
-
-      .modal-content {
-        background: var(--card-bg);
-        padding: 30px;
-        border-radius: 16px;
-        width: 90%;
+      /* Enhanced Mobile-Optimized Modal */
+      .modal-content.mobile-optimized {
+        width: 95%;
         max-width: 500px;
-        box-shadow: var(--shadow-elevated);
-        border: 1px solid var(--card-border);
-        text-align: center;
-        position: relative;
-        animation: modalAppear 0.3s ease-out;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 20px;
+        margin: 20px auto;
       }
 
-      @keyframes modalAppear {
-        from {
-          opacity: 0;
-          transform: scale(0.9) translateY(-20px);
+      .letter-content {
+        max-height: 50vh;
+        overflow-y: auto;
+        margin: 15px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        line-height: 1.5;
+      }
+
+      .modal-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .modal-buttons .btn {
+        width: 100%;
+        margin: 0;
+      }
+
+      @media (min-width: 768px) {
+        .modal-buttons {
+          flex-direction: row;
+          justify-content: center;
         }
-        to {
-          opacity: 1;
-          transform: scale(1) translateY(0);
+
+        .modal-buttons .btn {
+          width: auto;
         }
-      }
-
-      .close {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--muted-text);
-        transition: var(--transition);
-      }
-
-      .close:hover {
-        color: var(--primary-pink);
-        transform: scale(1.1);
       }
 
       /* Enhanced Love Notes */
@@ -1016,8 +1005,8 @@
         <div class="progress-bar" id="progress-bar"></div>
       </div>
       <audio id="background-music" loop>
-      
-        <source src="assets/music/romantic.mp3" type="audio/mpeg" /> 
+        <!-- In a real implementation, you would link to an actual audio file -->
+        <!-- <source src="assets/music/romantic.mp3" type="audio/mpeg" /> -->
       </audio>
     </div>
 
@@ -1205,15 +1194,21 @@
       </div>
     </div>
 
-    <!-- Modals -->
+    <!-- Footer -->
+    <div class="footer">
+      <p>Made with 💖 for our special day</p>
+      <p>© 2023 Our Love Story</p>
+    </div>
+
+    <!-- Updated AI Love Letter Modal -->
     <div id="ai-letter-modal" class="modal">
-      <div class="modal-content">
+      <div class="modal-content mobile-optimized">
         <span class="close">&times;</span>
         <h2>AI-Generated Love Letter</h2>
-        <div id="ai-letter-content">
+        <div id="ai-letter-content" class="letter-content">
           <p>Loading your personalized love letter...</p>
         </div>
-        <div style="margin-top: 20px">
+        <div class="modal-buttons">
           <button id="regenerate-letter" class="btn glow-btn">
             Generate New Letter
           </button>
@@ -1297,20 +1292,18 @@
       const sendRoseBtn = document.getElementById("send-rose");
       const roseMessage = document.getElementById("rose-message");
 
-      const anniversary = new Date("2024-10-15");
-const today = new Date();
-const timeDiff = today.getTime() - anniversary.getTime();
-const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
+      // Anniversary date (set your anniversary date here)
+      const anniversary = new Date("2020-05-20");
+      const today = new Date();
+      const timeDiff = today.getTime() - anniversary.getTime();
+      const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
 
-// Use 365 days if the actual calculation is less than 365
-const displayDays = daysTogether < 365 ? 365 : daysTogether;
-
-// Set anniversary information
-anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
-  "en-US",
-  { month: "long", day: "numeric", year: "numeric" }
-)}`;
-daysCounter.textContent = `${displayDays} days together!`;
+      // Set anniversary information
+      anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
+        "en-US",
+        { month: "long", day: "numeric", year: "numeric" }
+      )}`;
+      daysCounter.textContent = `${daysTogether} days together!`;
 
       // Feature Navigation
       featureNavBtns.forEach((btn) => {
@@ -2148,7 +2141,3 @@ Your forever partner`,
     </script>
   </body>
 </html>
-
-
-
-
