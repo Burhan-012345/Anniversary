@@ -458,7 +458,84 @@
         transition: width 0.1s linear;
       }
 
-      /* Modal Styles - FIXED FOR MOBILE */
+      /* Enhanced AI Love Letter Modal for Mobile */
+      #ai-letter-modal .modal-content {
+        width: 95%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .letter-content {
+        max-height: 50vh;
+        overflow-y: auto;
+        margin: 15px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+
+      .letter-content p {
+        margin-bottom: 10px;
+        white-space: pre-line;
+        text-align: left;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .modal-buttons .btn {
+        flex: 1;
+        min-width: 120px;
+        max-width: 200px;
+      }
+
+      /* Mobile-specific adjustments */
+      @media (max-width: 768px) {
+        #ai-letter-modal .modal-content {
+          padding: 15px;
+          width: 90%;
+        }
+
+        .letter-content {
+          font-size: 0.9rem;
+          max-height: 40vh;
+        }
+
+        .modal-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .modal-buttons .btn {
+          width: 100%;
+          max-width: 250px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #ai-letter-modal .modal-content {
+          padding: 12px;
+          width: 85%;
+        }
+
+        .letter-content {
+          font-size: 0.85rem;
+        }
+
+        #ai-letter-modal h2 {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Modal Styles */
       .modal {
         display: none;
         position: fixed;
@@ -470,25 +547,19 @@
         background-color: rgba(0, 0, 0, 0.7);
         align-items: center;
         justify-content: center;
-        padding: 10px;
-        overflow-y: auto;
       }
 
       .modal-content {
         background: var(--card-bg);
-        padding: 20px;
+        padding: 30px;
         border-radius: 16px;
-        width: 100%;
+        width: 90%;
         max-width: 600px;
-        max-height: 90vh;
         box-shadow: var(--shadow-elevated);
         border: 1px solid var(--card-border);
         text-align: center;
         position: relative;
         animation: modalAppear 0.3s ease-out;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
       }
 
       @keyframes modalAppear {
@@ -510,7 +581,6 @@
         cursor: pointer;
         color: var(--muted-text);
         transition: var(--transition);
-        z-index: 10;
       }
 
       .close:hover {
@@ -869,19 +939,15 @@
       /* Enhanced Virtual Rose */
       .rose-modal-content {
         background: var(--card-bg);
-        padding: 20px;
+        padding: 40px;
         border-radius: 16px;
-        width: 100%;
+        width: 90%;
         max-width: 500px;
-        max-height: 90vh;
         box-shadow: var(--shadow-elevated);
         border: 1px solid var(--card-border);
         text-align: center;
         position: relative;
         animation: modalAppear 0.3s ease-out;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
       }
 
       .close-rose {
@@ -892,7 +958,6 @@
         cursor: pointer;
         color: var(--muted-text);
         transition: var(--transition);
-        z-index: 10;
       }
 
       .close-rose:hover {
@@ -943,27 +1008,6 @@
         margin: 5px 0;
       }
 
-      /* AI Love Letter Modal Specific Styles */
-      .letter-content {
-        max-height: 50vh;
-        overflow-y: auto;
-        padding: 15px;
-        margin: 15px 0;
-        text-align: left;
-        line-height: 1.6;
-        background: rgba(30, 30, 45, 0.3);
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
-      }
-
-      .modal-buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
-        flex-wrap: wrap;
-      }
-
       /* Responsive adjustments */
       @media (max-width: 768px) {
         .header h1 {
@@ -1010,34 +1054,6 @@
           width: 80%;
           max-width: 250px;
         }
-
-        /* Mobile-specific modal adjustments */
-        .modal-content {
-          padding: 15px;
-          margin: 10px;
-          max-height: 85vh;
-        }
-
-        .rose-modal-content {
-          padding: 15px;
-          margin: 10px;
-          max-height: 85vh;
-        }
-
-        .letter-content {
-          max-height: 40vh;
-          padding: 10px;
-        }
-
-        .modal-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .modal-buttons .btn {
-          width: 100%;
-          max-width: 200px;
-        }
       }
 
       @media (max-width: 480px) {
@@ -1059,23 +1075,6 @@
         .memory-stats,
         .trivia-stats {
           justify-content: center;
-        }
-
-        /* Extra small screen adjustments */
-        .modal-content {
-          padding: 10px;
-        }
-
-        .rose-modal-content {
-          padding: 10px;
-        }
-
-        #rose-3d {
-          font-size: 4rem;
-        }
-
-        .letter-content {
-          font-size: 0.9rem;
         }
       }
     </style>
@@ -1242,200 +1241,165 @@
         <!-- Virtual Candle -->
         <div id="candle" class="feature-section">
           <div class="card candle-container">
-            <h2>Virtual Candle</h2>
-            <p>Light a virtual candle for our love</p>
-
+            <h2>Light a Candle of Love</h2>
             <div class="candle">
               <div class="candle-body"></div>
               <div class="candle-wick"></div>
               <div class="candle-flame" id="candle-flame"></div>
             </div>
-
-            <button id="light-candle" class="btn glow-btn">
-              Light the Candle
+            <button id="toggle-candle" class="btn glow-btn">
+              Light Candle
             </button>
-
-            <div class="candle-message" id="candle-message">
-              Click the button to light the candle of our love
-            </div>
+            <p class="candle-message" id="candle-message">
+              Click to light our candle of eternal love
+            </p>
           </div>
         </div>
 
-        <!-- Feature Buttons -->
+        <!-- Heartbeat Visualization -->
+        <div id="heartbeat-container">
+          <div class="heartbeat-visual">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="heart-icon">💖</div>
+          </div>
+          <div id="romantic-quote" class="quote-text">
+            "Your love makes my heart beat faster"
+          </div>
+        </div>
+
         <div class="feature-buttons">
-          <button id="ai-love-letter" class="btn glow-btn">
-            AI Love Letter
+          <a href="gallery.html" class="btn glow-btn">Start Our Journey 💌</a>
+          <button id="ai-letter-btn" class="btn glow-btn">
+            AI Love Letter ✨
           </button>
-          <button id="virtual-rose" class="btn glow-btn">Virtual Rose</button>
-          <button id="view-memories" class="btn glow-btn">View Memories</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI Love Letter Modal -->
-    <div class="modal" id="ai-love-letter-modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>AI-Generated Love Letter</h2>
-        <div class="letter-content" id="letter-content">
-          <!-- Love letter content will be generated here -->
-        </div>
-        <div class="modal-buttons">
-          <button id="copy-letter" class="btn glow-btn">Copy Letter</button>
-          <button id="regenerate-letter" class="btn glow-btn">
-            Regenerate
+          <button id="virtual-rose-btn" class="btn glow-btn">
+            Send Virtual Rose 🌹
           </button>
-          <button id="close-letter" class="btn">Close</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Virtual Rose Modal -->
-    <div class="modal" id="virtual-rose-modal">
-      <div class="rose-modal-content">
-        <span class="close-rose">&times;</span>
-        <h2>A Virtual Rose for You</h2>
-        <div id="rose-3d">🌹</div>
-        <div class="rose-message" id="rose-message">
-          This rose represents my never-ending love for you. Every petal holds a
-          memory of our beautiful journey together.
-        </div>
-        <div class="rose-controls">
-          <button id="change-rose-color" class="btn glow-btn">
-            Change Color
-          </button>
-          <button id="close-rose" class="btn">Close</button>
         </div>
       </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-      <p>Made with 💖 for the most amazing person in my life</p>
-      <p>Our love story continues...</p>
+      <p>Made with 💖 for our special day</p>
+      <p>© 2023 Our Love Story</p>
+    </div>
+
+    <!-- Updated AI Love Letter Modal -->
+    <div id="ai-letter-modal" class="modal">
+      <div class="modal-content mobile-optimized">
+        <span class="close">&times;</span>
+        <h2>AI Love Letter</h2>
+        <div id="ai-letter-content" class="letter-content">
+          <p>Loading your personalized love letter...</p>
+        </div>
+        <div class="modal-buttons">
+          <button id="regenerate-letter" class="btn glow-btn">
+            New Letter
+          </button>
+          <button id="copy-letter" class="btn">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="virtual-rose-modal" class="modal">
+      <div class="rose-modal-content">
+        <span class="close-rose">&times;</span>
+        <h2>For My Beloved</h2>
+        <div id="rose-3d">🌹</div>
+        <div class="rose-message" id="rose-message">
+          A virtual rose for the most beautiful person in my life
+        </div>
+        <div class="rose-controls">
+          <button id="change-rose-color" class="btn glow-btn">
+            Change Rose Color
+          </button>
+          <button id="send-rose" class="btn">Send with Message</button>
+        </div>
+      </div>
     </div>
 
     <script>
-      // DOM elements
-      const aiLoveLetterBtn = document.getElementById("ai-love-letter");
-      const aiLoveLetterModal = document.getElementById("ai-love-letter-modal");
-      const letterContent = document.getElementById("letter-content");
-      const copyLetterBtn = document.getElementById("copy-letter");
-      const regenerateLetterBtn = document.getElementById("regenerate-letter");
-      const closeLetterBtn = document.getElementById("close-letter");
-      const closeModalBtns = document.querySelectorAll(".close");
-
-      // Modal functionality
-      aiLoveLetterBtn.addEventListener("click", function () {
-        generateLoveLetter();
-        aiLoveLetterModal.style.display = "flex";
-      });
-
-      // Close modal when clicking on X
-      closeModalBtns.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          aiLoveLetterModal.style.display = "none";
-        });
-      });
-
-      // Close modal when clicking outside
-      window.addEventListener("click", function (event) {
-        if (event.target === aiLoveLetterModal) {
-          aiLoveLetterModal.style.display = "none";
-        }
-      });
-
-      // Close letter button
-      closeLetterBtn.addEventListener("click", function () {
-        aiLoveLetterModal.style.display = "none";
-      });
-
-      // Copy letter functionality
-      copyLetterBtn.addEventListener("click", function () {
-        const textToCopy = letterContent.innerText;
-        navigator.clipboard
-          .writeText(textToCopy)
-          .then(() => {
-            alert("Love letter copied to clipboard!");
-          })
-          .catch((err) => {
-            console.error("Failed to copy text: ", err);
-          });
-      });
-
-      // Regenerate letter
-      regenerateLetterBtn.addEventListener("click", generateLoveLetter);
-
-      // Generate love letter
-      function generateLoveLetter() {
-        const loveLetters = [
-          `My Dearest Love,
-
-          On this special day, I find myself reflecting on the incredible journey we've shared. From our first meeting to this beautiful anniversary, every moment with you has been a treasure.
-
-          Your smile brightens my darkest days, your laughter is my favorite melody, and your love is the anchor that keeps me grounded. Through challenges and triumphs, you've stood by my side, making every step of our journey meaningful.
-
-          I love the way your eyes sparkle when you talk about your passions, the warmth of your embrace after a long day, and the comfort of simply being with you. You are my best friend, my confidant, and my greatest blessing.
-
-          As we celebrate another year together, I promise to continue cherishing you, supporting your dreams, and building a future filled with love, laughter, and endless adventures.
-
-          Forever yours,
-          With all my love`,
-
-          `My Beloved,
-
-          Happy anniversary to the person who completes me in every way. Today marks another year of shared dreams, laughter, and the beautiful life we're building together.
-
-          I remember the first time I saw you, and how my heart instantly knew you were special. Little did I know that you would become my everything - my partner, my inspiration, my home.
-
-          Your kindness touches everyone around you, your strength inspires me to be better, and your love has transformed my world in ways I never imagined possible. With you, I've discovered the true meaning of partnership and unconditional love.
-
-          Through seasons of change and moments of stillness, our love has only grown stronger. I cherish our inside jokes, our deep conversations, and the comfortable silence we share.
-
-          Here's to us, to our love story, and to all the beautiful chapters yet to be written. I look forward to growing old with you, creating more memories, and loving you more with each passing day.
-
-          All my love, forever`,
-
-          `To My Soulmate,
-
-          On this anniversary, I want to express how grateful I am to have you in my life. You are not just my partner; you are my greatest adventure, my safe harbor, and my reason to smile every day.
-
-          I love how we can be completely ourselves with each other - the good, the bad, and everything in between. With you, I've found a love that accepts, understands, and celebrates every part of me.
-
-          Your presence in my life has brought colors I never knew existed. You've taught me the depth of true connection and the beauty of shared dreams. Every challenge we've faced has only made us stronger, and every joy we've experienced has been magnified because we shared it together.
-
-          As we celebrate this milestone, I want you to know that my love for you grows with each sunrise. You are the first thought in my morning and the last in my night.
-
-          Thank you for being you, for loving me, and for making every day an opportunity to fall in love all over again.
-
-          Yours eternally`,
-        ];
-
-        const randomLetter =
-          loveLetters[Math.floor(Math.random() * loveLetters.length)];
-        letterContent.innerHTML = `<p>${randomLetter.replace(
-          /\n/g,
-          "<br>"
-        )}</p>`;
-      }
-
-      // Initialize with a love letter
-      generateLoveLetter();
-
-      // Other functionality would go here...
-      // For the sake of this example, I'm focusing on the modal fix
-
-      // Feature navigation
+      // DOM Elements
       const featureNavBtns = document.querySelectorAll(".feature-nav-btn");
       const featureSections = document.querySelectorAll(".feature-section");
+      const musicToggle = document.getElementById("music-toggle");
+      const progressBar = document.getElementById("progress-bar");
+      const backgroundMusic = document.getElementById("background-music");
+      const loveCalculator = document.getElementById("love-calculator");
+      const memoryGame = document.getElementById("memory-game");
+      const triviaGame = document.getElementById("trivia-game");
+      const loveNotes = document.getElementById("love-notes");
+      const candleSection = document.getElementById("candle");
+      const daysCounter = document.getElementById("days-counter");
+      const anniversaryDate = document.getElementById("anniversary-date");
+      const animatedHeading = document.getElementById("animated-heading");
+      const heartsContainer = document.getElementById("hearts-container");
+      const petalsContainer = document.getElementById("petals-container");
+      const sparklesContainer = document.getElementById("sparkles-container");
+      const confettiCanvas = document.getElementById("confetti-canvas");
+      const loveFill = document.getElementById("love-fill");
+      const lovePercentage = document.getElementById("love-percentage");
+      const loveMessage = document.getElementById("love-message");
+      const calculateLoveBtn = document.getElementById("calculate-love");
+      const name1Input = document.getElementById("name1");
+      const name2Input = document.getElementById("name2");
+      const memoryGrid = document.getElementById("memory-grid");
+      const resetMemoryBtn = document.getElementById("reset-memory");
+      const moveCount = document.getElementById("move-count");
+      const matchCount = document.getElementById("match-count");
+      const timeCount = document.getElementById("time-count");
+      const triviaQuestion = document.getElementById("trivia-question");
+      const triviaOptions = document.getElementById("trivia-options");
+      const nextTriviaBtn = document.getElementById("next-trivia");
+      const triviaResult = document.getElementById("trivia-result");
+      const scoreCount = document.getElementById("score-count");
+      const questionCount = document.getElementById("question-count");
+      const notesContainer = document.getElementById("notes-container");
+      const addNoteBtn = document.getElementById("add-note");
+      const noteModal = document.getElementById("note-modal");
+      const closeModal = document.querySelector(".close");
+      const saveNoteBtn = document.getElementById("save-note");
+      const cancelNoteBtn = document.getElementById("cancel-note");
+      const noteText = document.getElementById("note-text");
+      const toggleCandleBtn = document.getElementById("toggle-candle");
+      const candleFlame = document.getElementById("candle-flame");
+      const candleMessage = document.getElementById("candle-message");
+      const aiLetterBtn = document.getElementById("ai-letter-btn");
+      const aiLetterModal = document.getElementById("ai-letter-modal");
+      const aiLetterContent = document.getElementById("ai-letter-content");
+      const regenerateLetterBtn = document.getElementById("regenerate-letter");
+      const copyLetterBtn = document.getElementById("copy-letter");
+      const virtualRoseBtn = document.getElementById("virtual-rose-btn");
+      const virtualRoseModal = document.getElementById("virtual-rose-modal");
+      const closeRoseModal = document.querySelector(".close-rose");
+      const changeRoseColorBtn = document.getElementById("change-rose-color");
+      const sendRoseBtn = document.getElementById("send-rose");
+      const roseMessage = document.getElementById("rose-message");
 
+      // Anniversary date (set your anniversary date here)
+      const anniversary = new Date("2020-05-20");
+      const today = new Date();
+      const timeDiff = today.getTime() - anniversary.getTime();
+      const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+      // Set anniversary information
+      anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
+        "en-US",
+        { month: "long", day: "numeric", year: "numeric" }
+      )}`;
+      daysCounter.textContent = `${daysTogether} days together!`;
+
+      // Feature Navigation
       featureNavBtns.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const feature = this.getAttribute("data-feature");
+        btn.addEventListener("click", () => {
+          const feature = btn.getAttribute("data-feature");
 
           // Update active button
           featureNavBtns.forEach((b) => b.classList.remove("active"));
-          this.classList.add("active");
+          btn.classList.add("active");
 
           // Show corresponding section
           featureSections.forEach((section) => {
@@ -1447,110 +1411,820 @@
         });
       });
 
-      // Days counter
-      function updateAnniversaryDate() {
-        const anniversaryDate = new Date("2022-06-15"); // Example date
-        const options = {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        };
-        document.getElementById(
-          "anniversary-date"
-        ).textContent = `Since ${anniversaryDate.toLocaleDateString(
-          "en-US",
-          options
-        )}`;
+      // Background Music
+      let isPlaying = false;
+      musicToggle.addEventListener("click", () => {
+        if (isPlaying) {
+          backgroundMusic.pause();
+          musicToggle.classList.remove("playing");
+          musicToggle.textContent = "♪";
+        } else {
+          backgroundMusic.play().catch((e) => {
+            console.log("Audio play failed:", e);
+            // Show a message to the user
+            alert(
+              "Please interact with the page first to enable audio, or check if your browser allows autoplay."
+            );
+          });
+          musicToggle.classList.add("playing");
+          musicToggle.textContent = "♫";
+        }
+        isPlaying = !isPlaying;
+      });
 
-        // Calculate days together
-        const today = new Date();
-        const timeDiff = today.getTime() - anniversaryDate.getTime();
-        const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
-        document.getElementById(
-          "days-counter"
-        ).textContent = `${daysTogether} days of love and counting!`;
+      // Update progress bar (simulated for demo)
+      setInterval(() => {
+        if (isPlaying) {
+          const progress =
+            (backgroundMusic.currentTime / backgroundMusic.duration) * 100 || 0;
+          progressBar.style.width = `${progress}%`;
+        }
+      }, 100);
+
+      // Background Animations
+      function createHearts() {
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "💖";
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heart.style.animation = `float ${
+              Math.random() * 10 + 10
+            }s linear infinite`;
+            heartsContainer.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+              heart.remove();
+            }, 15000);
+          }, i * 1000);
+        }
       }
 
-      updateAnniversaryDate();
+      function createPetals() {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.innerHTML = "🌸";
+            petal.style.left = `${Math.random() * 100}%`;
+            petal.style.top = `${Math.random() * 100}%`;
+            petal.style.fontSize = `${Math.random() * 15 + 10}px`;
+            petal.style.animation = `fall ${
+              Math.random() * 10 + 10
+            }s linear infinite`;
+            petalsContainer.appendChild(petal);
 
-      // Love calculator
-      document
-        .getElementById("calculate-love")
-        .addEventListener("click", function () {
-          const name1 = document.getElementById("name1").value || "You";
-          const name2 = document.getElementById("name2").value || "Your Love";
+            // Remove petal after animation
+            setTimeout(() => {
+              petal.remove();
+            }, 20000);
+          }, i * 500);
+        }
+      }
 
-          // Simple love calculation (for demonstration)
-          const lovePercentage = Math.floor(Math.random() * 31) + 70; // 70-100%
+      function createSparkles() {
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 3}s`;
+            sparklesContainer.appendChild(sparkle);
 
-          document.getElementById(
-            "love-percentage"
-          ).textContent = `${lovePercentage}%`;
-          document.getElementById(
-            "love-fill"
-          ).style.width = `${lovePercentage}%`;
+            // Remove sparkle after animation
+            setTimeout(() => {
+              sparkle.remove();
+            }, 4000);
+          }, i * 200);
+        }
+      }
 
-          const messages = [
-            "A perfect match made in heaven!",
-            "Your love story is truly magical!",
-            "You two are soulmates destined to be together!",
-            "Your connection is deep and meaningful!",
-            "This is a love that will stand the test of time!",
-          ];
+      // Initialize animations
+      createHearts();
+      createPetals();
+      createSparkles();
+      setInterval(createHearts, 15000);
+      setInterval(createPetals, 20000);
+      setInterval(createSparkles, 4000);
 
-          const randomMessage =
-            messages[Math.floor(Math.random() * messages.length)];
-          document.getElementById("love-message").textContent = randomMessage;
+      // Love Calculator
+      calculateLoveBtn.addEventListener("click", () => {
+        const name1 = name1Input.value.trim() || "You";
+        const name2 = name2Input.value.trim() || "Your Partner";
+
+        // Calculate "love percentage" (pseudo-random but based on names)
+        let seed = 0;
+        for (let i = 0; i < name1.length; i++) {
+          seed += name1.charCodeAt(i);
+        }
+        for (let i = 0; i < name2.length; i++) {
+          seed += name2.charCodeAt(i);
+        }
+
+        // Use seed to generate consistent but "random" percentage
+        const lovePercent = (seed % 40) + 60; // Between 60% and 99%
+
+        // Animate the love meter
+        loveFill.style.width = "0%";
+        setTimeout(() => {
+          loveFill.style.width = `${lovePercent}%`;
+        }, 100);
+
+        // Update percentage text
+        let currentPercent = 0;
+        const interval = setInterval(() => {
+          if (currentPercent >= lovePercent) {
+            clearInterval(interval);
+          } else {
+            currentPercent++;
+            lovePercentage.textContent = `${currentPercent}%`;
+          }
+        }, 20);
+
+        // Set love message based on percentage
+        let message = "";
+        if (lovePercent >= 90) {
+          message = "Perfect match! You two are meant to be! 💖";
+        } else if (lovePercent >= 80) {
+          message = "Amazing connection! Your love is strong! 💕";
+        } else if (lovePercent >= 70) {
+          message = "Great compatibility! Your bond is special! 💘";
+        } else {
+          message = "Good match! Your love can grow stronger! 💝";
+        }
+
+        loveMessage.textContent = message;
+
+        // Trigger confetti for high percentages
+        if (lovePercent > 85) {
+          triggerConfetti();
+        }
+      });
+
+      // Memory Game
+      const memoryCards = ["💖", "💕", "💘", "💝", "💓", "💗", "💞", "💟"];
+      let memoryGameState = {
+        cards: [],
+        flippedCards: [],
+        matchedPairs: 0,
+        moves: 0,
+        gameStarted: false,
+        timer: 0,
+        timerInterval: null,
+      };
+
+      function initializeMemoryGame() {
+        // Reset state
+        memoryGameState = {
+          cards: [...memoryCards, ...memoryCards].sort(
+            () => Math.random() - 0.5
+          ),
+          flippedCards: [],
+          matchedPairs: 0,
+          moves: 0,
+          gameStarted: false,
+          timer: 0,
+          timerInterval: null,
+        };
+
+        // Update UI
+        moveCount.textContent = "0";
+        matchCount.textContent = "0";
+        timeCount.textContent = "0";
+
+        // Clear grid
+        memoryGrid.innerHTML = "";
+
+        // Create cards
+        memoryGameState.cards.forEach((symbol, index) => {
+          const card = document.createElement("div");
+          card.classList.add("memory-card");
+          card.dataset.index = index;
+          card.dataset.symbol = symbol;
+
+          const cardFront = document.createElement("div");
+          cardFront.classList.add("card-front");
+          cardFront.textContent = symbol;
+
+          const cardBack = document.createElement("div");
+          cardBack.classList.add("card-back");
+          cardBack.textContent = "?";
+
+          card.appendChild(cardFront);
+          card.appendChild(cardBack);
+
+          card.addEventListener("click", () => flipCard(card));
+          memoryGrid.appendChild(card);
+        });
+      }
+
+      function flipCard(card) {
+        // Don't allow flipping if already flipped or matched
+        if (
+          card.classList.contains("flipped") ||
+          card.classList.contains("matched") ||
+          memoryGameState.flippedCards.length >= 2
+        ) {
+          return;
+        }
+
+        // Start timer on first move
+        if (!memoryGameState.gameStarted) {
+          memoryGameState.gameStarted = true;
+          memoryGameState.timerInterval = setInterval(() => {
+            memoryGameState.timer++;
+            timeCount.textContent = memoryGameState.timer;
+          }, 1000);
+        }
+
+        // Flip the card
+        card.classList.add("flipped");
+        memoryGameState.flippedCards.push(card);
+
+        // Check for match if two cards are flipped
+        if (memoryGameState.flippedCards.length === 2) {
+          memoryGameState.moves++;
+          moveCount.textContent = memoryGameState.moves;
+
+          const card1 = memoryGameState.flippedCards[0];
+          const card2 = memoryGameState.flippedCards[1];
+
+          if (card1.dataset.symbol === card2.dataset.symbol) {
+            // Match found
+            card1.classList.add("matched");
+            card2.classList.add("matched");
+            memoryGameState.matchedPairs++;
+            matchCount.textContent = memoryGameState.matchedPairs;
+
+            memoryGameState.flippedCards = [];
+
+            // Check for game completion
+            if (memoryGameState.matchedPairs === memoryCards.length) {
+              clearInterval(memoryGameState.timerInterval);
+              setTimeout(() => {
+                alert(
+                  `Congratulations! You completed the game in ${memoryGameState.moves} moves and ${memoryGameState.timer} seconds!`
+                );
+              }, 500);
+            }
+          } else {
+            // No match, flip cards back after a delay
+            setTimeout(() => {
+              card1.classList.remove("flipped");
+              card2.classList.remove("flipped");
+              memoryGameState.flippedCards = [];
+            }, 1000);
+          }
+        }
+      }
+
+      resetMemoryBtn.addEventListener("click", initializeMemoryGame);
+
+      // Trivia Game
+      const triviaQuestions = [
+        {
+          question: "What is the most popular month for weddings?",
+          options: ["June", "August", "May", "September"],
+          correct: 0,
+        },
+        {
+          question: "What is the traditional gift for a 1st anniversary?",
+          options: ["Paper", "Gold", "Cotton", "Wood"],
+          correct: 0,
+        },
+        {
+          question: "Which flower is most commonly associated with love?",
+          options: ["Tulip", "Rose", "Lily", "Orchid"],
+          correct: 1,
+        },
+        {
+          question:
+            "What percentage of people marry their childhood sweetheart?",
+          options: ["2%", "10%", "25%", "50%"],
+          correct: 0,
+        },
+        {
+          question: "Which country has the highest marriage rate?",
+          options: ["USA", "China", "India", "Qatar"],
+          correct: 3,
+        },
+      ];
+
+      let triviaState = {
+        currentQuestion: 0,
+        score: 0,
+        selectedOption: null,
+      };
+
+      function loadTriviaQuestion() {
+        const question = triviaQuestions[triviaState.currentQuestion];
+        triviaQuestion.textContent = question.question;
+
+        triviaOptions.innerHTML = "";
+        question.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("trivia-option");
+          optionElement.textContent = option;
+          optionElement.dataset.index = index;
+
+          optionElement.addEventListener("click", () =>
+            selectTriviaOption(optionElement)
+          );
+          triviaOptions.appendChild(optionElement);
         });
 
-      // Virtual Rose Modal
-      const virtualRoseBtn = document.getElementById("virtual-rose");
-      const virtualRoseModal = document.getElementById("virtual-rose-modal");
-      const closeRoseBtn = document.getElementById("close-rose");
-      const changeRoseColorBtn = document.getElementById("change-rose-color");
-      const rose3d = document.getElementById("rose-3d");
+        questionCount.textContent = triviaState.currentQuestion + 1;
+        scoreCount.textContent = triviaState.score;
+        nextTriviaBtn.style.display = "none";
+        triviaResult.textContent = "";
+        triviaState.selectedOption = null;
+      }
 
-      virtualRoseBtn.addEventListener("click", function () {
-        virtualRoseModal.style.display = "flex";
+      function selectTriviaOption(optionElement) {
+        if (triviaState.selectedOption !== null) return;
+
+        const selectedIndex = parseInt(optionElement.dataset.index);
+        triviaState.selectedOption = selectedIndex;
+
+        // Highlight selected option
+        document.querySelectorAll(".trivia-option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+        optionElement.classList.add("selected");
+
+        // Check if correct
+        const correctIndex =
+          triviaQuestions[triviaState.currentQuestion].correct;
+        const isCorrect = selectedIndex === correctIndex;
+
+        if (isCorrect) {
+          triviaState.score++;
+          scoreCount.textContent = triviaState.score;
+          optionElement.classList.add("correct");
+          triviaResult.textContent = "Correct! 🎉";
+        } else {
+          optionElement.classList.add("incorrect");
+          // Highlight correct answer
+          document
+            .querySelector(`.trivia-option[data-index="${correctIndex}"]`)
+            .classList.add("correct");
+          triviaResult.textContent = "Incorrect! 😔";
+        }
+
+        nextTriviaBtn.style.display = "block";
+      }
+
+      nextTriviaBtn.addEventListener("click", () => {
+        triviaState.currentQuestion++;
+
+        if (triviaState.currentQuestion < triviaQuestions.length) {
+          loadTriviaQuestion();
+        } else {
+          // Game over
+          triviaQuestion.textContent = "Trivia Complete!";
+          triviaOptions.innerHTML = "";
+          nextTriviaBtn.style.display = "none";
+
+          let message = "";
+          if (triviaState.score === triviaQuestions.length) {
+            message = "Perfect! You're a romance expert! 💖";
+          } else if (triviaState.score >= triviaQuestions.length * 0.7) {
+            message = "Great job! You know your romance! 💕";
+          } else {
+            message = "Nice try! Love is a learning journey! 💘";
+          }
+
+          triviaResult.textContent = `Final Score: ${triviaState.score}/${triviaQuestions.length}. ${message}`;
+
+          // Reset for next game
+          setTimeout(() => {
+            triviaState.currentQuestion = 0;
+            triviaState.score = 0;
+            loadTriviaQuestion();
+          }, 5000);
+        }
       });
 
-      closeRoseBtn.addEventListener("click", function () {
-        virtualRoseModal.style.display = "none";
+      // Love Notes
+      let loveNotesData = JSON.parse(localStorage.getItem("loveNotes")) || [
+        {
+          id: 1,
+          content:
+            "Every moment with you is a blessing I cherish. I love you more each day.",
+          date: "2023-10-15",
+        },
+        {
+          id: 2,
+          content:
+            "Your smile lights up my world like nothing else. I'm so grateful for you.",
+          date: "2023-11-20",
+        },
+      ];
+
+      function renderLoveNotes() {
+        notesContainer.innerHTML = "";
+
+        loveNotesData.forEach((note) => {
+          const noteElement = document.createElement("div");
+          noteElement.classList.add("love-note");
+
+          const noteContent = document.createElement("div");
+          noteContent.classList.add("note-content");
+          noteContent.textContent = note.content;
+
+          const noteDate = document.createElement("div");
+          noteDate.classList.add("note-date");
+          noteDate.textContent = new Date(note.date).toLocaleDateString();
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.classList.add("delete-note");
+          deleteBtn.innerHTML = "×";
+          deleteBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteLoveNote(note.id);
+          });
+
+          noteElement.appendChild(deleteBtn);
+          noteElement.appendChild(noteContent);
+          noteElement.appendChild(noteDate);
+
+          noteElement.addEventListener("click", () => {
+            noteText.value = note.content;
+            currentNoteId = note.id;
+            noteModal.style.display = "flex";
+          });
+
+          notesContainer.appendChild(noteElement);
+        });
+
+        // Add the "+" button at the end
+        const addButton = document.createElement("div");
+        addButton.classList.add("love-note", "add-note");
+        addButton.id = "add-note";
+        addButton.innerHTML = "+";
+        addButton.addEventListener("click", () => {
+          noteText.value = "";
+          currentNoteId = null;
+          noteModal.style.display = "flex";
+        });
+
+        notesContainer.appendChild(addButton);
+
+        // Save to localStorage
+        localStorage.setItem("loveNotes", JSON.stringify(loveNotesData));
+      }
+
+      let currentNoteId = null;
+
+      function saveLoveNote() {
+        const content = noteText.value.trim();
+        if (!content) return;
+
+        if (currentNoteId) {
+          // Update existing note
+          const noteIndex = loveNotesData.findIndex(
+            (note) => note.id === currentNoteId
+          );
+          if (noteIndex !== -1) {
+            loveNotesData[noteIndex].content = content;
+            loveNotesData[noteIndex].date = new Date()
+              .toISOString()
+              .split("T")[0];
+          }
+        } else {
+          // Add new note
+          const newId =
+            loveNotesData.length > 0
+              ? Math.max(...loveNotesData.map((n) => n.id)) + 1
+              : 1;
+          loveNotesData.push({
+            id: newId,
+            content: content,
+            date: new Date().toISOString().split("T")[0],
+          });
+        }
+
+        renderLoveNotes();
+        noteModal.style.display = "none";
+      }
+
+      function deleteLoveNote(id) {
+        if (confirm("Are you sure you want to delete this love note?")) {
+          loveNotesData = loveNotesData.filter((note) => note.id !== id);
+          renderLoveNotes();
+        }
+      }
+
+      addNoteBtn.addEventListener("click", () => {
+        noteText.value = "";
+        currentNoteId = null;
+        noteModal.style.display = "flex";
       });
 
-      changeRoseColorBtn.addEventListener("click", function () {
-        const roseColors = ["🌹", "🌺", "🌸", "💐", "🏵️"];
-        const randomRose =
-          roseColors[Math.floor(Math.random() * roseColors.length)];
-        rose3d.textContent = randomRose;
+      closeModal.addEventListener("click", () => {
+        noteModal.style.display = "none";
       });
 
-      // Close rose modal when clicking outside
-      window.addEventListener("click", function (event) {
-        if (event.target === virtualRoseModal) {
+      cancelNoteBtn.addEventListener("click", () => {
+        noteModal.style.display = "none";
+      });
+
+      saveNoteBtn.addEventListener("click", saveLoveNote);
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === noteModal) {
+          noteModal.style.display = "none";
+        }
+        if (e.target === aiLetterModal) {
+          aiLetterModal.style.display = "none";
+        }
+        if (e.target === virtualRoseModal) {
           virtualRoseModal.style.display = "none";
         }
       });
 
-      // Initialize with some background animations
-      function createBackgroundAnimation() {
-        // This would create hearts, petals, and sparkles
-        // For brevity, we'll just add a simple implementation
-        const heartsContainer = document.getElementById("hearts-container");
-        for (let i = 0; i < 15; i++) {
-          const heart = document.createElement("div");
-          heart.innerHTML = "💖";
-          heart.classList.add("heart");
-          heart.style.left = `${Math.random() * 100}%`;
-          heart.style.top = `${Math.random() * 100}%`;
-          heart.style.fontSize = `${Math.random() * 20 + 10}px`;
-          heart.style.animation = `float ${Math.random() * 10 + 5}s infinite`;
-          heartsContainer.appendChild(heart);
+      // Virtual Candle
+      let isCandleLit = false;
+      toggleCandleBtn.addEventListener("click", () => {
+        isCandleLit = !isCandleLit;
+
+        if (isCandleLit) {
+          candleFlame.style.display = "block";
+          toggleCandleBtn.textContent = "Blow Out Candle";
+          candleMessage.textContent = "Our love burns bright and eternal 💖";
+
+          // Add flickering effect to the message
+          candleMessage.style.animation = "pulse 2s infinite";
+        } else {
+          candleFlame.style.display = "none";
+          toggleCandleBtn.textContent = "Light Candle";
+          candleMessage.textContent =
+            "Click to light our candle of eternal love";
+          candleMessage.style.animation = "";
         }
+      });
+
+      // AI Love Letter
+      const loveLetterTemplates = [
+        `My Dearest Love,
+
+Every day with you feels like a beautiful dream I never want to wake up from. From the moment we met, you've brought so much joy, laughter, and meaning into my life.
+
+I cherish the little moments we share - your smile in the morning, your hand in mine, the way you laugh at my silly jokes. These are the treasures that fill my heart with happiness.
+
+You are my rock, my confidant, my best friend, and the love of my life. Through challenges and celebrations, you've stood by me, and I promise to always stand by you.
+
+On this special day, I want to reaffirm my love for you. You are, and always will be, the most important person in my life.
+
+Forever yours,
+Your loving partner`,
+
+        `To My Beloved,
+
+As we celebrate another year together, I find myself reflecting on all the beautiful memories we've created. Each one is a precious gem in the treasure chest of our relationship.
+
+Your love has transformed my world in ways I never thought possible. You've shown me what true happiness means, and with you, I've discovered parts of myself I never knew existed.
+
+I admire your strength, your kindness, your intelligence, and the beautiful person you are inside and out. You inspire me to be better every single day.
+
+No matter what life brings our way, I know we can face it together. Our love is the anchor that keeps me steady through any storm.
+
+Happy anniversary, my love. Here's to many more years of laughter, adventure, and growing old together.
+
+With all my love,
+Your devoted partner`,
+
+        `My Sweetheart,
+
+On this anniversary, I want to put into words what my heart feels every day - an overwhelming love and gratitude for having you in my life.
+
+You are the missing piece I never knew I was searching for. With you, everything makes sense. With you, I am home.
+
+I love the way your eyes light up when you talk about your passions. I love the sound of your laughter, which is my favorite melody. I love how you know exactly what to say to make me feel better on a difficult day.
+
+Our journey together has been the most beautiful adventure, and I look forward to all the chapters we have yet to write.
+
+Thank you for being you, and for choosing to share your life with me. You are my greatest blessing.
+
+All my love,
+Your forever partner`,
+      ];
+
+      function generateLoveLetter() {
+        const randomTemplate =
+          loveLetterTemplates[
+            Math.floor(Math.random() * loveLetterTemplates.length)
+          ];
+        aiLetterContent.innerHTML = `<p style="white-space: pre-line; text-align: left; line-height: 1.6;">${randomTemplate}</p>`;
       }
 
-      createBackgroundAnimation();
+      aiLetterBtn.addEventListener("click", () => {
+        aiLetterModal.style.display = "flex";
+        generateLoveLetter();
+      });
+
+      regenerateLetterBtn.addEventListener("click", generateLoveLetter);
+
+      copyLetterBtn.addEventListener("click", () => {
+        const text = aiLetterContent.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          copyLetterBtn.textContent = "Copied!";
+          setTimeout(() => {
+            copyLetterBtn.textContent = "Copy to Clipboard";
+          }, 2000);
+        });
+      });
+
+      // Virtual Rose
+      const roseColors = ["🌹", "🌺", "🌸", "💐", "🥀"];
+      const roseMessages = [
+        "A virtual rose for the most beautiful person in my life",
+        "Just like this rose, my love for you grows more beautiful each day",
+        "Sending you a rose to brighten your day, just as you brighten mine",
+        "This rose symbolizes my eternal love for you",
+        "Even a thousand roses couldn't express how much I love you",
+      ];
+
+      let currentRoseIndex = 0;
+      let currentMessageIndex = 0;
+
+      virtualRoseBtn.addEventListener("click", () => {
+        virtualRoseModal.style.display = "flex";
+      });
+
+      closeRoseModal.addEventListener("click", () => {
+        virtualRoseModal.style.display = "none";
+      });
+
+      changeRoseColorBtn.addEventListener("click", () => {
+        currentRoseIndex = (currentRoseIndex + 1) % roseColors.length;
+        document.getElementById("rose-3d").textContent =
+          roseColors[currentRoseIndex];
+      });
+
+      sendRoseBtn.addEventListener("click", () => {
+        currentMessageIndex = (currentMessageIndex + 1) % roseMessages.length;
+        roseMessage.textContent = roseMessages[currentMessageIndex];
+
+        // Add a nice effect
+        roseMessage.style.transform = "scale(1.1)";
+        setTimeout(() => {
+          roseMessage.style.transform = "scale(1)";
+        }, 300);
+      });
+
+      // Confetti Effect
+      function triggerConfetti() {
+        const canvas = confettiCanvas;
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const confettiPieces = [];
+        const confettiColors = [
+          "#e91e63",
+          "#9c27b0",
+          "#2196f3",
+          "#4caf50",
+          "#ffeb3b",
+        ];
+
+        // Create confetti pieces
+        for (let i = 0; i < 150; i++) {
+          confettiPieces.push({
+            x: Math.random() * canvas.width,
+            y: -20,
+            size: Math.random() * 10 + 5,
+            color:
+              confettiColors[Math.floor(Math.random() * confettiColors.length)],
+            speed: Math.random() * 3 + 2,
+            rotation: Math.random() * 360,
+            rotationSpeed: Math.random() * 10 - 5,
+          });
+        }
+
+        function drawConfetti() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          let activePieces = 0;
+
+          confettiPieces.forEach((piece) => {
+            piece.y += piece.speed;
+            piece.rotation += piece.rotationSpeed;
+
+            if (piece.y < canvas.height) {
+              activePieces++;
+
+              ctx.save();
+              ctx.translate(piece.x, piece.y);
+              ctx.rotate((piece.rotation * Math.PI) / 180);
+
+              ctx.fillStyle = piece.color;
+              ctx.fillRect(
+                -piece.size / 2,
+                -piece.size / 2,
+                piece.size,
+                piece.size
+              );
+
+              ctx.restore();
+            }
+          });
+
+          if (activePieces > 0) {
+            requestAnimationFrame(drawConfetti);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          }
+        }
+
+        drawConfetti();
+      }
+
+      // Initialize components
+      initializeMemoryGame();
+      loadTriviaQuestion();
+      renderLoveNotes();
+
+      // Add CSS for animations
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes fall {
+                0% {
+                    transform: translateY(-100px) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes pulse {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            
+            .slide-up {
+                animation: slideUp 1s ease-out;
+            }
+            
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            textarea {
+                width: 100%;
+                height: 150px;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid var(--card-border);
+                background: rgba(30, 30, 45, 0.7);
+                color: white;
+                font-size: 1rem;
+                resize: vertical;
+                margin: 15px 0;
+                transition: var(--transition);
+            }
+            
+            textarea:focus {
+                outline: none;
+                border-color: var(--primary-pink);
+                box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+            }
+        `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
