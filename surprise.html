@@ -9,7 +9,7 @@
       content="A special romantic surprise with heartfelt messages"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;500&family=Dancing+Script:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -23,6 +23,7 @@
         --primary-pink: #e91e63;
         --primary-purple: #9c27b0;
         --accent-gold: #ffd700;
+        --accent-teal: #00e5ff;
         --dark-bg: #0f0f1a;
         --darker-bg: #0a0a12;
         --card-bg: rgba(25, 25, 40, 0.95);
@@ -34,6 +35,7 @@
         --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.5);
         --glow-pink: 0 0 15px rgba(233, 30, 99, 0.5);
         --glow-purple: 0 0 15px rgba(156, 39, 176, 0.5);
+        --glow-teal: 0 0 15px rgba(0, 229, 255, 0.5);
       }
 
       body {
@@ -85,9 +87,10 @@
         top: 0;
       }
 
-      /* Background Animations - Enhanced */
+      /* Enhanced Background Animations */
       #hearts-container,
-      #petals-container {
+      #petals-container,
+      #sparkles-container {
         position: fixed;
         top: 0;
         left: 0;
@@ -98,7 +101,8 @@
       }
 
       .heart,
-      .petal {
+      .petal,
+      .sparkle {
         position: absolute;
         opacity: 0;
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
@@ -117,6 +121,12 @@
         color: var(--primary-purple);
         text-shadow: 0 0 10px rgba(156, 39, 176, 0.7);
         animation: floatPetal 25s infinite linear;
+      }
+
+      .sparkle {
+        font-size: 0.8rem;
+        color: var(--accent-teal);
+        animation: floatSparkle 15s infinite linear;
       }
 
       @keyframes floatHeart {
@@ -153,12 +163,32 @@
         }
       }
 
-      /* Music Controls */
+      @keyframes floatSparkle {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(1);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.8;
+        }
+        80% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(180deg) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* Enhanced Music Controls */
       #music-controls {
         position: fixed;
         top: 25px;
         right: 25px;
         z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       #music-toggle {
@@ -182,7 +212,22 @@
         color: var(--primary-pink);
       }
 
-      /* Container */
+      .progress-container {
+        width: 120px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: var(--primary-pink);
+        width: 0%;
+        transition: width 0.1s linear;
+      }
+
+      /* Enhanced Container */
       .container {
         min-height: 100vh;
         display: flex;
@@ -193,10 +238,10 @@
 
       .content {
         text-align: center;
-        max-width: 800px;
+        max-width: 900px;
         background: var(--card-bg);
         padding: 50px 40px;
-        border-radius: 16px;
+        border-radius: 20px;
         box-shadow: var(--shadow-elevated);
         backdrop-filter: blur(15px);
         border: 1px solid var(--card-border);
@@ -239,11 +284,18 @@
         }
       }
 
-      /* Typography */
+      /* Enhanced Typography */
       .page-title {
-        font-size: 3.5rem;
+        font-size: 4rem;
         margin-bottom: 30px;
-        color: var(--primary-purple);
+        background: linear-gradient(
+          135deg,
+          var(--primary-pink),
+          var(--primary-purple),
+          var(--accent-teal)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         position: relative;
         display: inline-block;
         text-shadow: var(--glow-purple);
@@ -268,20 +320,28 @@
         bottom: -10px;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
-        height: 2px;
-        background: var(--primary-pink);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        border-radius: 2px;
       }
 
       .intro-text {
-        font-size: 1.15rem;
+        font-size: 1.2rem;
         line-height: 1.8;
         margin-bottom: 35px;
         color: var(--light-text);
         font-weight: 400;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      /* Buttons */
+      /* Enhanced Buttons */
       .btn {
         display: inline-block;
         padding: 14px 32px;
@@ -334,7 +394,7 @@
         left: 100%;
       }
 
-      /* Surprise Container */
+      /* Enhanced Surprise Container */
       .surprise-container {
         margin: 40px 0;
         position: relative;
@@ -344,8 +404,28 @@
         position: relative;
         overflow: hidden;
         z-index: 1;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         padding: 16px 40px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-pink),
+          var(--primary-purple),
+          var(--accent-teal)
+        );
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       #reveal-btn::after {
@@ -370,19 +450,20 @@
         transform: translateX(100%);
       }
 
-      /* Love Message */
+      /* Enhanced Love Message */
       #love-message {
         margin-top: 30px;
-        padding: 25px;
+        padding: 30px;
         background: linear-gradient(
           135deg,
           rgba(233, 30, 99, 0.1),
-          rgba(156, 39, 176, 0.1)
+          rgba(156, 39, 176, 0.1),
+          rgba(0, 229, 255, 0.1)
         );
-        border-radius: 12px;
+        border-radius: 15px;
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
         position: relative;
         z-index: 2;
         box-shadow: var(--shadow-subtle);
@@ -399,48 +480,45 @@
         display: grid;
       }
 
-      #love-message p {
-        font-size: 1.3rem;
-        font-weight: 500;
-        color: var(--light-text);
-        line-height: 1.6;
-        padding: 15px;
+      .message-card {
         background: rgba(25, 25, 40, 0.7);
-        border-radius: 10px;
-        border-left: 4px solid #e91e63;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-pink);
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
         animation: fadeInMessage 0.5s ease forwards;
         opacity: 0;
         transform: translateX(-20px);
+        text-align: left;
       }
 
-      #love-message p:nth-child(1) {
+      .message-card:nth-child(1) {
         animation-delay: 0.1s;
       }
-      #love-message p:nth-child(2) {
+      .message-card:nth-child(2) {
         animation-delay: 0.2s;
       }
-      #love-message p:nth-child(3) {
+      .message-card:nth-child(3) {
         animation-delay: 0.3s;
       }
-      #love-message p:nth-child(4) {
+      .message-card:nth-child(4) {
         animation-delay: 0.4s;
       }
-      #love-message p:nth-child(5) {
+      .message-card:nth-child(5) {
         animation-delay: 0.5s;
       }
-      #love-message p:nth-child(6) {
+      .message-card:nth-child(6) {
         animation-delay: 0.6s;
       }
-      #love-message p:nth-child(7) {
+      .message-card:nth-child(7) {
         animation-delay: 0.7s;
       }
-      #love-message p:nth-child(8) {
+      .message-card:nth-child(8) {
         animation-delay: 0.8s;
       }
-      #love-message p:nth-child(9) {
+      .message-card:nth-child(9) {
         animation-delay: 0.9s;
       }
 
@@ -451,7 +529,7 @@
         }
       }
 
-      #love-message p::before {
+      .message-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -467,16 +545,25 @@
         transition: left 0.7s;
       }
 
-      #love-message p:hover {
-        transform: translateX(5px);
+      .message-card:hover {
+        transform: translateX(5px) translateY(-5px);
         background: rgba(30, 30, 50, 0.8);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       }
 
-      #love-message p:hover::before {
+      .message-card:hover::before {
         left: 100%;
       }
 
-      /* Mini Messages */
+      .message-text {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--light-text);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* Enhanced Mini Messages */
       .mini-messages {
         display: flex;
         justify-content: center;
@@ -533,7 +620,7 @@
       }
 
       .mini-message.revealed {
-        width: 160px;
+        width: 180px;
         height: auto;
         min-height: 80px;
         border-radius: 20px;
@@ -558,7 +645,7 @@
         }
       }
 
-      /* Confetti Canvas */
+      /* Enhanced Confetti Canvas */
       #confetti-canvas {
         position: fixed;
         top: 0;
@@ -570,7 +657,7 @@
         display: none;
       }
 
-      /* Loading indicator */
+      /* Enhanced Loading indicator */
       .loading-indicator {
         position: fixed;
         top: 50%;
@@ -578,10 +665,30 @@
         transform: translate(-50%, -50%);
         z-index: 1000;
         background: var(--card-bg);
-        padding: 20px;
-        border-radius: 10px;
+        padding: 30px;
+        border-radius: 15px;
         box-shadow: var(--shadow-elevated);
         display: none;
+        text-align: center;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-left: 4px solid var(--primary-pink);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       /* Enhanced floating particles */
@@ -610,19 +717,359 @@
         }
       }
 
+      /* Love Meter */
+      .love-meter-container {
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(25, 25, 40, 0.7);
+        border-radius: 15px;
+        border: 1px solid var(--card-border);
+      }
+
+      .love-meter {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 15px 0;
+        position: relative;
+      }
+
+      .love-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        border-radius: 10px;
+        transition: width 2s ease;
+        width: 0%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .love-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .love-percentage {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-pink);
+        margin: 10px 0;
+      }
+
+      /* NEW ENHANCED GIFT BOX STYLES */
+      .gift-box-container {
+        margin: 40px 0;
+        perspective: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .gift-box {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        cursor: pointer;
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease;
+      }
+
+      .gift-box:hover {
+        transform: scale(1.05);
+      }
+
+      .gift-box.open {
+        transform: rotateY(180deg) scale(1.1);
+      }
+
+      .box {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: linear-gradient(
+          135deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3rem;
+        color: white;
+        backface-visibility: hidden;
+        transition: all 0.5s ease;
+      }
+
+      .box-lid {
+        width: 100%;
+        height: 20%;
+        position: absolute;
+        background: linear-gradient(
+          135deg,
+          var(--primary-purple),
+          var(--accent-teal)
+        );
+        border-radius: 10px 10px 0 0;
+        top: 0;
+        transform-origin: top;
+        transition: transform 0.5s ease;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      .gift-box.open .box-lid {
+        transform: rotateX(-110deg);
+      }
+
+      .box-content {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: linear-gradient(
+          135deg,
+          var(--accent-teal),
+          var(--primary-pink)
+        );
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: white;
+        transform: rotateY(180deg);
+        backface-visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.5s;
+      }
+
+      .gift-box.open .box-content {
+        opacity: 1;
+      }
+
+      .gift-box-label {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: var(--muted-text);
+        font-weight: 500;
+      }
+
+      /* Enhanced Poem Styling */
+      .poem-container {
+        margin-top: 40px;
+        padding: 30px;
+        background: linear-gradient(
+          135deg,
+          rgba(233, 30, 99, 0.1),
+          rgba(156, 39, 176, 0.1),
+          rgba(0, 229, 255, 0.1)
+        );
+        border-radius: 15px;
+        box-shadow: var(--shadow-subtle);
+        border: 1px solid var(--card-border);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+        display: none;
+        text-align: center;
+      }
+
+      .poem-container.revealed {
+        opacity: 1;
+        transform: translateY(0);
+        display: block;
+      }
+
+      .poem-title {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--primary-pink);
+        text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+      }
+
+      .poem-content {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        line-height: 1.8;
+        color: var(--light-text);
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .poem-line {
+        margin-bottom: 15px;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInLine 0.8s forwards;
+      }
+
+      @keyframes fadeInLine {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* NEW FEATURE 2: Constellation of Love */
+      #constellation-container {
+        margin: 40px 0;
+        text-align: center;
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 15px;
+        background: rgba(25, 25, 40, 0.5);
+        border: 1px solid var(--card-border);
+      }
+
+      #constellation-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .constellation-message {
+        position: absolute;
+        background: rgba(25, 25, 40, 0.9);
+        padding: 10px 15px;
+        border-radius: 10px;
+        color: var(--light-text);
+        font-size: 0.9rem;
+        max-width: 200px;
+        box-shadow: var(--shadow-subtle);
+        border: 1px solid var(--card-border);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      /* NEW FEATURE 3: Love Poem Generator */
+      #poem-generator {
+        margin: 40px 0;
+        text-align: center;
+        background: rgba(25, 25, 40, 0.7);
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid var(--card-border);
+      }
+
+      #poem-output {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(25, 25, 40, 0.9);
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-pink);
+        font-family: "Great Vibes", cursive;
+        font-size: 1.5rem;
+        line-height: 1.8;
+        color: var(--light-text);
+        min-height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+      }
+
+      #poem-output.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .feature-title {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+      }
+
+      .feature-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+        border-radius: 2px;
+      }
+
+      /* Love Counter */
+      .love-counter {
+        font-size: 1.2rem;
+        margin: 20px 0;
+        color: var(--muted-text);
+      }
+
+      .counter-number {
+        font-weight: bold;
+        color: var(--primary-pink);
+        font-size: 1.5rem;
+      }
+
       /* Enhanced responsive design */
       @media (max-width: 768px) {
         .page-title {
-          font-size: 2.8rem;
+          font-size: 3rem;
         }
 
         .content {
           padding: 30px 25px;
         }
 
-        #love-message p {
-          font-size: 1.1rem;
-          padding: 12px;
+        .message-card {
+          padding: 15px;
+        }
+
+        .message-text {
+          font-size: 1rem;
         }
 
         .mini-message {
@@ -632,18 +1079,48 @@
         }
 
         .mini-message.revealed {
-          width: 140px;
+          width: 150px;
           font-size: 0.85rem;
         }
 
         .mini-messages {
           gap: 15px;
         }
+
+        #love-message {
+          grid-template-columns: 1fr;
+        }
+
+        /* New features responsive */
+        .feature-title {
+          font-size: 2rem;
+        }
+
+        .gift-box {
+          width: 150px;
+          height: 150px;
+        }
+
+        .poem-title {
+          font-size: 2rem;
+        }
+
+        .poem-content {
+          font-size: 1.5rem;
+        }
+
+        #constellation-container {
+          height: 300px;
+        }
+
+        #poem-output {
+          font-size: 1.3rem;
+        }
       }
 
       @media (max-width: 480px) {
         .page-title {
-          font-size: 2.2rem;
+          font-size: 2.5rem;
         }
 
         .intro-text {
@@ -655,8 +1132,8 @@
           font-size: 1rem;
         }
 
-        #love-message p {
-          font-size: 1rem;
+        .message-text {
+          font-size: 0.95rem;
         }
 
         .mini-message {
@@ -666,9 +1143,36 @@
         }
 
         .mini-message.revealed {
-          width: 120px;
+          width: 130px;
           font-size: 0.8rem;
           padding: 12px;
+        }
+
+        /* New features responsive */
+        .feature-title {
+          font-size: 1.8rem;
+        }
+
+        .gift-box {
+          width: 120px;
+          height: 120px;
+        }
+
+        .poem-title {
+          font-size: 1.8rem;
+        }
+
+        .poem-content {
+          font-size: 1.3rem;
+        }
+
+        #constellation-container {
+          height: 250px;
+        }
+
+        #poem-output {
+          font-size: 1.2rem;
+          padding: 15px;
         }
       }
 
@@ -684,6 +1188,7 @@
 
         .heart,
         .petal,
+        .sparkle,
         .floating-particle {
           animation: none;
           opacity: 0.3;
@@ -724,21 +1229,24 @@
 
     <!-- Loading indicator -->
     <div class="loading-indicator" id="loading-indicator">
+      <div class="loading-spinner"></div>
       Loading your special surprise...
     </div>
 
     <!-- Background animations -->
     <div id="hearts-container"></div>
     <div id="petals-container"></div>
+    <div id="sparkles-container"></div>
 
     <!-- Music controls -->
     <div id="music-controls">
       <button id="music-toggle" aria-label="Toggle background music">♪</button>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
       <audio id="background-music" loop>
-        <source
-          src="https://assets.mixkit.co/music/preview/mixkit-romantic-serenade-309.mp3"
-          type="audio/mpeg"
-        />
+        <!-- In a real implementation, you would link to an actual audio file -->
+        <source src="assets/music/romantic.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
     </div>
@@ -751,337 +1259,221 @@
       <div class="content">
         <h1 class="page-title">Just For You 💖</h1>
         <p class="intro-text">
-          Click the button below to reveal a special message
+          Every moment with you is special. Click the button below to reveal
+          heartfelt messages that express my love for you.
         </p>
 
-        <div class="surprise-container">
-          <button id="reveal-btn" class="btn glow-btn">
-            Reveal My Love 💕
-          </button>
-
-          <div id="love-message" aria-live="polite">
-            <p>Ap meri zindagi ka sabse beautiful part ho 💕</p>
-            <p>Har pal aapke bina adhoora lagta hai 😘</p>
-            <p>Apke bina jeena mumkin nahi hai ❤️</p>
-            <p>Meri har saans aapke naam hai 💖</p>
-            <p>Ap meri muskaan ki wajah ho 🌸</p>
-            <p>Meri duaon ka har lafz sirf aapke liye hai 🤲❤️</p>
-            <p>Apke saath har lamha ek khubsurat yaad ban jaata hai ✨</p>
-            <p>Ap meri duniya ka sabse pyaara ehsaas ho 💞</p>
-            <p>Apke bina meri kahani adhuri hai 📖💔</p>
-          </div>
-
-          <div class="mini-messages">
-            <div
-              class="mini-message"
-              data-text="Apke muskurane se mera din ban jata hai 😊"
-              role="button"
-              tabindex="0"
-            >
-              ?
-            </div>
-            <div
-              class="mini-message"
-              data-text="Ap mere sapno ka sach hai 💭"
-              role="button"
-              tabindex="0"
-            >
-              ?
-            </div>
-            <div
-              class="mini-message"
-              data-text="Apke saath har pal special hai ✨"
-              role="button"
-              tabindex="0"
-            >
-              ?
-            </div>
-          </div>
+        <!-- Love Counter -->
+        <div class="love-counter">
+          We've shared
+          <span class="counter-number" id="days-counter">365</span> beautiful
+          days together
         </div>
 
+        <!-- NEW ENHANCED GIFT BOX -->
+        <div class="gift-box-container">
+          <h2 class="feature-title">A Special Gift For You</h2>
+          <div class="gift-box" id="gift-box">
+            <div class="box">
+              <div class="box-lid">🎀</div>
+              💝
+            </div>
+            <div class="box-content">❤️</div>
+          </div>
+          <div class="gift-box-label">Click to open your gift</div>
+        </div>
+
+        <!-- Love Meter -->
+        <div class="love-meter-container">
+          <h3>Our Love Meter</h3>
+          <div class="love-meter">
+            <div class="love-fill" id="love-fill"></div>
+          </div>
+          <div class="love-percentage" id="love-percentage">0%</div>
+        </div>
+
+        <!-- NEW FEATURE 2: Constellation of Love -->
+        <div id="constellation-container">
+          <h2 class="feature-title">Our Love Constellation</h2>
+          <canvas id="constellation-canvas"></canvas>
+        </div>
+
+        <!-- NEW FEATURE 3: Love Poem Generator -->
+        <div id="poem-generator">
+          <h2 class="feature-title">A Poem For You</h2>
+          <button class="btn glow-btn" id="generate-poem-btn">
+            Generate a Love Poem
+          </button>
+          <div id="poem-output"></div>
+        </div>
+
+        <!-- Main Surprise Button -->
+        <div class="surprise-container">
+          <button class="btn glow-btn" id="reveal-btn">
+            Click to Reveal My Heart
+          </button>
+        </div>
+
+        <!-- Enhanced Love Message -->
+        <div id="love-message">
+          <!-- Messages will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Mini Messages -->
+        <div class="mini-messages">
+          <div class="mini-message" data-message="You're my sunshine ☀️">
+            ☀️
+          </div>
+          <div class="mini-message" data-message="My heart beats for you 💓">
+            💓
+          </div>
+          <div class="mini-message" data-message="Forever and always 💫">
+            💫
+          </div>
+          <div class="mini-message" data-message="You complete me ✨">✨</div>
+          <div class="mini-message" data-message="My soulmate 💞">💞</div>
+        </div>
+
+        <!-- Navigation Button -->
         <a href="index.html" class="btn glow-btn">Back to Start</a>
       </div>
     </div>
 
     <script>
-      // Enhanced Surprise Page with better performance and accessibility
       document.addEventListener("DOMContentLoaded", function () {
-        // Show loading indicator initially
-        const loadingIndicator = document.getElementById("loading-indicator");
-        loadingIndicator.style.display = "block";
-
-        // Fade in the page after a short delay
+        // Fade in the page
         setTimeout(() => {
           document.body.style.opacity = "1";
-          loadingIndicator.style.display = "none";
-        }, 500);
+        }, 300);
 
         // DOM Elements
-        const musicToggle = document.getElementById("music-toggle");
-        const backgroundMusic = document.getElementById("background-music");
-        const heartsContainer = document.getElementById("hearts-container");
-        const petalsContainer = document.getElementById("petals-container");
+        const loadingIndicator = document.getElementById("loading-indicator");
         const revealBtn = document.getElementById("reveal-btn");
         const loveMessage = document.getElementById("love-message");
         const miniMessages = document.querySelectorAll(".mini-message");
+        const musicToggle = document.getElementById("music-toggle");
+        const backgroundMusic = document.getElementById("background-music");
+        const progressBar = document.getElementById("progress-bar");
         const confettiCanvas = document.getElementById("confetti-canvas");
+        const daysCounter = document.getElementById("days-counter");
+        const loveFill = document.getElementById("love-fill");
+        const lovePercentage = document.getElementById("love-percentage");
 
-        // Create background animations with optimized performance
-        createBackgroundAnimations();
-
-        // Setup music toggle with error handling
-        setupMusicToggle();
-
-        // Setup surprise page interactions
-        setupSurprisePage();
-
-        // Background Animations - Enhanced
-        function createBackgroundAnimations() {
-          // Create fewer elements for better performance
-          const heartCount = window.innerWidth < 768 ? 8 : 12;
-          const petalCount = window.innerWidth < 768 ? 12 : 18;
-
-          // Create floating hearts
-          for (let i = 0; i < heartCount; i++) {
-            createFloatingElement("💖", heartsContainer, "heart");
-          }
-
-          // Create falling petals
-          for (let i = 0; i < petalCount; i++) {
-            createFloatingElement("🌹", petalsContainer, "petal");
-          }
-
-          // Create additional floating particles for enhanced effect
-          createFloatingParticles();
-        }
-
-        function createFloatingElement(emoji, container, className) {
-          const element = document.createElement("div");
-          element.className = className;
-          element.textContent = emoji;
-          element.setAttribute("aria-hidden", "true"); // Hide from screen readers
-
-          // Random position
-          const left = Math.random() * 100;
-          element.style.left = `${left}%`;
-
-          // Random size
-          const size = 0.5 + Math.random() * 1.5;
-          element.style.fontSize = `${size}rem`;
-
-          // Random animation duration and delay
-          const duration = 15 + Math.random() * 20;
-          const delay = Math.random() * 5;
-          element.style.animationDuration = `${duration}s`;
-          element.style.animationDelay = `${delay}s`;
-
-          container.appendChild(element);
-        }
-
-        // Create additional floating particles for enhanced visual effect
-        function createFloatingParticles() {
-          const particleCount = window.innerWidth < 768 ? 15 : 25;
-          const particles = ["✦", "✧", "❀", "✿", "❁", "✽", "✾", "❃"];
-
-          for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement("div");
-            particle.className = "floating-particle";
-            particle.textContent =
-              particles[Math.floor(Math.random() * particles.length)];
-            particle.style.color = Math.random() > 0.5 ? "#ff9ec6" : "#c084fc";
-            particle.style.fontSize = `${0.5 + Math.random() * 1}rem`;
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.animationDuration = `${20 + Math.random() * 30}s`;
-            particle.style.animationDelay = `${Math.random() * 10}s`;
-            particle.setAttribute("aria-hidden", "true");
-
-            document.body.appendChild(particle);
-          }
-        }
-
-        // Music Toggle with error handling
-        function setupMusicToggle() {
-          if (!musicToggle || !backgroundMusic) return;
-
-          // Check if audio can be played
-          backgroundMusic.addEventListener("error", function () {
-            console.error("Audio loading failed");
-            musicToggle.disabled = true;
-            musicToggle.title = "Audio not available";
-          });
-
-          musicToggle.addEventListener("click", () => {
-            if (backgroundMusic.paused) {
-              // Play with error handling
-              const playPromise = backgroundMusic.play();
-              if (playPromise !== undefined) {
-                playPromise.catch((error) => {
-                  console.error("Audio play failed:", error);
-                  musicToggle.disabled = true;
-                  musicToggle.title = "Audio playback failed";
-                });
-              }
-              musicToggle.textContent = "♫";
-              musicToggle.setAttribute("aria-label", "Pause background music");
-            } else {
-              backgroundMusic.pause();
-              musicToggle.textContent = "♪";
-              musicToggle.setAttribute("aria-label", "Play background music");
-            }
-          });
-
-          // Set initial aria-label
-          musicToggle.setAttribute("aria-label", "Play background music");
-        }
-
-        // Surprise Page Setup with better accessibility
-        function setupSurprisePage() {
-          if (revealBtn && loveMessage) {
-            revealBtn.addEventListener("click", revealLoveMessage);
-            // Also allow Enter key to trigger the button
-            revealBtn.addEventListener("keypress", function (e) {
-              if (e.key === "Enter") {
-                revealLoveMessage();
-              }
-            });
-          }
-
-          if (miniMessages.length > 0) {
-            miniMessages.forEach((message) => {
-              message.addEventListener("click", () =>
-                revealMiniMessage(message)
-              );
-              // Also allow keyboard activation
-              message.addEventListener("keypress", function (e) {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  revealMiniMessage(message);
-                }
-              });
-            });
-          }
-        }
-
-        // Separate function for revealing love message
-        function revealLoveMessage() {
-          // Create sparkle effect on button
-          createSparkleEffect(revealBtn);
-
-          // Hide the button with animation
-          revealBtn.style.transform = "scale(0)";
-          revealBtn.style.opacity = "0";
-
-          setTimeout(() => {
-            revealBtn.style.display = "none";
-
-            // Show the love message with animation
-            setTimeout(() => {
-              loveMessage.classList.add("revealed");
-              // Announce to screen readers
-              announceToScreenReader("Love message revealed");
-            }, 100);
-
-            // Create confetti effect
-            createConfetti();
-          }, 500);
-        }
-
-        // Separate function for revealing mini messages
-        function revealMiniMessage(message) {
-          if (!message.classList.contains("revealed")) {
-            const text = message.getAttribute("data-text");
-            message.textContent = text;
-            message.classList.add("revealed");
-
-            // Update accessibility attributes
-            message.setAttribute("aria-label", text);
-
-            // Add a small heart animation
-            createHeartAnimation(message);
-
-            // Create sparkle effect
-            createSparkleEffect(message);
-
-            // Announce to screen readers
-            announceToScreenReader("Mini message: " + text);
-          }
-        }
-
-        // Create sparkle effect
-        function createSparkleEffect(element) {
-          const rect = element.getBoundingClientRect();
-          const sparkleCount = 8;
-
-          for (let i = 0; i < sparkleCount; i++) {
-            const sparkle = document.createElement("div");
-            sparkle.className = "sparkle";
-
-            // Position sparkles around the element
-            const angle = (i / sparkleCount) * Math.PI * 2;
-            const distance = 40;
-            const x = Math.cos(angle) * distance;
-            const y = Math.sin(angle) * distance;
-
-            sparkle.style.left = rect.left + rect.width / 2 + x + "px";
-            sparkle.style.top = rect.top + rect.height / 2 + y + "px";
-
-            document.body.appendChild(sparkle);
-
-            // Remove sparkle after animation
-            setTimeout(() => {
-              if (sparkle.parentNode) {
-                sparkle.parentNode.removeChild(sparkle);
-              }
-            }, 1500);
-          }
-        }
-
-        // Utility function to announce changes to screen readers
-        function announceToScreenReader(message) {
-          const announcement = document.createElement("div");
-          announcement.setAttribute("aria-live", "polite");
-          announcement.setAttribute("aria-atomic", "true");
-          announcement.classList.add("sr-only");
-          announcement.textContent = message;
-
-          document.body.appendChild(announcement);
-
-          // Remove after a short delay
-          setTimeout(() => {
-            document.body.removeChild(announcement);
-          }, 1000);
-        }
-
-        // CSS for screen reader only content
-        const srOnlyCSS = `
-          .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-          }
+        // NEW GIFT BOX ELEMENTS
+        const giftBox = document.getElementById("gift-box");
+        const poemContainer = document.createElement("div");
+        poemContainer.className = "poem-container";
+        poemContainer.innerHTML = `
+          <h2 class="poem-title">For My Beloved</h2>
+          <div class="poem-content" id="poem-content"></div>
         `;
+        document
+          .querySelector(".gift-box-container")
+          .appendChild(poemContainer);
+        const poemContent = document.getElementById("poem-content");
 
-        // Add the CSS to the document
-        const style = document.createElement("style");
-        style.textContent = srOnlyCSS;
-        document.head.appendChild(style);
+        // NEW CONSTELLATION ELEMENTS
+        const constellationCanvas = document.getElementById(
+          "constellation-canvas"
+        );
+        const constellationCtx = constellationCanvas.getContext("2d");
 
-        // Confetti Effect with performance optimization
-        function createConfetti() {
+        // NEW POEM GENERATOR ELEMENTS
+        const generatePoemBtn = document.getElementById("generate-poem-btn");
+        const poemOutput = document.getElementById("poem-output");
+
+        // Background animation elements
+        const heartsContainer = document.getElementById("hearts-container");
+        const petalsContainer = document.getElementById("petals-container");
+        const sparklesContainer = document.getElementById("sparkles-container");
+
+        // Love messages
+        const loveMessages = [
+          "Every time I see you, my heart skips a beat. You are the most beautiful person I've ever known.",
+          "Your smile lights up my world and makes everything better. I'm so grateful for you.",
+          "I love the way you laugh, the way you think, and the way you make me feel when we're together.",
+          "You are my sunshine on cloudy days and my anchor in stormy seas. I can't imagine life without you.",
+          "Every moment with you feels like a dream come true. I cherish our time together.",
+          "Your kindness, intelligence, and strength inspire me every day. I'm so proud to be with you.",
+          "I fall in love with you more each day. You are my everything.",
+          "You understand me in ways no one else does. With you, I can truly be myself.",
+          "My love for you grows stronger with each passing day. You are my forever.",
+        ];
+
+        // NEW POEM LINES
+        const poemLines = [
+          "In the garden of my heart,",
+          "Your love blooms like a rose,",
+          "With petals soft and fragrant,",
+          "That only you can compose.",
+          "",
+          "Each moment spent together,",
+          "Is a treasure I hold dear,",
+          "Your laughter is the melody,",
+          "That banishes all fear.",
+          "",
+          "Through sunshine and through shadows,",
+          "Our bond will ever grow,",
+          "For in your eyes I've found my home,",
+          "And a love that makes me glow.",
+        ];
+
+        // NEW POEM GENERATOR DATA
+        const poemParts = {
+          beginnings: [
+            "In the quiet of the night,",
+            "Underneath the starry sky,",
+            "When morning light appears,",
+            "In the whisper of the breeze,",
+            "Through the seasons as they change,",
+          ],
+          middles: [
+            "my heart sings only for you,",
+            "I feel your love surround me,",
+            "I see your smile before me,",
+            "our souls dance together,",
+            "I cherish every moment,",
+          ],
+          endings: [
+            "eternally yours.",
+            "forever and always.",
+            "my love for you grows.",
+            "you are my everything.",
+            "our love story continues.",
+          ],
+        };
+
+        // Initialize
+        initBackgroundAnimations();
+        setupConfettiCanvas();
+        setupConstellation();
+        updateDaysCounter();
+        startLoveMeter();
+
+        // Show loading indicator briefly
+        loadingIndicator.style.display = "block";
+        setTimeout(() => {
+          loadingIndicator.style.display = "none";
+        }, 1500);
+
+        // NEW GIFT BOX FUNCTIONALITY
+        function setupConfettiCanvas() {
+          if (!confettiCanvas) return;
+
+          confettiCanvas.width = window.innerWidth;
+          confettiCanvas.height = window.innerHeight;
+        }
+
+        // Create confetti blast
+        function createConfettiBlast() {
           if (!confettiCanvas) return;
 
           const ctx = confettiCanvas.getContext("2d");
           confettiCanvas.width = window.innerWidth;
           confettiCanvas.height = window.innerHeight;
 
-          // Reduce confetti count for better performance
-          const confettiCount = window.innerWidth < 768 ? 80 : 120;
+          // Confetti pieces
+          const confettiCount = 200;
           const confettiPieces = [];
           const colors = [
             "#ff9ec6",
@@ -1089,40 +1481,41 @@
             "#fda4af",
             "#f9a8d4",
             "#e9d5ff",
+            "#a5f3fc",
+            "#fef08a",
+            "#bbf7d0",
           ];
 
           class ConfettiPiece {
             constructor() {
               this.x = Math.random() * confettiCanvas.width;
-              this.y = -20;
-              this.size = Math.random() * 8 + 4; // Slightly smaller for performance
-              this.speed = Math.random() * 3 + 2;
+              this.y = -10;
+              this.size = Math.random() * 10 + 5;
+              this.speed = Math.random() * 5 + 3;
               this.angle = Math.random() * Math.PI * 2;
-              this.rotation = Math.random() * 360;
-              this.rotationSpeed = Math.random() * 5 - 2.5;
+              this.spin = Math.random() * 10 - 5;
               this.color = colors[Math.floor(Math.random() * colors.length)];
               this.shape = Math.random() > 0.5 ? "circle" : "rect";
             }
 
             update() {
               this.y += this.speed;
-              this.x += Math.sin(this.angle) * 0.5;
-              this.angle += 0.02;
-              this.rotation += this.rotationSpeed;
+              this.x += Math.sin(this.angle) * 2;
+              this.angle += 0.05;
             }
 
             draw() {
               ctx.save();
               ctx.translate(this.x, this.y);
-              ctx.rotate((this.rotation * Math.PI) / 180);
+              ctx.rotate(this.angle);
+
+              ctx.fillStyle = this.color;
 
               if (this.shape === "circle") {
-                ctx.fillStyle = this.color;
                 ctx.beginPath();
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                 ctx.fill();
               } else {
-                ctx.fillStyle = this.color;
                 ctx.fillRect(
                   -this.size / 2,
                   -this.size / 2,
@@ -1142,20 +1535,19 @@
 
           let animationId;
 
-          // Animation loop with performance optimization
           function animate() {
             ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
 
-            let allDone = true;
+            let activePieces = 0;
             confettiPieces.forEach((piece) => {
-              if (piece.y < confettiCanvas.height + 50) {
+              if (piece.y < confettiCanvas.height) {
                 piece.update();
                 piece.draw();
-                allDone = false;
+                activePieces++;
               }
             });
 
-            if (!allDone) {
+            if (activePieces > 0) {
               animationId = requestAnimationFrame(animate);
             } else {
               cancelAnimationFrame(animationId);
@@ -1167,72 +1559,329 @@
           animationId = requestAnimationFrame(animate);
         }
 
-        // Create heart animation for mini messages
-        function createHeartAnimation(element) {
-          const rect = element.getBoundingClientRect();
-          const heart = document.createElement("div");
-          heart.innerHTML = "💖";
-          heart.style.position = "fixed";
-          heart.style.left = rect.left + rect.width / 2 + "px";
-          heart.style.top = rect.top + "px";
-          heart.style.fontSize = "1.5rem";
-          heart.style.zIndex = "9999";
-          heart.style.pointerEvents = "none";
-          heart.style.animation = "heartFloat 2s ease-out forwards";
+        // Display poem with animation
+        function displayPoem() {
+          // Clear previous content
+          poemContent.innerHTML = "";
 
-          // Add animation keyframes
-          const style = document.createElement("style");
-          style.textContent = `
-            @keyframes heartFloat {
-              0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-              }
-              100% {
-                transform: translateY(-100px) scale(0.5);
-                opacity: 0;
-              }
-            }
-          `;
-          document.head.appendChild(style);
+          // Add each line with a delay
+          poemLines.forEach((line, index) => {
+            const lineElement = document.createElement("div");
+            lineElement.className = "poem-line";
+            lineElement.textContent = line;
+            lineElement.style.animationDelay = `${index * 0.2}s`;
 
-          document.body.appendChild(heart);
+            poemContent.appendChild(lineElement);
+          });
 
-          // Remove after animation completes
-          setTimeout(() => {
-            document.body.removeChild(heart);
-          }, 2000);
+          // Show the poem container
+          poemContainer.classList.add("revealed");
         }
 
-        // Handle window resize for responsive adjustments
-        window.addEventListener("resize", function () {
-          // Update confetti canvas size
-          if (confettiCanvas) {
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
+        // Gift box click handler
+        giftBox.addEventListener("click", function () {
+          if (!giftBox.classList.contains("open")) {
+            // Open the gift box
+            giftBox.classList.add("open");
+
+            // Create confetti blast after a short delay
+            setTimeout(() => {
+              createConfettiBlast();
+            }, 500);
+
+            // Display the poem after the box is fully open
+            setTimeout(() => {
+              displayPoem();
+            }, 1000);
           }
         });
 
-        // Add a subtle parallax effect to background elements
-        document.addEventListener("mousemove", function (e) {
-          const hearts = document.querySelectorAll(".heart");
-          const petals = document.querySelectorAll(".petal");
+        // NEW CONSTELLATION SETUP
+        function setupConstellation() {
+          if (!constellationCanvas) return;
 
-          // Apply subtle parallax effect
-          hearts.forEach((heart) => {
-            const speed = 0.5;
-            const x = (e.clientX * speed) / 100;
-            const y = (e.clientY * speed) / 100;
-            heart.style.transform = `translate(${x}px, ${y}px)`;
+          // Set canvas size
+          constellationCanvas.width = constellationCanvas.offsetWidth;
+          constellationCanvas.height = constellationCanvas.offsetHeight;
+
+          // Create stars
+          const stars = [];
+          const starCount = 100;
+
+          for (let i = 0; i < starCount; i++) {
+            stars.push({
+              x: Math.random() * constellationCanvas.width,
+              y: Math.random() * constellationCanvas.height,
+              size: Math.random() * 2 + 1,
+              brightness: Math.random() * 0.5 + 0.5,
+              twinkleSpeed: Math.random() * 0.05 + 0.02,
+            });
+          }
+
+          // Draw constellation
+          function drawConstellation() {
+            constellationCtx.clearRect(
+              0,
+              0,
+              constellationCanvas.width,
+              constellationCanvas.height
+            );
+
+            // Draw connections between stars
+            constellationCtx.strokeStyle = "rgba(233, 30, 99, 0.3)";
+            constellationCtx.lineWidth = 1;
+
+            for (let i = 0; i < stars.length; i++) {
+              for (let j = i + 1; j < stars.length; j++) {
+                const dx = stars[i].x - stars[j].x;
+                const dy = stars[i].y - stars[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 150) {
+                  constellationCtx.globalAlpha = 0.3 - (distance / 150) * 0.3;
+                  constellationCtx.beginPath();
+                  constellationCtx.moveTo(stars[i].x, stars[i].y);
+                  constellationCtx.lineTo(stars[j].x, stars[j].y);
+                  constellationCtx.stroke();
+                }
+              }
+            }
+
+            // Draw stars
+            constellationCtx.globalAlpha = 1;
+            stars.forEach((star) => {
+              // Twinkle effect
+              star.brightness += star.twinkleSpeed;
+              if (star.brightness > 1 || star.brightness < 0.5) {
+                star.twinkleSpeed = -star.twinkleSpeed;
+              }
+
+              constellationCtx.fillStyle = `rgba(255, 255, 255, ${star.brightness})`;
+              constellationCtx.beginPath();
+              constellationCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+              constellationCtx.fill();
+            });
+
+            requestAnimationFrame(drawConstellation);
+          }
+
+          drawConstellation();
+        }
+
+        // NEW POEM GENERATOR
+        function generateLovePoem() {
+          const beginning =
+            poemParts.beginnings[
+              Math.floor(Math.random() * poemParts.beginnings.length)
+            ];
+          const middle =
+            poemParts.middles[
+              Math.floor(Math.random() * poemParts.middles.length)
+            ];
+          const ending =
+            poemParts.endings[
+              Math.floor(Math.random() * poemParts.endings.length)
+            ];
+
+          const poem = `${beginning}<br>${middle}<br>${ending}`;
+
+          poemOutput.innerHTML = poem;
+          poemOutput.classList.add("show");
+
+          // Add sparkle effect
+          createSparkles(poemOutput);
+        }
+
+        // Event listeners
+        generatePoemBtn.addEventListener("click", generateLovePoem);
+
+        // Initialize confetti canvas
+        setupConfettiCanvas();
+
+        // Handle window resize
+        window.addEventListener("resize", setupConfettiCanvas);
+        window.addEventListener("resize", setupConstellation);
+
+        // Rest of existing code...
+        function initBackgroundAnimations() {
+          // Create hearts
+          for (let i = 0; i < 15; i++) {
+            createFloatingElement(
+              "❤️",
+              heartsContainer,
+              15000 + Math.random() * 10000
+            );
+          }
+
+          // Create petals
+          for (let i = 0; i < 12; i++) {
+            createFloatingElement(
+              "🌸",
+              petalsContainer,
+              20000 + Math.random() * 15000
+            );
+          }
+
+          // Create sparkles
+          for (let i = 0; i < 10; i++) {
+            createFloatingElement(
+              "✨",
+              sparklesContainer,
+              12000 + Math.random() * 8000
+            );
+          }
+        }
+
+        function createFloatingElement(character, container, duration) {
+          const element = document.createElement("div");
+          element.className = container.id.replace("-container", "");
+          element.innerHTML = character;
+          element.style.left = Math.random() * 100 + "vw";
+          element.style.animationDuration = duration + "ms";
+          element.style.animationDelay = Math.random() * 5000 + "ms";
+          container.appendChild(element);
+
+          // Remove and recreate element after animation completes
+          setTimeout(() => {
+            element.remove();
+            createFloatingElement(character, container, duration);
+          }, duration);
+        }
+
+        function updateDaysCounter() {
+          // In a real implementation, you would calculate actual days
+          // For demo purposes, we'll use a fixed number
+          const days = 365;
+          daysCounter.textContent = days;
+        }
+
+        function startLoveMeter() {
+          let percentage = 0;
+          const interval = setInterval(() => {
+            percentage += 1;
+            loveFill.style.width = percentage + "%";
+            lovePercentage.textContent = percentage + "%";
+
+            if (percentage >= 100) {
+              clearInterval(interval);
+              // Add pulsing effect when complete
+              loveFill.style.animation = "pulse 2s infinite";
+            }
+          }, 30);
+        }
+
+        function createSparkles(element) {
+          const rect = element.getBoundingClientRect();
+          for (let i = 0; i < 10; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.left = rect.left + Math.random() * rect.width + "px";
+            sparkle.style.top = rect.top + Math.random() * rect.height + "px";
+            document.body.appendChild(sparkle);
+
+            // Remove sparkle after animation
+            setTimeout(() => {
+              sparkle.remove();
+            }, 1500);
+          }
+        }
+
+        // Event Listeners
+        revealBtn.addEventListener("click", function () {
+          // Hide the button
+          revealBtn.style.display = "none";
+
+          // Show loading indicator briefly
+          loadingIndicator.style.display = "block";
+
+          // Create confetti blast
+          createConfettiBlast();
+
+          // After a short delay, reveal the love message
+          setTimeout(() => {
+            loadingIndicator.style.display = "none";
+            displayLoveMessages();
+            loveMessage.classList.add("revealed");
+
+            // Scroll to the message
+            loveMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 2000);
+        });
+
+        function displayLoveMessages() {
+          // Clear any existing content
+          loveMessage.innerHTML = "";
+
+          // Add each message with a staggered animation
+          loveMessages.forEach((message, index) => {
+            const messageCard = document.createElement("div");
+            messageCard.className = "message-card";
+            messageCard.innerHTML = `<p class="message-text">${message}</p>`;
+            messageCard.style.animationDelay = `${index * 0.2}s`;
+            loveMessage.appendChild(messageCard);
           });
+        }
 
-          petals.forEach((petal) => {
-            const speed = 0.3;
-            const x = (e.clientX * speed) / 100;
-            const y = (e.clientY * speed) / 100;
-            petal.style.transform = `translate(${x}px, ${y}px)`;
+        // Mini message click handlers
+        miniMessages.forEach((message) => {
+          message.addEventListener("click", function () {
+            if (!this.classList.contains("revealed")) {
+              const messageText = this.getAttribute("data-message");
+              this.textContent = messageText;
+              this.classList.add("revealed");
+
+              // Create sparkles
+              createSparkles(this);
+            }
           });
         });
+
+        // Music controls
+        musicToggle.addEventListener("click", function () {
+          if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicToggle.style.color = "var(--primary-pink)";
+            musicToggle.innerHTML = "♫";
+          } else {
+            backgroundMusic.pause();
+            musicToggle.style.color = "var(--primary-purple)";
+            musicToggle.innerHTML = "♪";
+          }
+        });
+
+        // Update progress bar
+        backgroundMusic.addEventListener("timeupdate", function () {
+          const progress =
+            (backgroundMusic.currentTime / backgroundMusic.duration) * 100;
+          progressBar.style.width = progress + "%";
+        });
+
+        // Click on progress bar to seek
+        progressBar.parentElement.addEventListener("click", function (e) {
+          const rect = this.getBoundingClientRect();
+          const percent = (e.clientX - rect.left) / rect.width;
+          backgroundMusic.currentTime = percent * backgroundMusic.duration;
+        });
+
+        // Add floating particles on click
+        document.addEventListener("click", function (e) {
+          createSparkleAtPosition(e.clientX, e.clientY);
+        });
+
+        function createSparkleAtPosition(x, y) {
+          const sparkle = document.createElement("div");
+          sparkle.className = "floating-particle";
+          sparkle.innerHTML = "✨";
+          sparkle.style.left = x + "px";
+          sparkle.style.top = y + "px";
+          sparkle.style.animationDuration = 5000 + Math.random() * 10000 + "ms";
+          document.body.appendChild(sparkle);
+
+          // Remove after animation
+          setTimeout(() => {
+            sparkle.remove();
+          }, 15000);
+        }
       });
     </script>
   </body>
