@@ -1538,6 +1538,9 @@
         }, 3000);
       }
 
+      // Store calculated results so same names always give same percentage
+      const loveResultsCache = {};
+
       // Update the Love Calculator event listener
       calculateLoveBtn.addEventListener("click", () => {
         const name1 = name1Input.value.trim();
@@ -1553,35 +1556,46 @@
         const name1Lower = name1.toLowerCase();
         const name2Lower = name2.toLowerCase();
 
-        // Special names that should always get high scores
-        const specialNames = ["burhan", "raisa"];
+        // Make a unique key for this pair of names (order independent)
+        const pairKey = [name1Lower, name2Lower].sort().join("_");
 
         let lovePercent;
 
-        // ✅ Special case: Burhan + Raisa (any order)
-        if (
-          (name1Lower === "burhan" && name2Lower === "raisa") ||
-          (name1Lower === "raisa" && name2Lower === "burhan")
-        ) {
-          lovePercent = 95 + Math.floor(Math.random() * 5); // 95%–99%
-        }
-        // ✅ If either name is special
-        else if (
-          specialNames.includes(name1Lower) ||
-          specialNames.includes(name2Lower)
-        ) {
-          lovePercent = 95 + Math.floor(Math.random() * 5); // 95%–99%
-        }
-        // ✅ Default calculation
-        else {
-          let seed = 0;
-          for (let i = 0; i < name1.length; i++) {
-            seed += name1.charCodeAt(i);
+        // ✅ If already calculated before, reuse result
+        if (loveResultsCache[pairKey]) {
+          lovePercent = loveResultsCache[pairKey];
+        } else {
+          // Special names
+          const specialNames = ["burhan", "raisa"];
+
+          // ✅ Special case: Burhan + Raisa
+          if (
+            (name1Lower === "burhan" && name2Lower === "raisa") ||
+            (name1Lower === "raisa" && name2Lower === "burhan")
+          ) {
+            lovePercent = 95 + (pairKey.length % 5); // Deterministic 95–99
           }
-          for (let i = 0; i < name2.length; i++) {
-            seed += name2.charCodeAt(i);
+          // ✅ If either is special
+          else if (
+            specialNames.includes(name1Lower) ||
+            specialNames.includes(name2Lower)
+          ) {
+            lovePercent = 95 + (pairKey.length % 5); // Deterministic 95–99
           }
-          lovePercent = (seed % 40) + 60; // 60%–99%
+          // ✅ Default calculation
+          else {
+            let seed = 0;
+            for (let i = 0; i < name1.length; i++) {
+              seed += name1.charCodeAt(i);
+            }
+            for (let i = 0; i < name2.length; i++) {
+              seed += name2.charCodeAt(i);
+            }
+            lovePercent = (seed % 40) + 60; // 60%–99%
+          }
+
+          // Save result for this pair
+          loveResultsCache[pairKey] = lovePercent;
         }
 
         // Animate the love meter
@@ -1601,7 +1615,7 @@
           }
         }, 20);
 
-        // Set love message based on percentage
+        // Set love message
         let message = "";
         if (
           (name1Lower === "burhan" && name2Lower === "raisa") ||
