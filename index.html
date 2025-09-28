@@ -1379,11 +1379,9 @@
       const sendRoseBtn = document.getElementById("send-rose");
       const roseMessage = document.getElementById("rose-message");
 
-     // Anniversary date (set your anniversary date here)
+// Anniversary date set to October 15, 2024 with 365 days
 const anniversary = new Date("2024-10-15");
-const today = new Date();
-const timeDiff = today.getTime() - anniversary.getTime();
-const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
+const daysTogether = 365; // Force to 365 days
 
 // Set anniversary information
 anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
@@ -2228,4 +2226,5 @@ Your forever partner`,
     </script>
   </body>
 </html>
+
 
