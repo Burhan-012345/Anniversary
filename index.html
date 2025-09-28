@@ -1379,18 +1379,18 @@
       const sendRoseBtn = document.getElementById("send-rose");
       const roseMessage = document.getElementById("rose-message");
 
-      // Anniversary date (set your anniversary date here)
-      const anniversary = new Date("2020-05-20");
-      const today = new Date();
-      const timeDiff = today.getTime() - anniversary.getTime();
-      const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
+     // Anniversary date (set your anniversary date here)
+const anniversary = new Date("2024-10-15");
+const today = new Date();
+const timeDiff = today.getTime() - anniversary.getTime();
+const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
 
-      // Set anniversary information
-      anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
-        "en-US",
-        { month: "long", day: "numeric", year: "numeric" }
-      )}`;
-      daysCounter.textContent = `${daysTogether} days together!`;
+// Set anniversary information
+anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
+  "en-US",
+  { month: "long", day: "numeric", year: "numeric" }
+)}`;
+daysCounter.textContent = `${daysTogether} days together!`;
 
       // Feature Navigation
       featureNavBtns.forEach((btn) => {
@@ -2228,3 +2228,4 @@ Your forever partner`,
     </script>
   </body>
 </html>
+
