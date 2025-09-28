@@ -8,6 +8,7 @@
       :root {
         --primary-pink: #e91e63;
         --primary-purple: #9c27b0;
+        --primary-blue: #2196f3;
         --card-bg: rgba(255, 255, 255, 0.1);
         --card-border: rgba(255, 255, 255, 0.2);
         --light-text: #ffffff;
@@ -15,25 +16,33 @@
         --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.1);
         --shadow-elevated: 0 10px 20px rgba(0, 0, 0, 0.2);
         --transition: all 0.3s ease;
+        --gradient-bg: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        --gradient-primary: linear-gradient(
+          45deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Arial", sans-serif;
+        font-family: "Segoe UI", "Arial", sans-serif;
       }
 
       body {
-        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        background: var(--gradient-bg);
         color: white;
         min-height: 100vh;
         overflow-x: hidden;
         position: relative;
       }
 
+      /* Enhanced Background Animations */
       #hearts-container,
-      #petals-container {
+      #petals-container,
+      #sparkles-container {
         position: fixed;
         top: 0;
         left: 0;
@@ -44,56 +53,92 @@
       }
 
       .heart,
-      .petal {
+      .petal,
+      .sparkle {
         position: absolute;
         opacity: 0.7;
       }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+      .sparkle {
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        animation: sparkle 3s infinite;
       }
 
-      .content {
-        text-align: center;
-        padding: 40px 20px;
-      }
-
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
-        animation: pulse 2s infinite;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0);
         }
         50% {
-          transform: scale(1.05);
-        }
-        100% {
+          opacity: 1;
           transform: scale(1);
         }
       }
 
+      /* Enhanced Header */
+      .header {
+        text-align: center;
+        padding: 40px 20px 20px;
+        position: relative;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+        text-shadow: 0 0 15px rgba(233, 30, 99, 0.7);
+        animation: pulse 2s infinite, glow 3s infinite alternate;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(233, 30, 99, 0.8),
+            0 0 30px rgba(156, 39, 176, 0.6);
+        }
+      }
+
+      .anniversary-date {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--muted-text);
+        font-weight: 300;
+      }
+
+      .days-counter {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--primary-pink);
+        font-weight: bold;
+      }
+
+      /* Enhanced Intro Text */
       .intro-text {
         font-size: 1.2rem;
         max-width: 800px;
         margin: 0 auto 40px;
         line-height: 1.6;
         opacity: 0.9;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        box-shadow: var(--shadow-subtle);
+        border-left: 4px solid var(--primary-pink);
       }
 
+      /* Enhanced Buttons */
       .btn {
         padding: 12px 25px;
-        background: linear-gradient(
-          45deg,
-          var(--primary-pink),
-          var(--primary-purple)
-        );
+        background: var(--gradient-primary);
         border: none;
         border-radius: 50px;
         color: white;
@@ -103,11 +148,17 @@
         margin: 10px;
         text-decoration: none;
         display: inline-block;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
       }
 
       .btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        box-shadow: 0 7px 15px rgba(233, 30, 99, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
       }
 
       .glow-btn {
@@ -116,9 +167,170 @@
 
       .feature-buttons {
         margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
       }
 
-      /* Heartbeat Visualization */
+      /* Enhanced Feature Navigation */
+      .feature-nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-subtle);
+      }
+
+      .feature-nav-btn {
+        padding: 12px 20px;
+        background: rgba(30, 30, 45, 0.7);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        border: 1px solid transparent;
+        font-weight: 500;
+      }
+
+      .feature-nav-btn:hover {
+        background: rgba(40, 40, 60, 0.9);
+        transform: translateY(-2px);
+      }
+
+      .feature-nav-btn.active {
+        background: var(--primary-pink);
+        box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
+      }
+
+      /* Enhanced Feature Sections */
+      .feature-section {
+        display: none;
+        animation: fadeInElegant 0.5s;
+      }
+
+      .feature-section.active {
+        display: block;
+      }
+
+      @keyframes fadeInElegant {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Enhanced Cards */
+      .card {
+        background: var(--card-bg);
+        padding: 25px;
+        border-radius: 12px;
+        margin: 20px 0;
+        box-shadow: var(--shadow-subtle);
+        border: 1px solid var(--card-border);
+        transition: var(--transition);
+      }
+
+      .card:hover {
+        box-shadow: var(--shadow-elevated);
+        transform: translateY(-5px);
+      }
+
+      .card h2 {
+        margin-bottom: 15px;
+        color: var(--light-text);
+        font-size: 1.8rem;
+        text-align: center;
+      }
+
+      /* Enhanced Love Calculator */
+      .love-calculator .love-inputs {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .love-calculator input {
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+        background: rgba(30, 30, 45, 0.7);
+        color: var(--light-text);
+        font-size: 1rem;
+        width: 180px;
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .love-calculator input:focus {
+        outline: none;
+        border-color: var(--primary-pink);
+        box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+      }
+
+      .love-result {
+        font-size: 1.5rem;
+        margin: 20px 0;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .love-meter {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        margin: 15px 0;
+        overflow: hidden;
+      }
+
+      .love-fill {
+        height: 100%;
+        background: var(--gradient-primary);
+        border-radius: 10px;
+        transition: width 1s ease;
+        width: 0%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .love-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* Enhanced Heartbeat Visualization */
       #heartbeat-container {
         margin: 40px auto;
         text-align: center;
@@ -126,8 +338,8 @@
 
       .heartbeat-visual {
         position: relative;
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         margin: 0 auto 20px;
       }
 
@@ -163,12 +375,13 @@
       }
 
       .heart-icon {
-        font-size: 3rem;
+        font-size: 3.5rem;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         animation: heartbeat 1.5s infinite;
+        text-shadow: 0 0 15px rgba(233, 30, 99, 0.7);
       }
 
       @keyframes heartbeat {
@@ -188,14 +401,20 @@
         font-size: 1.2rem;
         margin-top: 10px;
         opacity: 0.9;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      /* Music Controls */
+      /* Enhanced Music Controls */
       #music-controls {
         position: fixed;
         top: 20px;
         right: 20px;
         z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       #music-toggle {
@@ -208,24 +427,38 @@
         font-size: 1.5rem;
         cursor: pointer;
         transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       #music-toggle:hover {
         background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
       }
 
-      /* Confetti Canvas */
-      #confetti-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
+      #music-toggle.playing {
+        background: var(--primary-pink);
+        box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+      }
+
+      /* Enhanced Progress Bar */
+      .progress-container {
+        width: 200px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
         height: 100%;
-        pointer-events: none;
-        z-index: 999;
+        background: var(--primary-pink);
+        width: 0%;
+        transition: width 0.1s linear;
       }
 
-      /* Modals */
+      /* Enhanced Modals */
       .modal {
         display: none;
         position: fixed;
@@ -237,92 +470,52 @@
         z-index: 1000;
         justify-content: center;
         align-items: center;
+        backdrop-filter: blur(5px);
       }
 
       .modal-content {
         background: var(--card-bg);
         padding: 30px;
-        border-radius: 12px;
+        border-radius: 16px;
         width: 90%;
         max-width: 500px;
         box-shadow: var(--shadow-elevated);
         border: 1px solid var(--card-border);
         text-align: center;
+        position: relative;
+        animation: modalAppear 0.3s ease-out;
+      }
+
+      @keyframes modalAppear {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
       }
 
       .close {
         position: absolute;
-        top: 10px;
-        right: 15px;
+        top: 15px;
+        right: 20px;
         font-size: 1.5rem;
         cursor: pointer;
+        color: var(--muted-text);
+        transition: var(--transition);
       }
 
-      /* Love Calculator Styles */
-      .love-calculator {
-        background: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        margin: 20px 0;
-        text-align: center;
-        box-shadow: var(--shadow-subtle);
-        border: 1px solid var(--card-border);
+      .close:hover {
+        color: var(--primary-pink);
+        transform: scale(1.1);
       }
 
-      .love-inputs {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin: 20px 0;
-        flex-wrap: wrap;
-      }
-
-      .love-inputs input {
-        padding: 12px 15px;
-        border-radius: 8px;
-        border: 1px solid var(--card-border);
-        background: rgba(30, 30, 45, 0.7);
-        color: var(--light-text);
-        font-size: 1rem;
-        width: 180px;
-        text-align: center;
-      }
-
-      .love-result {
-        font-size: 1.5rem;
-        margin: 20px 0;
-        min-height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-
-      .love-meter {
-        width: 100%;
-        height: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        margin: 15px 0;
-        overflow: hidden;
-      }
-
-      .love-fill {
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          var(--primary-pink),
-          var(--primary-purple)
-        );
-        border-radius: 10px;
-        transition: width 1s ease;
-        width: 0%;
-      }
-
-      /* Digital Love Notes Styles */
+      /* Enhanced Love Notes */
       .notes-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 20px;
         margin: 30px 0;
       }
@@ -330,18 +523,48 @@
       .love-note {
         background: linear-gradient(135deg, #ff9ec6, #c084fc);
         padding: 20px;
-        border-radius: 8px;
-        min-height: 150px;
+        border-radius: 12px;
+        min-height: 180px;
         display: flex;
         flex-direction: column;
         box-shadow: var(--shadow-subtle);
         position: relative;
         cursor: pointer;
         transition: var(--transition);
+        overflow: hidden;
+      }
+
+      .love-note::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transform: translateX(-100%);
+      }
+
+      .love-note:hover::before {
+        animation: shimmerNote 1.5s;
+      }
+
+      @keyframes shimmerNote {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
       }
 
       .love-note:hover {
-        transform: translateY(-5px);
+        transform: translateY(-5px) rotate(1deg);
         box-shadow: var(--shadow-elevated);
       }
 
@@ -349,12 +572,42 @@
         flex-grow: 1;
         color: white;
         font-weight: 500;
+        line-height: 1.5;
       }
 
       .note-date {
         font-size: 0.8rem;
         opacity: 0.8;
         margin-top: 10px;
+        align-self: flex-end;
+      }
+
+      .delete-note {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        color: white;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: var(--transition);
+        opacity: 0;
+      }
+
+      .love-note:hover .delete-note {
+        opacity: 1;
+      }
+
+      .delete-note:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: scale(1.1);
       }
 
       .add-note {
@@ -362,60 +615,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2rem;
+        font-size: 3rem;
         color: rgba(255, 255, 255, 0.7);
+        border: 2px dashed rgba(255, 255, 255, 0.3);
       }
 
-      .note-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
+      .add-note:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.9);
+        border-color: rgba(255, 255, 255, 0.5);
       }
 
-      .note-modal-content {
-        background: var(--card-bg);
-        padding: 30px;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: var(--shadow-elevated);
-        border: 1px solid var(--card-border);
-      }
-
-      .note-modal textarea {
-        width: 100%;
+      /* Enhanced Virtual Candle */
+      .candle-container .candle {
+        width: 80px;
         height: 150px;
-        background: rgba(30, 30, 45, 0.7);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 15px;
-        color: var(--light-text);
-        font-size: 1rem;
-        margin: 15px 0;
-        resize: vertical;
-      }
-
-      /* Virtual Candle Styles */
-      .candle-container {
-        background: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        margin: 20px 0;
-        text-align: center;
-        box-shadow: var(--shadow-subtle);
-        border: 1px solid var(--card-border);
-      }
-
-      .candle {
-        width: 60px;
-        height: 120px;
         margin: 0 auto 30px;
         position: relative;
       }
@@ -424,7 +638,7 @@
         width: 100%;
         height: 100%;
         background: linear-gradient(to right, #f0f0f5, #e0e0e5, #f0f0f5);
-        border-radius: 5px;
+        border-radius: 8px;
         position: relative;
         box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
       }
@@ -440,31 +654,36 @@
       }
 
       .candle-flame {
-        width: 20px;
-        height: 40px;
+        width: 25px;
+        height: 50px;
         background: linear-gradient(to bottom, #ff9900, #ff5500, #ff0000);
         border-radius: 50% 50% 20% 20%;
         position: absolute;
-        top: -55px;
+        top: -65px;
         left: 50%;
         transform: translateX(-50%);
         animation: flicker 2s infinite alternate;
         box-shadow: 0 0 20px #ff5500, 0 0 40px #ff0000;
+        display: none;
       }
 
       @keyframes flicker {
         0%,
         100% {
           transform: translateX(-50%) scale(1);
+          opacity: 1;
         }
         25% {
           transform: translateX(-52%) scale(1.05);
+          opacity: 0.9;
         }
         50% {
           transform: translateX(-48%) scale(0.95);
+          opacity: 0.8;
         }
         75% {
           transform: translateX(-51%) scale(1.02);
+          opacity: 0.95;
         }
       }
 
@@ -472,66 +691,11 @@
         margin-top: 20px;
         font-style: italic;
         color: var(--muted-text);
-      }
-
-      /* Feature Navigation */
-      .feature-nav {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin: 30px 0;
-        flex-wrap: wrap;
-      }
-
-      .feature-nav-btn {
-        padding: 10px 20px;
-        background: rgba(30, 30, 45, 0.7);
-        border-radius: 8px;
-        cursor: pointer;
         transition: var(--transition);
-        border: 1px solid transparent;
       }
 
-      .feature-nav-btn:hover {
-        background: rgba(40, 40, 60, 0.9);
-      }
-
-      .feature-nav-btn.active {
-        background: var(--primary-pink);
-      }
-
-      /* Feature Sections */
-      .feature-section {
-        display: none;
-      }
-
-      .feature-section.active {
-        display: block;
-        animation: fadeInElegant 0.5s;
-      }
-
-      @keyframes fadeInElegant {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Love Memory Match Game Styles - FIXED */
-      .memory-game-container {
-        background: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        margin: 20px 0;
-        box-shadow: var(--shadow-subtle);
-        border: 1px solid var(--card-border);
-      }
-
-      .memory-game-header {
+      /* Enhanced Memory Game */
+      .memory-game-container .memory-game-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -550,6 +714,9 @@
         padding: 8px 15px;
         border-radius: 8px;
         font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
 
       .memory-grid {
@@ -572,16 +739,17 @@
         transition: var(--transition);
         transform-style: preserve-3d;
         position: relative;
-        transform: rotateY(0deg); /* Start with back visible */
+        transform: rotateY(0deg);
       }
 
       .memory-card.flipped {
-        transform: rotateY(180deg); /* Flip to show front */
+        transform: rotateY(180deg);
       }
 
       .memory-card.matched {
         cursor: default;
         opacity: 0.7;
+        transform: rotateY(180deg) scale(0.95);
       }
 
       .memory-card .card-front,
@@ -597,11 +765,7 @@
       }
 
       .memory-card .card-front {
-        background: linear-gradient(
-          135deg,
-          var(--primary-pink),
-          var(--primary-purple)
-        );
+        background: var(--gradient-primary);
         transform: rotateY(180deg);
         font-size: 2rem;
       }
@@ -609,19 +773,11 @@
       .memory-card .card-back {
         background: rgba(30, 30, 45, 0.9);
         font-size: 1.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
       }
 
-      /* Romantic Trivia Game Styles */
-      .trivia-game-container {
-        background: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        margin: 20px 0;
-        box-shadow: var(--shadow-subtle);
-        border: 1px solid var(--card-border);
-      }
-
-      .trivia-header {
+      /* Enhanced Trivia Game */
+      .trivia-game-container .trivia-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -643,6 +799,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
+        padding: 15px;
+        background: rgba(30, 30, 45, 0.5);
+        border-radius: 8px;
       }
 
       .trivia-options {
@@ -671,6 +831,7 @@
       .trivia-option:hover {
         background: rgba(40, 40, 60, 0.9);
         border-color: var(--primary-pink);
+        transform: translateY(-2px);
       }
 
       .trivia-option.selected {
@@ -699,30 +860,18 @@
         flex-direction: column;
       }
 
-      /* Virtual Rose Modal Styles - NEW */
-      #virtual-rose-container {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-      }
-
+      /* Enhanced Virtual Rose */
       .rose-modal-content {
         background: var(--card-bg);
         padding: 40px;
-        border-radius: 12px;
+        border-radius: 16px;
         width: 90%;
         max-width: 500px;
         box-shadow: var(--shadow-elevated);
         border: 1px solid var(--card-border);
         text-align: center;
         position: relative;
+        animation: modalAppear 0.3s ease-out;
       }
 
       .close-rose {
@@ -731,11 +880,13 @@
         right: 20px;
         font-size: 1.5rem;
         cursor: pointer;
-        color: var(--light-text);
+        color: var(--muted-text);
+        transition: var(--transition);
       }
 
       .close-rose:hover {
         color: var(--primary-pink);
+        transform: scale(1.1);
       }
 
       #rose-3d {
@@ -743,6 +894,7 @@
         margin: 20px 0;
         animation: rotateRose 5s infinite linear;
         text-shadow: 0 0 20px rgba(233, 30, 99, 0.7);
+        display: inline-block;
       }
 
       @keyframes rotateRose {
@@ -759,20 +911,36 @@
         margin: 20px 0;
         color: var(--light-text);
         font-style: italic;
+        line-height: 1.5;
       }
 
       .rose-controls {
         margin-top: 20px;
       }
 
+      /* Enhanced Footer */
+      .footer {
+        text-align: center;
+        padding: 30px 20px;
+        margin-top: 40px;
+        color: var(--muted-text);
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer p {
+        margin: 5px 0;
+      }
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
-        h1 {
-          font-size: 2rem;
+        .header h1 {
+          font-size: 2.5rem;
         }
 
         .intro-text {
           font-size: 1rem;
+          padding: 15px;
         }
 
         .love-inputs {
@@ -785,7 +953,7 @@
         }
 
         .feature-nav-btn {
-          padding: 8px 15px;
+          padding: 10px 15px;
           font-size: 0.9rem;
         }
 
@@ -796,6 +964,42 @@
         #rose-3d {
           font-size: 5rem;
         }
+
+        .notes-container {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .feature-buttons .btn {
+          width: 80%;
+          max-width: 250px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .anniversary-date,
+        .days-counter {
+          font-size: 1rem;
+        }
+
+        .memory-game-header,
+        .trivia-header {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .memory-stats,
+        .trivia-stats {
+          justify-content: center;
+        }
       }
     </style>
   </head>
@@ -803,12 +1007,17 @@
     <!-- Background animations -->
     <div id="hearts-container"></div>
     <div id="petals-container"></div>
+    <div id="sparkles-container"></div>
 
     <!-- Music controls -->
     <div id="music-controls">
       <button id="music-toggle">♪</button>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
       <audio id="background-music" loop>
-        <source src="assets/music/romantic.mp3" type="audio/mpeg" />
+        <!-- In a real implementation, you would link to an actual audio file -->
+        <!-- <source src="assets/music/romantic.mp3" type="audio/mpeg" /> -->
       </audio>
     </div>
 
@@ -818,7 +1027,12 @@
     <!-- Main content -->
     <div class="container">
       <div class="content">
-        <h1 id="animated-heading">💖 Happy Anniversary My Love 💖</h1>
+        <div class="header">
+          <h1 id="animated-heading">💖 Happy Anniversary My Love 💖</h1>
+          <div class="anniversary-date" id="anniversary-date"></div>
+          <div class="days-counter" id="days-counter"></div>
+        </div>
+
         <p class="intro-text slide-up">
           Every moment with you feels like a beautiful dream. Today, we
           celebrate another year of our incredible journey together. Through
@@ -826,7 +1040,7 @@
           my rock, my everything.
         </p>
 
-        <!-- New Feature Navigation -->
+        <!-- Feature Navigation -->
         <div class="feature-nav">
           <div class="feature-nav-btn active" data-feature="love-calculator">
             Love Calculator
@@ -845,11 +1059,11 @@
           </div>
         </div>
 
-        <!-- New Features Sections -->
+        <!-- Features Sections -->
 
         <!-- Love Calculator -->
         <div id="love-calculator" class="feature-section active">
-          <div class="love-calculator">
+          <div class="card love-calculator">
             <h2>Love Compatibility Calculator</h2>
             <p>Enter your names to see your love percentage!</p>
 
@@ -874,7 +1088,7 @@
 
         <!-- Love Memory Match Game -->
         <div id="memory-game" class="feature-section">
-          <div class="memory-game-container">
+          <div class="card memory-game-container">
             <div class="memory-game-header">
               <h2>Love Memory Match</h2>
               <div class="memory-stats">
@@ -895,7 +1109,7 @@
 
         <!-- Romantic Trivia Game -->
         <div id="trivia-game" class="feature-section">
-          <div class="trivia-game-container">
+          <div class="card trivia-game-container">
             <div class="trivia-header">
               <h2>Romantic Trivia</h2>
               <div class="trivia-stats">
@@ -926,14 +1140,15 @@
           </div>
 
           <!-- Note Modal -->
-          <div class="note-modal" id="note-modal">
-            <div class="note-modal-content">
+          <div class="modal" id="note-modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
               <h3>Add a Love Note</h3>
               <textarea
                 id="note-text"
                 placeholder="Write your love note here..."
               ></textarea>
-              <div style="display: flex; gap: 10px">
+              <div style="display: flex; gap: 10px; justify-content: center">
                 <button id="save-note" class="btn glow-btn">Save Note</button>
                 <button
                   id="cancel-note"
@@ -949,7 +1164,7 @@
 
         <!-- Virtual Candle -->
         <div id="candle" class="feature-section">
-          <div class="candle-container">
+          <div class="card candle-container">
             <h2>Light a Candle of Love</h2>
             <div class="candle">
               <div class="candle-body"></div>
@@ -965,7 +1180,7 @@
           </div>
         </div>
 
-        <!-- Existing Heartbeat Visualization -->
+        <!-- Heartbeat Visualization -->
         <div id="heartbeat-container">
           <div class="heartbeat-visual">
             <div class="pulse-ring"></div>
@@ -990,743 +1205,825 @@
       </div>
     </div>
 
-    <!-- Existing Modals -->
+    <!-- Footer -->
+    <div class="footer">
+      <p>Made with 💖 for our special day</p>
+      <p>© 2023 Our Love Story</p>
+    </div>
+
+    <!-- Modals -->
     <div id="ai-letter-modal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>AI-Generated Love Letter</h2>
         <div id="ai-letter-content">
-          <p>Click the button below to generate a beautiful love letter!</p>
+          <p>Loading your personalized love letter...</p>
         </div>
-        <button id="generate-letter" class="btn glow-btn">
-          Generate Love Letter
-        </button>
+        <div style="margin-top: 20px">
+          <button id="regenerate-letter" class="btn glow-btn">
+            Generate New Letter
+          </button>
+          <button id="copy-letter" class="btn">Copy to Clipboard</button>
+        </div>
       </div>
     </div>
 
-    <!-- Virtual Rose Modal - FIXED -->
-    <div id="virtual-rose-container" class="modal">
+    <div id="virtual-rose-modal" class="modal">
       <div class="rose-modal-content">
         <span class="close-rose">&times;</span>
+        <h2>For My Beloved</h2>
         <div id="rose-3d">🌹</div>
-        <div class="rose-message">
-          This virtual rose symbolizes my eternal love for you!
+        <div class="rose-message" id="rose-message">
+          A virtual rose for the most beautiful person in my life
         </div>
         <div class="rose-controls">
-          <button id="send-rose" class="btn glow-btn">
-            Send with Love Message
+          <button id="change-rose-color" class="btn glow-btn">
+            Change Rose Color
           </button>
+          <button id="send-rose" class="btn">Send with Message</button>
         </div>
       </div>
     </div>
 
     <script>
+      // DOM Elements
+      const featureNavBtns = document.querySelectorAll(".feature-nav-btn");
+      const featureSections = document.querySelectorAll(".feature-section");
+      const musicToggle = document.getElementById("music-toggle");
+      const progressBar = document.getElementById("progress-bar");
+      const backgroundMusic = document.getElementById("background-music");
+      const loveCalculator = document.getElementById("love-calculator");
+      const memoryGame = document.getElementById("memory-game");
+      const triviaGame = document.getElementById("trivia-game");
+      const loveNotes = document.getElementById("love-notes");
+      const candleSection = document.getElementById("candle");
+      const daysCounter = document.getElementById("days-counter");
+      const anniversaryDate = document.getElementById("anniversary-date");
+      const animatedHeading = document.getElementById("animated-heading");
+      const heartsContainer = document.getElementById("hearts-container");
+      const petalsContainer = document.getElementById("petals-container");
+      const sparklesContainer = document.getElementById("sparkles-container");
+      const confettiCanvas = document.getElementById("confetti-canvas");
+      const loveFill = document.getElementById("love-fill");
+      const lovePercentage = document.getElementById("love-percentage");
+      const loveMessage = document.getElementById("love-message");
+      const calculateLoveBtn = document.getElementById("calculate-love");
+      const name1Input = document.getElementById("name1");
+      const name2Input = document.getElementById("name2");
+      const memoryGrid = document.getElementById("memory-grid");
+      const resetMemoryBtn = document.getElementById("reset-memory");
+      const moveCount = document.getElementById("move-count");
+      const matchCount = document.getElementById("match-count");
+      const timeCount = document.getElementById("time-count");
+      const triviaQuestion = document.getElementById("trivia-question");
+      const triviaOptions = document.getElementById("trivia-options");
+      const nextTriviaBtn = document.getElementById("next-trivia");
+      const triviaResult = document.getElementById("trivia-result");
+      const scoreCount = document.getElementById("score-count");
+      const questionCount = document.getElementById("question-count");
+      const notesContainer = document.getElementById("notes-container");
+      const addNoteBtn = document.getElementById("add-note");
+      const noteModal = document.getElementById("note-modal");
+      const closeModal = document.querySelector(".close");
+      const saveNoteBtn = document.getElementById("save-note");
+      const cancelNoteBtn = document.getElementById("cancel-note");
+      const noteText = document.getElementById("note-text");
+      const toggleCandleBtn = document.getElementById("toggle-candle");
+      const candleFlame = document.getElementById("candle-flame");
+      const candleMessage = document.getElementById("candle-message");
+      const aiLetterBtn = document.getElementById("ai-letter-btn");
+      const aiLetterModal = document.getElementById("ai-letter-modal");
+      const aiLetterContent = document.getElementById("ai-letter-content");
+      const regenerateLetterBtn = document.getElementById("regenerate-letter");
+      const copyLetterBtn = document.getElementById("copy-letter");
+      const virtualRoseBtn = document.getElementById("virtual-rose-btn");
+      const virtualRoseModal = document.getElementById("virtual-rose-modal");
+      const closeRoseModal = document.querySelector(".close-rose");
+      const changeRoseColorBtn = document.getElementById("change-rose-color");
+      const sendRoseBtn = document.getElementById("send-rose");
+      const roseMessage = document.getElementById("rose-message");
+
+      // Anniversary date (set your anniversary date here)
+      const anniversary = new Date("2020-05-20");
+      const today = new Date();
+      const timeDiff = today.getTime() - anniversary.getTime();
+      const daysTogether = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+      // Set anniversary information
+      anniversaryDate.textContent = `Since ${anniversary.toLocaleDateString(
+        "en-US",
+        { month: "long", day: "numeric", year: "numeric" }
+      )}`;
+      daysCounter.textContent = `${daysTogether} days together!`;
+
       // Feature Navigation
-      document.addEventListener("DOMContentLoaded", function () {
-        const featureNavBtns = document.querySelectorAll(".feature-nav-btn");
-        const featureSections = document.querySelectorAll(".feature-section");
+      featureNavBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const feature = btn.getAttribute("data-feature");
 
-        featureNavBtns.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const feature = this.getAttribute("data-feature");
+          // Update active button
+          featureNavBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
 
-            // Update active button
-            featureNavBtns.forEach((b) => b.classList.remove("active"));
-            this.classList.add("active");
-
-            // Show corresponding section
-            featureSections.forEach((section) => {
-              section.classList.remove("active");
-              if (section.id === feature) {
-                section.classList.add("active");
-              }
-            });
+          // Show corresponding section
+          featureSections.forEach((section) => {
+            section.classList.remove("active");
+            if (section.id === feature) {
+              section.classList.add("active");
+            }
           });
         });
-
-        // Initialize all features
-        initLoveCalculator();
-        initMemoryGame();
-        initTriviaGame();
-        initLoveNotes();
-        initVirtualCandle();
-        initBackgroundEffects();
-        initModals();
       });
 
-      // Background Effects
-      function initBackgroundEffects() {
-        // Create floating hearts
-        const heartsContainer = document.getElementById("hearts-container");
-        for (let i = 0; i < 20; i++) {
-          setTimeout(() => {
-            createHeart();
-          }, i * 500);
+      // Background Music
+      let isPlaying = false;
+      musicToggle.addEventListener("click", () => {
+        if (isPlaying) {
+          backgroundMusic.pause();
+          musicToggle.classList.remove("playing");
+          musicToggle.textContent = "♪";
+        } else {
+          backgroundMusic.play().catch((e) => {
+            console.log("Audio play failed:", e);
+            // Show a message to the user
+            alert(
+              "Please interact with the page first to enable audio, or check if your browser allows autoplay."
+            );
+          });
+          musicToggle.classList.add("playing");
+          musicToggle.textContent = "♫";
         }
+        isPlaying = !isPlaying;
+      });
 
-        // Create falling petals
-        const petalsContainer = document.getElementById("petals-container");
+      // Update progress bar (simulated for demo)
+      setInterval(() => {
+        if (isPlaying) {
+          const progress =
+            (backgroundMusic.currentTime / backgroundMusic.duration) * 100 || 0;
+          progressBar.style.width = `${progress}%`;
+        }
+      }, 100);
+
+      // Background Animations
+      function createHearts() {
         for (let i = 0; i < 15; i++) {
           setTimeout(() => {
-            createPetal();
-          }, i * 700);
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "💖";
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heart.style.animation = `float ${
+              Math.random() * 10 + 10
+            }s linear infinite`;
+            heartsContainer.appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+              heart.remove();
+            }, 15000);
+          }, i * 1000);
+        }
+      }
+
+      function createPetals() {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.innerHTML = "🌸";
+            petal.style.left = `${Math.random() * 100}%`;
+            petal.style.top = `${Math.random() * 100}%`;
+            petal.style.fontSize = `${Math.random() * 15 + 10}px`;
+            petal.style.animation = `fall ${
+              Math.random() * 10 + 10
+            }s linear infinite`;
+            petalsContainer.appendChild(petal);
+
+            // Remove petal after animation
+            setTimeout(() => {
+              petal.remove();
+            }, 20000);
+          }, i * 500);
+        }
+      }
+
+      function createSparkles() {
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 3}s`;
+            sparklesContainer.appendChild(sparkle);
+
+            // Remove sparkle after animation
+            setTimeout(() => {
+              sparkle.remove();
+            }, 4000);
+          }, i * 200);
+        }
+      }
+
+      // Initialize animations
+      createHearts();
+      createPetals();
+      createSparkles();
+      setInterval(createHearts, 15000);
+      setInterval(createPetals, 20000);
+      setInterval(createSparkles, 4000);
+
+      // Love Calculator
+      calculateLoveBtn.addEventListener("click", () => {
+        const name1 = name1Input.value.trim() || "You";
+        const name2 = name2Input.value.trim() || "Your Partner";
+
+        // Calculate "love percentage" (pseudo-random but based on names)
+        let seed = 0;
+        for (let i = 0; i < name1.length; i++) {
+          seed += name1.charCodeAt(i);
+        }
+        for (let i = 0; i < name2.length; i++) {
+          seed += name2.charCodeAt(i);
         }
 
-        // Music controls
-        const musicToggle = document.getElementById("music-toggle");
-        const backgroundMusic = document.getElementById("background-music");
+        // Use seed to generate consistent but "random" percentage
+        const lovePercent = (seed % 40) + 60; // Between 60% and 99%
 
-        musicToggle.addEventListener("click", function () {
-          if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicToggle.textContent = "♪";
-          } else {
-            backgroundMusic.pause();
-            musicToggle.textContent = "♪";
-          }
-        });
-      }
-
-      function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 10 + "px";
-        heart.style.animationDuration = Math.random() * 3 + 3 + "s";
-
-        document.getElementById("hearts-container").appendChild(heart);
-
-        // Remove heart after animation completes
-        setTimeout(() => {
-          heart.remove();
-        }, 6000);
-
-        // Create new heart periodically
-        setTimeout(createHeart, Math.random() * 3000 + 2000);
-      }
-
-      function createPetal() {
-        const petal = document.createElement("div");
-        petal.classList.add("petal");
-        petal.innerHTML = "🌸";
-        petal.style.left = Math.random() * 100 + "vw";
-        petal.style.fontSize = Math.random() * 15 + 10 + "px";
-        petal.style.animation = `fall ${
-          Math.random() * 5 + 5
-        }s linear forwards`;
-
-        document.getElementById("petals-container").appendChild(petal);
-
-        // Remove petal after animation completes
-        setTimeout(() => {
-          petal.remove();
-        }, 10000);
-
-        // Create new petal periodically
-        setTimeout(createPetal, Math.random() * 4000 + 3000);
-      }
-
-      // Love Calculator - FIXED to properly handle empty inputs on page load
-      function initLoveCalculator() {
-        const calculateBtn = document.getElementById("calculate-love");
-        const name1Input = document.getElementById("name1");
-        const name2Input = document.getElementById("name2");
-        const loveFill = document.getElementById("love-fill");
-        const lovePercentage = document.getElementById("love-percentage");
-        const loveMessage = document.getElementById("love-message");
-
-        // Clear inputs on page load
-        name1Input.value = "";
-        name2Input.value = "";
+        // Animate the love meter
         loveFill.style.width = "0%";
-        lovePercentage.textContent = "0%";
-        loveMessage.textContent =
-          "Enter your names to see your love percentage!";
+        setTimeout(() => {
+          loveFill.style.width = `${lovePercent}%`;
+        }, 100);
 
-        calculateBtn.addEventListener("click", function () {
-          const name1 = name1Input.value.trim();
-          const name2 = name2Input.value.trim();
-
-          // Use default values if inputs are empty
-          const displayName1 = name1 || "You";
-          const displayName2 = name2 || "Your Partner";
-
-          // Only save to localStorage if both names have actual content
-          if (name1 && name2) {
-            const results = { name1, name2 };
-            localStorage.setItem(
-              "loveCalculatorResults",
-              JSON.stringify(results)
-            );
+        // Update percentage text
+        let currentPercent = 0;
+        const interval = setInterval(() => {
+          if (currentPercent >= lovePercent) {
+            clearInterval(interval);
           } else {
-            // Clear localStorage if names are empty
-            localStorage.removeItem("loveCalculatorResults");
+            currentPercent++;
+            lovePercentage.textContent = `${currentPercent}%`;
           }
+        }, 20);
 
-          updateLoveResult(displayName1, displayName2);
+        // Set love message based on percentage
+        let message = "";
+        if (lovePercent >= 90) {
+          message = "Perfect match! You two are meant to be! 💖";
+        } else if (lovePercent >= 80) {
+          message = "Amazing connection! Your love is strong! 💕";
+        } else if (lovePercent >= 70) {
+          message = "Great compatibility! Your bond is special! 💘";
+        } else {
+          message = "Good match! Your love can grow stronger! 💝";
+        }
+
+        loveMessage.textContent = message;
+
+        // Trigger confetti for high percentages
+        if (lovePercent > 85) {
+          triggerConfetti();
+        }
+      });
+
+      // Memory Game
+      const memoryCards = ["💖", "💕", "💘", "💝", "💓", "💗", "💞", "💟"];
+      let memoryGameState = {
+        cards: [],
+        flippedCards: [],
+        matchedPairs: 0,
+        moves: 0,
+        gameStarted: false,
+        timer: 0,
+        timerInterval: null,
+      };
+
+      function initializeMemoryGame() {
+        // Reset state
+        memoryGameState = {
+          cards: [...memoryCards, ...memoryCards].sort(
+            () => Math.random() - 0.5
+          ),
+          flippedCards: [],
+          matchedPairs: 0,
+          moves: 0,
+          gameStarted: false,
+          timer: 0,
+          timerInterval: null,
+        };
+
+        // Update UI
+        moveCount.textContent = "0";
+        matchCount.textContent = "0";
+        timeCount.textContent = "0";
+
+        // Clear grid
+        memoryGrid.innerHTML = "";
+
+        // Create cards
+        memoryGameState.cards.forEach((symbol, index) => {
+          const card = document.createElement("div");
+          card.classList.add("memory-card");
+          card.dataset.index = index;
+          card.dataset.symbol = symbol;
+
+          const cardFront = document.createElement("div");
+          cardFront.classList.add("card-front");
+          cardFront.textContent = symbol;
+
+          const cardBack = document.createElement("div");
+          cardBack.classList.add("card-back");
+          cardBack.textContent = "?";
+
+          card.appendChild(cardFront);
+          card.appendChild(cardBack);
+
+          card.addEventListener("click", () => flipCard(card));
+          memoryGrid.appendChild(card);
         });
-
-        function updateLoveResult(name1, name2) {
-          // Don't calculate if using default placeholder names
-          if (name1 === "You" && name2 === "Your Partner") {
-            loveFill.style.width = "0%";
-            lovePercentage.textContent = "0%";
-            loveMessage.textContent =
-              "Enter your names to see your love percentage!";
-            return;
-          }
-
-          // Deterministic algorithm based on names
-          const calculatedPercentage = calculateLovePercentage(name1, name2);
-
-          loveFill.style.width = `${calculatedPercentage}%`;
-          lovePercentage.textContent = `${calculatedPercentage}%`;
-
-          // Generate a romantic message based on percentage
-          let message = "";
-          if (calculatedPercentage >= 90) {
-            message = `Wow! ${name1} and ${name2} are a perfect match! Your love is truly special.`;
-          } else if (calculatedPercentage >= 80) {
-            message = `Amazing! ${name1} and ${name2} have a strong connection that will last forever.`;
-          } else if (calculatedPercentage >= 70) {
-            message = `Great! ${name1} and ${name2} have a beautiful relationship full of love.`;
-          } else {
-            message = `Good! ${name1} and ${name2} have a loving bond that will grow stronger.`;
-          }
-
-          loveMessage.textContent = message;
-        }
-
-        function calculateLovePercentage(name1, name2) {
-          // Create a consistent hash from the names
-          const combined = (name1 + name2).toLowerCase().replace(/\s/g, "");
-          let hash = 0;
-
-          for (let i = 0; i < combined.length; i++) {
-            const char = combined.charCodeAt(i);
-            hash = (hash << 5) - hash + char;
-            hash = hash & hash; // Convert to 32-bit integer
-          }
-
-          // Use the hash to generate a consistent percentage between 70-100%
-          const percentage = 70 + (Math.abs(hash) % 31);
-          return percentage;
-        }
       }
 
-      // Memory Game - FIXED with confetti on completion
-      function initMemoryGame() {
-        const memoryGrid = document.getElementById("memory-grid");
-        const moveCount = document.getElementById("move-count");
-        const matchCount = document.getElementById("match-count");
-        const timeCount = document.getElementById("time-count");
-        const resetBtn = document.getElementById("reset-memory");
-
-        let moves = 0;
-        let matches = 0;
-        let timer = 0;
-        let timerInterval;
-        let flippedCards = [];
-        let canFlip = true;
-
-        // Romantic symbols for the game
-        const symbols = ["💖", "💕", "💘", "💝", "💓", "💗", "💞", "💟"];
-        const gameCards = [...symbols, ...symbols]; // Duplicate for matching
-
-        // Shuffle function
-        function shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-          return array;
+      function flipCard(card) {
+        // Don't allow flipping if already flipped or matched
+        if (
+          card.classList.contains("flipped") ||
+          card.classList.contains("matched") ||
+          memoryGameState.flippedCards.length >= 2
+        ) {
+          return;
         }
 
-        // Initialize game
-        function initGame() {
-          // Clear the grid
-          memoryGrid.innerHTML = "";
-          moves = 0;
-          matches = 0;
-          timer = 0;
-          flippedCards = [];
-          canFlip = true;
-
-          moveCount.textContent = moves;
-          matchCount.textContent = matches;
-          timeCount.textContent = timer;
-
-          // Stop any existing timer
-          if (timerInterval) clearInterval(timerInterval);
-
-          // Start timer
-          timerInterval = setInterval(() => {
-            timer++;
-            timeCount.textContent = timer;
+        // Start timer on first move
+        if (!memoryGameState.gameStarted) {
+          memoryGameState.gameStarted = true;
+          memoryGameState.timerInterval = setInterval(() => {
+            memoryGameState.timer++;
+            timeCount.textContent = memoryGameState.timer;
           }, 1000);
-
-          // Shuffle and create cards
-          const shuffledCards = shuffle([...gameCards]);
-
-          shuffledCards.forEach((symbol, index) => {
-            const card = document.createElement("div");
-            card.classList.add("memory-card");
-            card.dataset.symbol = symbol;
-            card.dataset.index = index;
-
-            const cardFront = document.createElement("div");
-            cardFront.classList.add("card-front");
-            cardFront.textContent = symbol;
-
-            const cardBack = document.createElement("div");
-            cardBack.classList.add("card-back");
-            cardBack.textContent = "?";
-
-            card.appendChild(cardFront);
-            card.appendChild(cardBack);
-
-            card.addEventListener("click", flipCard);
-            memoryGrid.appendChild(card);
-          });
         }
 
-        // Flip card function
-        function flipCard() {
-          if (!canFlip) return;
-          if (this.classList.contains("flipped")) return;
-          if (flippedCards.length >= 2) return;
+        // Flip the card
+        card.classList.add("flipped");
+        memoryGameState.flippedCards.push(card);
 
-          this.classList.add("flipped");
-          flippedCards.push(this);
+        // Check for match if two cards are flipped
+        if (memoryGameState.flippedCards.length === 2) {
+          memoryGameState.moves++;
+          moveCount.textContent = memoryGameState.moves;
 
-          if (flippedCards.length === 2) {
-            canFlip = false;
-            moves++;
-            moveCount.textContent = moves;
-
-            checkForMatch();
-          }
-        }
-
-        // Check for match
-        function checkForMatch() {
-          const [card1, card2] = flippedCards;
+          const card1 = memoryGameState.flippedCards[0];
+          const card2 = memoryGameState.flippedCards[1];
 
           if (card1.dataset.symbol === card2.dataset.symbol) {
             // Match found
             card1.classList.add("matched");
             card2.classList.add("matched");
-            matches++;
-            matchCount.textContent = matches;
+            memoryGameState.matchedPairs++;
+            matchCount.textContent = memoryGameState.matchedPairs;
 
-            flippedCards = [];
-            canFlip = true;
+            memoryGameState.flippedCards = [];
 
             // Check for game completion
-            if (matches === symbols.length) {
-              clearInterval(timerInterval);
+            if (memoryGameState.matchedPairs === memoryCards.length) {
+              clearInterval(memoryGameState.timerInterval);
               setTimeout(() => {
-                triggerConfetti();
-                alert("Congratulations! You've matched all the symbols!");
+                alert(
+                  `Congratulations! You completed the game in ${memoryGameState.moves} moves and ${memoryGameState.timer} seconds!`
+                );
               }, 500);
             }
           } else {
-            // No match
+            // No match, flip cards back after a delay
             setTimeout(() => {
               card1.classList.remove("flipped");
               card2.classList.remove("flipped");
-              flippedCards = [];
-              canFlip = true;
+              memoryGameState.flippedCards = [];
             }, 1000);
           }
         }
-
-        // Reset game
-        resetBtn.addEventListener("click", initGame);
-
-        // Initialize the game on page load
-        initGame();
       }
 
-      // Trivia Game - FIXED with confetti on completion
-      function initTriviaGame() {
-        const triviaQuestion = document.getElementById("trivia-question");
-        const triviaOptions = document.getElementById("trivia-options");
-        const scoreCount = document.getElementById("score-count");
-        const questionCount = document.getElementById("question-count");
-        const nextBtn = document.getElementById("next-trivia");
-        const triviaResult = document.getElementById("trivia-result");
+      resetMemoryBtn.addEventListener("click", initializeMemoryGame);
 
-        let currentQuestion = 0;
-        let score = 0;
-        let selectedOption = null;
+      // Trivia Game
+      const triviaQuestions = [
+        {
+          question: "What is the most popular month for weddings?",
+          options: ["June", "August", "May", "September"],
+          correct: 0,
+        },
+        {
+          question: "What is the traditional gift for a 1st anniversary?",
+          options: ["Paper", "Gold", "Cotton", "Wood"],
+          correct: 0,
+        },
+        {
+          question: "Which flower is most commonly associated with love?",
+          options: ["Tulip", "Rose", "Lily", "Orchid"],
+          correct: 1,
+        },
+        {
+          question:
+            "What percentage of people marry their childhood sweetheart?",
+          options: ["2%", "10%", "25%", "50%"],
+          correct: 0,
+        },
+        {
+          question: "Which country has the highest marriage rate?",
+          options: ["USA", "China", "India", "Qatar"],
+          correct: 3,
+        },
+      ];
 
-        // Romantic trivia questions
-        const questions = [
-          {
-            question: "Which flower is most commonly associated with romance?",
-            options: ["Tulip", "Rose", "Daisy", "Sunflower"],
-            correct: 1,
-          },
-          {
-            question: "What is the traditional gift for a 1st anniversary?",
-            options: ["Paper", "Gold", "Silver", "Diamond"],
-            correct: 0,
-          },
-          {
-            question: "Which of these is a symbol of eternal love?",
-            options: ["Infinity symbol", "Anchor", "Key", "Star"],
-            correct: 0,
-          },
-          {
-            question: "What is the most popular month for weddings?",
-            options: ["June", "August", "September", "October"],
-            correct: 0,
-          },
-          {
-            question: "Which gemstone is associated with love and passion?",
-            options: ["Ruby", "Sapphire", "Emerald", "Amethyst"],
-            correct: 0,
-          },
-        ];
+      let triviaState = {
+        currentQuestion: 0,
+        score: 0,
+        selectedOption: null,
+      };
 
-        // Initialize trivia game
-        function initTrivia() {
-          currentQuestion = 0;
-          score = 0;
-          selectedOption = null;
+      function loadTriviaQuestion() {
+        const question = triviaQuestions[triviaState.currentQuestion];
+        triviaQuestion.textContent = question.question;
 
-          scoreCount.textContent = score;
-          questionCount.textContent = currentQuestion + 1;
+        triviaOptions.innerHTML = "";
+        question.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("trivia-option");
+          optionElement.textContent = option;
+          optionElement.dataset.index = index;
 
-          nextBtn.style.display = "none";
-          triviaResult.textContent = "";
+          optionElement.addEventListener("click", () =>
+            selectTriviaOption(optionElement)
+          );
+          triviaOptions.appendChild(optionElement);
+        });
 
-          loadQuestion();
+        questionCount.textContent = triviaState.currentQuestion + 1;
+        scoreCount.textContent = triviaState.score;
+        nextTriviaBtn.style.display = "none";
+        triviaResult.textContent = "";
+        triviaState.selectedOption = null;
+      }
+
+      function selectTriviaOption(optionElement) {
+        if (triviaState.selectedOption !== null) return;
+
+        const selectedIndex = parseInt(optionElement.dataset.index);
+        triviaState.selectedOption = selectedIndex;
+
+        // Highlight selected option
+        document.querySelectorAll(".trivia-option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+        optionElement.classList.add("selected");
+
+        // Check if correct
+        const correctIndex =
+          triviaQuestions[triviaState.currentQuestion].correct;
+        const isCorrect = selectedIndex === correctIndex;
+
+        if (isCorrect) {
+          triviaState.score++;
+          scoreCount.textContent = triviaState.score;
+          optionElement.classList.add("correct");
+          triviaResult.textContent = "Correct! 🎉";
+        } else {
+          optionElement.classList.add("incorrect");
+          // Highlight correct answer
+          document
+            .querySelector(`.trivia-option[data-index="${correctIndex}"]`)
+            .classList.add("correct");
+          triviaResult.textContent = "Incorrect! 😔";
         }
 
-        // Load question
-        function loadQuestion() {
-          const question = questions[currentQuestion];
-          triviaQuestion.textContent = question.question;
+        nextTriviaBtn.style.display = "block";
+      }
 
-          // Clear options
+      nextTriviaBtn.addEventListener("click", () => {
+        triviaState.currentQuestion++;
+
+        if (triviaState.currentQuestion < triviaQuestions.length) {
+          loadTriviaQuestion();
+        } else {
+          // Game over
+          triviaQuestion.textContent = "Trivia Complete!";
           triviaOptions.innerHTML = "";
+          nextTriviaBtn.style.display = "none";
 
-          // Create options
-          question.options.forEach((option, index) => {
-            const optionElement = document.createElement("div");
-            optionElement.classList.add("trivia-option");
-            optionElement.textContent = option;
-            optionElement.dataset.index = index;
+          let message = "";
+          if (triviaState.score === triviaQuestions.length) {
+            message = "Perfect! You're a romance expert! 💖";
+          } else if (triviaState.score >= triviaQuestions.length * 0.7) {
+            message = "Great job! You know your romance! 💕";
+          } else {
+            message = "Nice try! Love is a learning journey! 💘";
+          }
 
-            optionElement.addEventListener("click", selectOption);
-            triviaOptions.appendChild(optionElement);
+          triviaResult.textContent = `Final Score: ${triviaState.score}/${triviaQuestions.length}. ${message}`;
+
+          // Reset for next game
+          setTimeout(() => {
+            triviaState.currentQuestion = 0;
+            triviaState.score = 0;
+            loadTriviaQuestion();
+          }, 5000);
+        }
+      });
+
+      // Love Notes
+      let loveNotesData = JSON.parse(localStorage.getItem("loveNotes")) || [
+        {
+          id: 1,
+          content:
+            "Every moment with you is a blessing I cherish. I love you more each day.",
+          date: "2023-10-15",
+        },
+        {
+          id: 2,
+          content:
+            "Your smile lights up my world like nothing else. I'm so grateful for you.",
+          date: "2023-11-20",
+        },
+      ];
+
+      function renderLoveNotes() {
+        notesContainer.innerHTML = "";
+
+        loveNotesData.forEach((note) => {
+          const noteElement = document.createElement("div");
+          noteElement.classList.add("love-note");
+
+          const noteContent = document.createElement("div");
+          noteContent.classList.add("note-content");
+          noteContent.textContent = note.content;
+
+          const noteDate = document.createElement("div");
+          noteDate.classList.add("note-date");
+          noteDate.textContent = new Date(note.date).toLocaleDateString();
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.classList.add("delete-note");
+          deleteBtn.innerHTML = "×";
+          deleteBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteLoveNote(note.id);
           });
-        }
 
-        // Select option
-        function selectOption() {
-          if (selectedOption !== null) return;
+          noteElement.appendChild(deleteBtn);
+          noteElement.appendChild(noteContent);
+          noteElement.appendChild(noteDate);
 
-          selectedOption = parseInt(this.dataset.index);
-          this.classList.add("selected");
+          noteElement.addEventListener("click", () => {
+            noteText.value = note.content;
+            currentNoteId = note.id;
+            noteModal.style.display = "flex";
+          });
 
-          // Check answer
-          const isCorrect =
-            selectedOption === questions[currentQuestion].correct;
-
-          if (isCorrect) {
-            score++;
-            scoreCount.textContent = score;
-            this.classList.add("correct");
-          } else {
-            this.classList.add("incorrect");
-            // Highlight correct answer
-            triviaOptions.children[
-              questions[currentQuestion].correct
-            ].classList.add("correct");
-          }
-
-          // Show next button
-          nextBtn.style.display = "block";
-        }
-
-        // Next question
-        nextBtn.addEventListener("click", function () {
-          currentQuestion++;
-
-          if (currentQuestion < questions.length) {
-            questionCount.textContent = currentQuestion + 1;
-            selectedOption = null;
-            nextBtn.style.display = "none";
-            triviaResult.textContent = "";
-            loadQuestion();
-          } else {
-            // Game completed
-            triviaQuestion.textContent = "Quiz Completed!";
-            triviaOptions.innerHTML = "";
-            nextBtn.style.display = "none";
-
-            // Show results
-            const percentage = (score / questions.length) * 100;
-            triviaResult.innerHTML = `
-              <p>Your Score: ${score}/${questions.length}</p>
-              <p>${
-                percentage >= 80
-                  ? "Excellent! You're a romantic expert!"
-                  : percentage >= 60
-                  ? "Great job! You know your romance!"
-                  : "Good effort! Keep learning about love!"
-              }</p>
-            `;
-
-            // Trigger confetti for good scores
-            if (percentage >= 60) {
-              triggerConfetti();
-            }
-          }
+          notesContainer.appendChild(noteElement);
         });
 
-        // Initialize the trivia game
-        initTrivia();
-      }
-
-      // Love Notes - FIXED with localStorage
-      function initLoveNotes() {
-        const notesContainer = document.getElementById("notes-container");
-        const addNoteBtn = document.getElementById("add-note");
-        const noteModal = document.getElementById("note-modal");
-        const saveNoteBtn = document.getElementById("save-note");
-        const cancelNoteBtn = document.getElementById("cancel-note");
-        const noteText = document.getElementById("note-text");
-
-        // Load notes from localStorage
-        let notes = JSON.parse(localStorage.getItem("loveNotes")) || [];
-
-        // Display notes
-        function displayNotes() {
-          // Clear container except for add button
-          notesContainer.innerHTML = "";
-
-          notes.forEach((note, index) => {
-            const noteElement = document.createElement("div");
-            noteElement.classList.add("love-note");
-            noteElement.innerHTML = `
-              <div class="note-content">${note.text}</div>
-              <div class="note-date">${note.date}</div>
-              <button class="delete-note" data-index="${index}">×</button>
-            `;
-
-            // Add delete functionality
-            const deleteBtn = noteElement.querySelector(".delete-note");
-            deleteBtn.addEventListener("click", function (e) {
-              e.stopPropagation();
-              deleteNote(index);
-            });
-
-            // Add edit functionality on click
-            noteElement.addEventListener("click", function () {
-              editNote(index);
-            });
-
-            notesContainer.appendChild(noteElement);
-          });
-
-          // Add the add button at the end
-          notesContainer.appendChild(addNoteBtn);
-        }
-
-        // Add new note
-        addNoteBtn.addEventListener("click", function () {
+        // Add the "+" button at the end
+        const addButton = document.createElement("div");
+        addButton.classList.add("love-note", "add-note");
+        addButton.id = "add-note";
+        addButton.innerHTML = "+";
+        addButton.addEventListener("click", () => {
           noteText.value = "";
+          currentNoteId = null;
           noteModal.style.display = "flex";
         });
 
-        // Save note
-        saveNoteBtn.addEventListener("click", function () {
-          const text = noteText.value.trim();
-          if (text) {
-            const newNote = {
-              text: text,
-              date: new Date().toLocaleDateString(),
-            };
+        notesContainer.appendChild(addButton);
 
-            // Check if we're editing an existing note
-            const editingIndex = saveNoteBtn.dataset.editingIndex;
-            if (editingIndex !== undefined) {
-              notes[editingIndex] = newNote;
-              delete saveNoteBtn.dataset.editingIndex;
-            } else {
-              notes.push(newNote);
-            }
-
-            // Save to localStorage
-            localStorage.setItem("loveNotes", JSON.stringify(notes));
-
-            // Update display and close modal
-            displayNotes();
-            noteModal.style.display = "none";
-          }
-        });
-
-        // Cancel note
-        cancelNoteBtn.addEventListener("click", function () {
-          noteModal.style.display = "none";
-          delete saveNoteBtn.dataset.editingIndex;
-        });
-
-        // Delete note
-        function deleteNote(index) {
-          if (confirm("Are you sure you want to delete this note?")) {
-            notes.splice(index, 1);
-            localStorage.setItem("loveNotes", JSON.stringify(notes));
-            displayNotes();
-          }
-        }
-
-        // Edit note
-        function editNote(index) {
-          const note = notes[index];
-          noteText.value = note.text;
-          saveNoteBtn.dataset.editingIndex = index;
-          noteModal.style.display = "flex";
-        }
-
-        // Initialize notes display
-        displayNotes();
+        // Save to localStorage
+        localStorage.setItem("loveNotes", JSON.stringify(loveNotesData));
       }
+
+      let currentNoteId = null;
+
+      function saveLoveNote() {
+        const content = noteText.value.trim();
+        if (!content) return;
+
+        if (currentNoteId) {
+          // Update existing note
+          const noteIndex = loveNotesData.findIndex(
+            (note) => note.id === currentNoteId
+          );
+          if (noteIndex !== -1) {
+            loveNotesData[noteIndex].content = content;
+            loveNotesData[noteIndex].date = new Date()
+              .toISOString()
+              .split("T")[0];
+          }
+        } else {
+          // Add new note
+          const newId =
+            loveNotesData.length > 0
+              ? Math.max(...loveNotesData.map((n) => n.id)) + 1
+              : 1;
+          loveNotesData.push({
+            id: newId,
+            content: content,
+            date: new Date().toISOString().split("T")[0],
+          });
+        }
+
+        renderLoveNotes();
+        noteModal.style.display = "none";
+      }
+
+      function deleteLoveNote(id) {
+        if (confirm("Are you sure you want to delete this love note?")) {
+          loveNotesData = loveNotesData.filter((note) => note.id !== id);
+          renderLoveNotes();
+        }
+      }
+
+      addNoteBtn.addEventListener("click", () => {
+        noteText.value = "";
+        currentNoteId = null;
+        noteModal.style.display = "flex";
+      });
+
+      closeModal.addEventListener("click", () => {
+        noteModal.style.display = "none";
+      });
+
+      cancelNoteBtn.addEventListener("click", () => {
+        noteModal.style.display = "none";
+      });
+
+      saveNoteBtn.addEventListener("click", saveLoveNote);
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === noteModal) {
+          noteModal.style.display = "none";
+        }
+        if (e.target === aiLetterModal) {
+          aiLetterModal.style.display = "none";
+        }
+        if (e.target === virtualRoseModal) {
+          virtualRoseModal.style.display = "none";
+        }
+      });
 
       // Virtual Candle
-      function initVirtualCandle() {
-        const toggleCandleBtn = document.getElementById("toggle-candle");
-        const candleFlame = document.getElementById("candle-flame");
-        const candleMessage = document.getElementById("candle-message");
+      let isCandleLit = false;
+      toggleCandleBtn.addEventListener("click", () => {
+        isCandleLit = !isCandleLit;
 
-        let isLit = false;
-
-        // Load candle state from localStorage
-        const savedState = localStorage.getItem("candleLit");
-        if (savedState === "true") {
-          isLit = true;
+        if (isCandleLit) {
           candleFlame.style.display = "block";
           toggleCandleBtn.textContent = "Blow Out Candle";
-          candleMessage.textContent = "Our love burns bright and eternal";
+          candleMessage.textContent = "Our love burns bright and eternal 💖";
+
+          // Add flickering effect to the message
+          candleMessage.style.animation = "pulse 2s infinite";
+        } else {
+          candleFlame.style.display = "none";
+          toggleCandleBtn.textContent = "Light Candle";
+          candleMessage.textContent =
+            "Click to light our candle of eternal love";
+          candleMessage.style.animation = "";
         }
+      });
 
-        toggleCandleBtn.addEventListener("click", function () {
-          isLit = !isLit;
+      // AI Love Letter
+      const loveLetterTemplates = [
+        `My Dearest Love,
 
-          if (isLit) {
-            candleFlame.style.display = "block";
-            toggleCandleBtn.textContent = "Blow Out Candle";
-            candleMessage.textContent = "Our love burns bright and eternal";
-          } else {
-            candleFlame.style.display = "none";
-            toggleCandleBtn.textContent = "Light Candle";
-            candleMessage.textContent =
-              "Click to light our candle of eternal love";
-          }
+Every day with you feels like a beautiful dream I never want to wake up from. From the moment we met, you've brought so much joy, laughter, and meaning into my life.
 
-          // Save state to localStorage
-          localStorage.setItem("candleLit", isLit.toString());
-        });
-      }
+I cherish the little moments we share - your smile in the morning, your hand in mine, the way you laugh at my silly jokes. These are the treasures that fill my heart with happiness.
 
-      // Modals
-      function initModals() {
-        // AI Love Letter Modal
-        const aiLetterBtn = document.getElementById("ai-letter-btn");
-        const aiLetterModal = document.getElementById("ai-letter-modal");
-        const closeModal = document.querySelector(".close");
-        const generateLetterBtn = document.getElementById("generate-letter");
-        const aiLetterContent = document.getElementById("ai-letter-content");
+You are my rock, my confidant, my best friend, and the love of my life. Through challenges and celebrations, you've stood by me, and I promise to always stand by you.
 
-        aiLetterBtn.addEventListener("click", function () {
-          aiLetterModal.style.display = "flex";
-        });
+On this special day, I want to reaffirm my love for you. You are, and always will be, the most important person in my life.
 
-        closeModal.addEventListener("click", function () {
-          aiLetterModal.style.display = "none";
-        });
+Forever yours,
+Your loving partner`,
 
-        generateLetterBtn.addEventListener("click", function () {
-          // Simple AI love letter generation
-          const letters = [
-            "My dearest love, every moment with you feels like a beautiful dream. Your smile lights up my world and your laughter is the sweetest melody to my ears. I cherish every second we spend together and look forward to a lifetime of creating beautiful memories with you.",
+        `To My Beloved,
 
-            "To the one who holds my heart, being with you has shown me what true love means. Your kindness, your passion, and your unwavering support make me a better person. I fall more in love with you each day, and I'm grateful for every moment we share.",
+As we celebrate another year together, I find myself reflecting on all the beautiful memories we've created. Each one is a precious gem in the treasure chest of our relationship.
 
-            "My beloved, from the moment we met, I knew there was something special about you. Our journey together has been filled with laughter, joy, and an unbreakable bond. You are my everything, and I promise to love you today, tomorrow, and forever.",
+Your love has transformed my world in ways I never thought possible. You've shown me what true happiness means, and with you, I've discovered parts of myself I never knew existed.
+
+I admire your strength, your kindness, your intelligence, and the beautiful person you are inside and out. You inspire me to be better every single day.
+
+No matter what life brings our way, I know we can face it together. Our love is the anchor that keeps me steady through any storm.
+
+Happy anniversary, my love. Here's to many more years of laughter, adventure, and growing old together.
+
+With all my love,
+Your devoted partner`,
+
+        `My Sweetheart,
+
+On this anniversary, I want to put into words what my heart feels every day - an overwhelming love and gratitude for having you in my life.
+
+You are the missing piece I never knew I was searching for. With you, everything makes sense. With you, I am home.
+
+I love the way your eyes light up when you talk about your passions. I love the sound of your laughter, which is my favorite melody. I love how you know exactly what to say to make me feel better on a difficult day.
+
+Our journey together has been the most beautiful adventure, and I look forward to all the chapters we have yet to write.
+
+Thank you for being you, and for choosing to share your life with me. You are my greatest blessing.
+
+All my love,
+Your forever partner`,
+      ];
+
+      function generateLoveLetter() {
+        const randomTemplate =
+          loveLetterTemplates[
+            Math.floor(Math.random() * loveLetterTemplates.length)
           ];
-
-          const randomLetter =
-            letters[Math.floor(Math.random() * letters.length)];
-          aiLetterContent.innerHTML = `<p style="font-style: italic; line-height: 1.6;">${randomLetter}</p>`;
-        });
-
-        // Virtual Rose Modal
-        const virtualRoseBtn = document.getElementById("virtual-rose-btn");
-        const virtualRoseContainer = document.getElementById(
-          "virtual-rose-container"
-        );
-        const closeRose = document.querySelector(".close-rose");
-        const sendRoseBtn = document.getElementById("send-rose");
-
-        virtualRoseBtn.addEventListener("click", function () {
-          virtualRoseContainer.style.display = "flex";
-        });
-
-        closeRose.addEventListener("click", function () {
-          virtualRoseContainer.style.display = "none";
-        });
-
-        sendRoseBtn.addEventListener("click", function () {
-          alert("🌹 Your virtual rose has been sent with a loving message! 🌹");
-          virtualRoseContainer.style.display = "none";
-          triggerConfetti();
-        });
-
-        // Close modals when clicking outside
-        window.addEventListener("click", function (event) {
-          if (event.target === aiLetterModal) {
-            aiLetterModal.style.display = "none";
-          }
-          if (event.target === virtualRoseContainer) {
-            virtualRoseContainer.style.display = "none";
-          }
-        });
+        aiLetterContent.innerHTML = `<p style="white-space: pre-line; text-align: left; line-height: 1.6;">${randomTemplate}</p>`;
       }
 
-      // Confetti Effect - NEW
-      function triggerConfetti() {
-        const canvas = document.getElementById("confetti-canvas");
-        const ctx = canvas.getContext("2d");
+      aiLetterBtn.addEventListener("click", () => {
+        aiLetterModal.style.display = "flex";
+        generateLoveLetter();
+      });
 
-        // Set canvas size
+      regenerateLetterBtn.addEventListener("click", generateLoveLetter);
+
+      copyLetterBtn.addEventListener("click", () => {
+        const text = aiLetterContent.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          copyLetterBtn.textContent = "Copied!";
+          setTimeout(() => {
+            copyLetterBtn.textContent = "Copy to Clipboard";
+          }, 2000);
+        });
+      });
+
+      // Virtual Rose
+      const roseColors = ["🌹", "🌺", "🌸", "💐", "🥀"];
+      const roseMessages = [
+        "A virtual rose for the most beautiful person in my life",
+        "Just like this rose, my love for you grows more beautiful each day",
+        "Sending you a rose to brighten your day, just as you brighten mine",
+        "This rose symbolizes my eternal love for you",
+        "Even a thousand roses couldn't express how much I love you",
+      ];
+
+      let currentRoseIndex = 0;
+      let currentMessageIndex = 0;
+
+      virtualRoseBtn.addEventListener("click", () => {
+        virtualRoseModal.style.display = "flex";
+      });
+
+      closeRoseModal.addEventListener("click", () => {
+        virtualRoseModal.style.display = "none";
+      });
+
+      changeRoseColorBtn.addEventListener("click", () => {
+        currentRoseIndex = (currentRoseIndex + 1) % roseColors.length;
+        document.getElementById("rose-3d").textContent =
+          roseColors[currentRoseIndex];
+      });
+
+      sendRoseBtn.addEventListener("click", () => {
+        currentMessageIndex = (currentMessageIndex + 1) % roseMessages.length;
+        roseMessage.textContent = roseMessages[currentMessageIndex];
+
+        // Add a nice effect
+        roseMessage.style.transform = "scale(1.1)";
+        setTimeout(() => {
+          roseMessage.style.transform = "scale(1)";
+        }, 300);
+      });
+
+      // Confetti Effect
+      function triggerConfetti() {
+        const canvas = confettiCanvas;
+        const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const confettiPieces = [];
         const confettiColors = [
-          "#f44336",
           "#e91e63",
           "#9c27b0",
-          "#673ab7",
-          "#3f51b5",
           "#2196f3",
-          "#03a9f4",
-          "#00bcd4",
-          "#009688",
-          "#4CAF50",
+          "#4caf50",
+          "#ffeb3b",
         ];
 
         // Create confetti pieces
         for (let i = 0; i < 150; i++) {
           confettiPieces.push({
             x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height - canvas.height,
+            y: -20,
             size: Math.random() * 10 + 5,
             color:
               confettiColors[Math.floor(Math.random() * confettiColors.length)],
@@ -1736,15 +2033,13 @@
           });
         }
 
-        // Animation function
-        function animateConfetti() {
+        function drawConfetti() {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           let activePieces = 0;
 
           confettiPieces.forEach((piece) => {
             piece.y += piece.speed;
-            piece.x += Math.sin(piece.y * 0.01) * 0.5; // Slight horizontal movement
             piece.rotation += piece.rotationSpeed;
 
             if (piece.y < canvas.height) {
@@ -1767,26 +2062,93 @@
           });
 
           if (activePieces > 0) {
-            requestAnimationFrame(animateConfetti);
+            requestAnimationFrame(drawConfetti);
           } else {
-            // Clear canvas when animation is complete
             ctx.clearRect(0, 0, canvas.width, canvas.height);
           }
         }
 
-        animateConfetti();
+        drawConfetti();
       }
 
-      // Add CSS for confetti animation
-      const confettiStyles = document.createElement("style");
-      confettiStyles.textContent = `
-        @keyframes fall {
-          to {
-            transform: translateY(100vh);
-          }
-        }
-      `;
-      document.head.appendChild(confettiStyles);
+      // Initialize components
+      initializeMemoryGame();
+      loadTriviaQuestion();
+      renderLoveNotes();
+
+      // Add CSS for animations
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes fall {
+                0% {
+                    transform: translateY(-100px) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes pulse {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            
+            .slide-up {
+                animation: slideUp 1s ease-out;
+            }
+            
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            textarea {
+                width: 100%;
+                height: 150px;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid var(--card-border);
+                background: rgba(30, 30, 45, 0.7);
+                color: white;
+                font-size: 1rem;
+                resize: vertical;
+                margin: 15px 0;
+                transition: var(--transition);
+            }
+            
+            textarea:focus {
+                outline: none;
+                border-color: var(--primary-pink);
+                box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2);
+            }
+        `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
