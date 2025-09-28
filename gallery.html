@@ -4,39 +4,188 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Memories Gallery</title>
-    <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* Enhanced Gallery Styles */
+      :root {
+        --primary-pink: #e91e63;
+        --primary-purple: #9c27b0;
+        --primary-blue: #2196f3;
+        --card-bg: rgba(255, 255, 255, 0.1);
+        --card-border: rgba(255, 255, 255, 0.2);
+        --light-text: #ffffff;
+        --muted-text: rgba(255, 255, 255, 0.7);
+        --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-elevated: 0 10px 20px rgba(0, 0, 0, 0.2);
+        --transition: all 0.3s ease;
+        --gradient-bg: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        --gradient-primary: linear-gradient(
+          45deg,
+          var(--primary-pink),
+          var(--primary-purple)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Roboto", sans-serif;
+      }
+
+      body {
+        background: var(--gradient-bg);
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Background animations */
+      #hearts-container,
+      #petals-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .heart,
+      .petal {
+        position: absolute;
+        opacity: 0.7;
+      }
+
+      .heart {
+        animation: float 8s linear infinite;
+      }
+
+      .petal {
+        animation: fall 10s linear infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Container */
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .content {
+        text-align: center;
+        padding: 20px;
+      }
+
+      .fade-in {
+        animation: fadeIn 1s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Header */
+      .page-title {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+        text-shadow: 0 0 15px rgba(233, 30, 99, 0.7);
+        animation: pulse 2s infinite, glow 3s infinite alternate;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+        font-family: "Great Vibes", cursive;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(233, 30, 99, 0.8),
+            0 0 30px rgba(156, 39, 176, 0.6);
+        }
+      }
+
+      /* Enhanced Gallery Controls */
       .gallery-controls {
         display: flex;
         justify-content: center;
         gap: 15px;
         margin: 25px 0;
         flex-wrap: wrap;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-subtle);
       }
 
       .gallery-filter {
-        padding: 8px 16px;
+        padding: 10px 20px;
         background: rgba(25, 25, 40, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
+        border-radius: 25px;
         color: var(--light-text);
         cursor: pointer;
         transition: all 0.3s ease;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      .gallery-filter:hover {
+        background: rgba(40, 40, 60, 0.9);
+        transform: translateY(-2px);
       }
 
       .gallery-filter.active {
-        background: linear-gradient(
-          135deg,
-          var(--primary-pink),
-          var(--primary-purple)
-        );
-        box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+        background: var(--gradient-primary);
+        box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
       }
 
       .gallery-stats {
@@ -44,18 +193,82 @@
         margin: 20px 0;
         font-size: 1.1rem;
         color: var(--muted-text);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 10px;
+        display: inline-block;
+        min-width: 300px;
       }
 
-      .gallery-zoom {
+      /* Enhanced Gallery Grid */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin: 30px 0;
+      }
+
+      .gallery-item {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow-subtle);
+        transition: var(--transition);
+        cursor: pointer;
+        aspect-ratio: 1;
+        background: rgba(30, 30, 45, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: var(--shadow-elevated);
+        border-color: var(--primary-pink);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+
+      .gallery-item::before {
+        content: "";
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          transparent 50%,
+          rgba(0, 0, 0, 0.7)
+        );
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+      }
+
+      .gallery-item:hover::before {
+        opacity: 1;
+      }
+
+      /* Enhanced Gallery Buttons */
+      .gallery-zoom,
+      .gallery-favorite,
+      .gallery-download {
+        position: absolute;
         background: rgba(0, 0, 0, 0.7);
         color: white;
         border: none;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         cursor: pointer;
         opacity: 0;
         transition: all 0.3s ease;
@@ -64,34 +277,33 @@
         align-items: center;
         justify-content: center;
         font-size: 1.2rem;
+        backdrop-filter: blur(5px);
       }
 
-      .gallery-item:hover .gallery-zoom {
+      .gallery-item:hover .gallery-zoom,
+      .gallery-item:hover .gallery-favorite,
+      .gallery-item:hover .gallery-download {
         opacity: 1;
+        transform: translateY(0);
+      }
+
+      .gallery-zoom {
+        top: 15px;
+        right: 15px;
+        transform: translateY(-10px);
       }
 
       .gallery-favorite {
-        position: absolute;
         top: 15px;
         left: 15px;
-        background: rgba(0, 0, 0, 0.7);
+        transform: translateY(-10px);
         color: gold;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
       }
 
-      .gallery-item:hover .gallery-favorite {
-        opacity: 1;
+      .gallery-download {
+        bottom: 15px;
+        right: 15px;
+        transform: translateY(10px);
       }
 
       .gallery-favorite.active {
@@ -100,31 +312,110 @@
         text-shadow: 0 0 10px gold;
       }
 
-      .gallery-download {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
+      .gallery-zoom:hover,
+      .gallery-favorite:hover,
+      .gallery-download:hover {
+        background: rgba(233, 30, 99, 0.8);
+        transform: scale(1.1);
+      }
+
+      /* Slideshow Controls */
+      .slideshow-controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .slideshow-btn {
+        padding: 10px 20px;
+        background: rgba(25, 25, 40, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        color: var(--light-text);
         cursor: pointer;
-        opacity: 0;
         transition: all 0.3s ease;
-        z-index: 2;
+        font-size: 0.9rem;
+      }
+
+      .slideshow-btn:hover {
+        background: rgba(40, 40, 60, 0.9);
+      }
+
+      .slideshow-btn.active {
+        background: var(--gradient-primary);
+        box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+      }
+
+      /* Enhanced Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content img {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s ease-out;
+      }
+
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 2.5rem;
+        cursor: pointer;
+        color: white;
+        transition: var(--transition);
+        z-index: 1002;
+        background: rgba(0, 0, 0, 0.5);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
       }
 
-      .gallery-item:hover .gallery-download {
-        opacity: 1;
+      .close:hover {
+        color: var(--primary-pink);
+        transform: scale(1.1);
+        background: rgba(0, 0, 0, 0.7);
       }
 
-      /* Modal Enhancements */
+      /* Modal Controls */
       .modal-controls {
         position: absolute;
         top: 20px;
@@ -139,14 +430,15 @@
         color: white;
         border: none;
         border-radius: 50%;
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.3rem;
         transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
       }
 
       .modal-btn:hover {
@@ -170,14 +462,15 @@
         color: white;
         border: none;
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
       }
 
       .nav-btn:hover {
@@ -191,37 +484,73 @@
         right: 20px;
         background: rgba(0, 0, 0, 0.7);
         color: white;
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        z-index: 1002;
-      }
-
-      /* Slideshow Controls */
-      .slideshow-controls {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin: 20px 0;
-      }
-
-      .slideshow-btn {
         padding: 10px 20px;
-        background: rgba(25, 25, 40, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 25px;
-        color: var(--light-text);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        z-index: 1002;
+        backdrop-filter: blur(5px);
       }
 
-      .slideshow-btn.active {
-        background: linear-gradient(
-          135deg,
-          var(--primary-pink),
-          var(--primary-purple)
-        );
+      /* Music Controls */
+      #music-controls {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      #music-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #music-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      #music-toggle.playing {
+        background: var(--primary-pink);
+        box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 12px 25px;
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        margin: 10px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 15px rgba(233, 30, 99, 0.4);
+      }
+
+      .glow-btn {
+        box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
       }
 
       /* Animation for new features */
@@ -241,15 +570,66 @@
         animation: featurePulse 2s infinite;
       }
 
+      /* New Features */
+      .gallery-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        padding: 10px 20px;
+        background: rgba(25, 25, 40, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        color: var(--light-text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .action-btn:hover {
+        background: rgba(40, 40, 60, 0.9);
+        transform: translateY(-2px);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        color: var(--muted-text);
+        font-size: 1.2rem;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+        opacity: 0.5;
+      }
+
       /* Responsive adjustments */
       @media (max-width: 768px) {
+        .page-title {
+          font-size: 2.5rem;
+        }
+
         .gallery-controls {
           gap: 10px;
         }
 
         .gallery-filter {
-          padding: 6px 12px;
-          font-size: 0.8rem;
+          padding: 8px 16px;
+          font-size: 0.85rem;
+        }
+
+        .gallery-grid {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 15px;
         }
 
         .modal-controls {
@@ -258,21 +638,46 @@
         }
 
         .modal-btn {
-          width: 35px;
-          height: 35px;
-          font-size: 1rem;
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
         }
 
         .nav-btn {
-          width: 40px;
-          height: 40px;
-          font-size: 1.2rem;
+          width: 45px;
+          height: 45px;
+          font-size: 1.5rem;
         }
 
         .modal-counter {
           top: 10px;
           right: 10px;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
+          padding: 8px 15px;
+        }
+
+        .close {
+          top: 10px;
+          right: 15px;
+          font-size: 2rem;
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-stats {
+          font-size: 1rem;
+          min-width: auto;
+          width: 100%;
         }
       }
     </style>
@@ -286,7 +691,8 @@
     <div id="music-controls">
       <button id="music-toggle">♪</button>
       <audio id="background-music" loop>
-        <source src="assets/music/romantic.mp3" type="audio/mpeg" />
+        <!-- In a real implementation, you would link to an actual audio file -->
+        <!-- <source src="assets/music/romantic.mp3" type="audio/mpeg" /> -->
       </audio>
     </div>
 
@@ -301,7 +707,8 @@
             All Memories
           </div>
           <div class="gallery-filter" data-filter="favorites">Favorites ⭐</div>
-          <div class="slideshow-controls"></div>
+          <div class="gallery-filter" data-filter="recent">Most Recent</div>
+          <div class="gallery-filter" data-filter="oldest">Oldest First</div>
         </div>
 
         <div class="gallery-stats">
@@ -309,43 +716,17 @@
           <span id="favorite-count">0</span> Favorites
         </div>
 
-        <div class="gallery-grid">
-          <div class="gallery-item" data-index="0" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me1.jpeg" alt="Memory 1" />
+        <!-- Gallery Actions -->
+        <div class="gallery-actions">
+          <div class="action-btn" id="select-all"><i>✓</i> Select All</div>
+          <div class="action-btn" id="deselect-all"><i>✕</i> Deselect All</div>
+          <div class="action-btn" id="start-slideshow">
+            <i>▶</i> Start Slideshow
           </div>
-          <div class="gallery-item" data-index="1" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me2.jpeg" alt="Memory 2" />
-          </div>
-          <div class="gallery-item" data-index="2" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me3.jpeg" alt="Memory 3" />
-          </div>
-          <div class="gallery-item" data-index="3" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me4.jpeg" alt="Memory 4" />
-          </div>
-          <div class="gallery-item" data-index="4" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me5.jpeg" alt="Memory 5" />
-          </div>
-          <div class="gallery-item" data-index="5" data-favorite="false">
-            <button class="gallery-favorite" title="Add to favorites">☆</button>
-            <button class="gallery-zoom" title="Zoom image">🔍</button>
-            <button class="gallery-download" title="Download image">⤓</button>
-            <img src="assets/me6.jpeg" alt="Memory 6" />
-          </div>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Gallery items will be populated by JavaScript -->
         </div>
 
         <a href="surprise.html" class="btn glow-btn">A Little Surprise 🎁</a>
@@ -361,6 +742,9 @@
         </button>
         <button class="modal-btn" id="modal-download" title="Download image">
           ⤓
+        </button>
+        <button class="modal-btn" id="modal-share" title="Share image">
+          ↪
         </button>
       </div>
       <div class="modal-nav">
@@ -378,49 +762,174 @@
     <script>
       // Enhanced Gallery Functionality
       document.addEventListener("DOMContentLoaded", function () {
-        const galleryItems = document.querySelectorAll(".gallery-item");
+        // DOM Elements
+        const galleryGrid = document.getElementById("gallery-grid");
         const modal = document.getElementById("image-modal");
         const modalImg = document.getElementById("modal-img");
         const closeBtn = document.querySelector(".close");
-        const favoriteBtns = document.querySelectorAll(".gallery-favorite");
-        const downloadBtns = document.querySelectorAll(".gallery-download");
-        const zoomBtns = document.querySelectorAll(".gallery-zoom");
         const filters = document.querySelectorAll(".gallery-filter");
-        const slideshowBtns = document.querySelectorAll(".slideshow-btn");
         const modalFavorite = document.getElementById("modal-favorite");
         const modalDownload = document.getElementById("modal-download");
+        const modalShare = document.getElementById("modal-share");
         const prevBtn = document.getElementById("prev-btn");
         const nextBtn = document.getElementById("next-btn");
         const currentIndexSpan = document.getElementById("current-index");
         const totalImagesSpan = document.getElementById("total-images");
         const photoCountSpan = document.getElementById("photo-count");
         const favoriteCountSpan = document.getElementById("favorite-count");
+        const selectAllBtn = document.getElementById("select-all");
+        const deselectAllBtn = document.getElementById("deselect-all");
+        const startSlideshowBtn = document.getElementById("start-slideshow");
+        const musicToggle = document.getElementById("music-toggle");
+        const backgroundMusic = document.getElementById("background-music");
+        const heartsContainer = document.getElementById("hearts-container");
+        const petalsContainer = document.getElementById("petals-container");
+
+        // Sample gallery data (in a real app, this would come from a database)
+        const galleryData = [
+          {
+            id: 1,
+            src: "assets/me1.jpeg",
+            alt: "Our first date",
+            date: "2023-01-15",
+            favorite: false,
+          },
+          {
+            id: 2,
+            src: "assets/me2.jpeg",
+            alt: "Beach vacation",
+            date: "2023-03-22",
+            favorite: false,
+          },
+          {
+            id: 3,
+            src: "assets/me3.jpeg",
+            alt: "Anniversary dinner",
+            date: "2023-05-10",
+            favorite: false,
+          },
+          {
+            id: 4,
+            src: "assets/me4.jpeg",
+            alt: "Mountain hike",
+            date: "2023-07-05",
+            favorite: false,
+          },
+          {
+            id: 5,
+            src: "assets/me5.jpeg",
+            alt: "City lights",
+            date: "2023-09-18",
+            favorite: false,
+          },
+          {
+            id: 6,
+            src: "assets/me6.jpeg",
+            alt: "Cozy evening",
+            date: "2023-11-30",
+            favorite: false,
+          },
+        ];
 
         let currentImageIndex = 0;
         let autoSlideInterval;
-        let slideSpeed = 2000; // Default speed
+        let slideSpeed = 3000; // Default speed
+        let isPlaying = false;
 
-        // Initialize counts
-        photoCountSpan.textContent = galleryItems.length;
-        updateFavoriteCount();
+        // Initialize the gallery
+        function initializeGallery() {
+          renderGalleryItems();
+          updateGalleryStats();
+          initializeBackgroundEffects();
+          initializeMusicControls();
+          loadFavoritesFromStorage();
+        }
+
+        // Render gallery items
+        function renderGalleryItems() {
+          galleryGrid.innerHTML = "";
+
+          galleryData.forEach((item, index) => {
+            const galleryItem = document.createElement("div");
+            galleryItem.className = "gallery-item";
+            galleryItem.dataset.index = index;
+            galleryItem.dataset.favorite = item.favorite;
+            galleryItem.dataset.date = item.date;
+
+            galleryItem.innerHTML = `
+              <button class="gallery-favorite" title="Add to favorites">${
+                item.favorite ? "★" : "☆"
+              }</button>
+              <button class="gallery-zoom" title="Zoom image">🔍</button>
+              <button class="gallery-download" title="Download image">⤓</button>
+              <img src="${item.src}" alt="${item.alt}" />
+            `;
+
+            galleryGrid.appendChild(galleryItem);
+          });
+
+          // Add event listeners to gallery items
+          addGalleryEventListeners();
+        }
+
+        // Add event listeners to gallery items
+        function addGalleryEventListeners() {
+          const galleryItems = document.querySelectorAll(".gallery-item");
+          const favoriteBtns = document.querySelectorAll(".gallery-favorite");
+          const downloadBtns = document.querySelectorAll(".gallery-download");
+          const zoomBtns = document.querySelectorAll(".gallery-zoom");
+
+          galleryItems.forEach((item, index) => {
+            item.addEventListener("click", (e) => {
+              if (
+                !e.target.classList.contains("gallery-favorite") &&
+                !e.target.classList.contains("gallery-download") &&
+                !e.target.classList.contains("gallery-zoom")
+              ) {
+                openModal(index);
+              }
+            });
+          });
+
+          favoriteBtns.forEach((btn, index) => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              toggleFavorite(index);
+              btn.classList.add("feature-highlight");
+              setTimeout(() => btn.classList.remove("feature-highlight"), 2000);
+            });
+          });
+
+          downloadBtns.forEach((btn, index) => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              downloadImage(index);
+            });
+          });
+
+          zoomBtns.forEach((btn, index) => {
+            btn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              openModal(index);
+            });
+          });
+        }
 
         // Enhanced modal opening with controls
         function openModal(index) {
           currentImageIndex = index;
-          const img = galleryItems[index].querySelector("img");
-          modalImg.src = img.src;
-          modal.style.display = "block";
+          modalImg.src = galleryData[index].src;
+          modal.style.display = "flex";
           updateModalControls();
           startAutoSlide();
         }
 
         function updateModalControls() {
           currentIndexSpan.textContent = currentImageIndex + 1;
-          totalImagesSpan.textContent = galleryItems.length;
+          totalImagesSpan.textContent = galleryData.length;
 
           // Update favorite button state
-          const isFavorite =
-            galleryItems[currentImageIndex].dataset.favorite === "true";
+          const isFavorite = galleryData[currentImageIndex].favorite;
           modalFavorite.textContent = isFavorite ? "★" : "☆";
           modalFavorite.style.color = isFavorite ? "gold" : "white";
         }
@@ -434,114 +943,235 @@
         }
 
         function nextImage() {
-          currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
-          const img = galleryItems[currentImageIndex].querySelector("img");
-          modalImg.src = img.src;
+          currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+          modalImg.src = galleryData[currentImageIndex].src;
           updateModalControls();
         }
 
         function prevImage() {
           currentImageIndex =
-            (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
-          const img = galleryItems[currentImageIndex].querySelector("img");
-          modalImg.src = img.src;
+            (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+          modalImg.src = galleryData[currentImageIndex].src;
           updateModalControls();
         }
 
         // Favorite functionality
         function toggleFavorite(index) {
-          const item = galleryItems[index];
-          const isFavorite = item.dataset.favorite === "true";
-          item.dataset.favorite = (!isFavorite).toString();
+          galleryData[index].favorite = !galleryData[index].favorite;
 
-          const favoriteBtn = item.querySelector(".gallery-favorite");
-          favoriteBtn.textContent = !isFavorite ? "★" : "☆";
-          favoriteBtn.classList.toggle("active", !isFavorite);
+          const galleryItem = document.querySelector(
+            `.gallery-item[data-index="${index}"]`
+          );
+          const favoriteBtn = galleryItem.querySelector(".gallery-favorite");
+
+          galleryItem.dataset.favorite = galleryData[index].favorite;
+          favoriteBtn.textContent = galleryData[index].favorite ? "★" : "☆";
+          favoriteBtn.classList.toggle("active", galleryData[index].favorite);
 
           updateFavoriteCount();
           updateModalControls();
+          saveFavoritesToStorage();
         }
 
         function updateFavoriteCount() {
-          const favoriteCount = Array.from(galleryItems).filter(
-            (item) => item.dataset.favorite === "true"
+          const favoriteCount = galleryData.filter(
+            (item) => item.favorite
           ).length;
           favoriteCountSpan.textContent = favoriteCount;
         }
 
+        function updateGalleryStats() {
+          photoCountSpan.textContent = galleryData.length;
+          updateFavoriteCount();
+        }
+
         // Download functionality
         function downloadImage(index) {
-          const img = galleryItems[index].querySelector("img");
+          const img = galleryData[index];
           const link = document.createElement("a");
           link.href = img.src;
           link.download = `memory-${index + 1}.jpg`;
           link.click();
         }
 
+        // Share functionality
+        function shareImage(index) {
+          const img = galleryData[index];
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Our Memory",
+                text: "Check out this beautiful memory from our relationship!",
+                url: img.src,
+              })
+              .catch((error) => console.log("Error sharing:", error));
+          } else {
+            // Fallback for browsers that don't support the Web Share API
+            alert("Share this image: " + img.src);
+          }
+        }
+
         // Filter functionality
         function filterGallery(filterType) {
+          const galleryItems = document.querySelectorAll(".gallery-item");
+
           galleryItems.forEach((item) => {
             if (filterType === "all") {
               item.style.display = "block";
             } else if (filterType === "favorites") {
               item.style.display =
                 item.dataset.favorite === "true" ? "block" : "none";
+            } else if (filterType === "recent") {
+              // Sort by date (newest first)
+              const sortedItems = Array.from(galleryItems).sort(
+                (a, b) => new Date(b.dataset.date) - new Date(a.dataset.date)
+              );
+              sortedItems.forEach((item, index) => {
+                item.style.order = index;
+                item.style.display = "block";
+              });
+            } else if (filterType === "oldest") {
+              // Sort by date (oldest first)
+              const sortedItems = Array.from(galleryItems).sort(
+                (a, b) => new Date(a.dataset.date) - new Date(b.dataset.date)
+              );
+              sortedItems.forEach((item, index) => {
+                item.style.order = index;
+                item.style.display = "block";
+              });
             }
           });
         }
 
-        // Event listeners
-        galleryItems.forEach((item, index) => {
-          item.addEventListener("click", (e) => {
-            if (
-              !e.target.classList.contains("gallery-favorite") &&
-              !e.target.classList.contains("gallery-download") &&
-              !e.target.classList.contains("gallery-zoom")
-            ) {
-              openModal(index);
+        // Select All / Deselect All functionality
+        function selectAllFavorites() {
+          galleryData.forEach((item, index) => {
+            if (!item.favorite) {
+              toggleFavorite(index);
             }
           });
-        });
+        }
 
-        favoriteBtns.forEach((btn, index) => {
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            toggleFavorite(index);
-            btn.classList.add("feature-highlight");
-            setTimeout(() => btn.classList.remove("feature-highlight"), 2000);
+        function deselectAllFavorites() {
+          galleryData.forEach((item, index) => {
+            if (item.favorite) {
+              toggleFavorite(index);
+            }
           });
-        });
+        }
 
-        downloadBtns.forEach((btn, index) => {
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            downloadImage(index);
+        // Initialize background effects
+        function initializeBackgroundEffects() {
+          // Create floating hearts
+          for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+              createHeart();
+            }, i * 500);
+          }
+
+          // Create falling petals
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              createPetal();
+            }, i * 700);
+          }
+        }
+
+        function createHeart() {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.innerHTML = "💖";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.fontSize = Math.random() * 20 + 10 + "px";
+          heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+
+          heartsContainer.appendChild(heart);
+
+          // Remove heart after animation completes
+          setTimeout(() => {
+            heart.remove();
+          }, 15000);
+
+          // Create new heart periodically
+          setTimeout(createHeart, Math.random() * 3000 + 2000);
+        }
+
+        function createPetal() {
+          const petal = document.createElement("div");
+          petal.classList.add("petal");
+          petal.innerHTML = "🌸";
+          petal.style.left = Math.random() * 100 + "vw";
+          petal.style.fontSize = Math.random() * 15 + 10 + "px";
+          petal.style.animationDuration = Math.random() * 7 + 7 + "s";
+
+          petalsContainer.appendChild(petal);
+
+          // Remove petal after animation completes
+          setTimeout(() => {
+            petal.remove();
+          }, 20000);
+
+          // Create new petal periodically
+          setTimeout(createPetal, Math.random() * 4000 + 3000);
+        }
+
+        // Music controls
+        function initializeMusicControls() {
+          musicToggle.addEventListener("click", function () {
+            if (isPlaying) {
+              backgroundMusic.pause();
+              musicToggle.classList.remove("playing");
+              musicToggle.textContent = "♪";
+            } else {
+              backgroundMusic.play().catch((e) => {
+                console.log("Audio play failed:", e);
+                alert(
+                  "Please interact with the page first to enable audio, or check if your browser allows autoplay."
+                );
+              });
+              musicToggle.classList.add("playing");
+              musicToggle.textContent = "♫";
+            }
+            isPlaying = !isPlaying;
           });
-        });
+        }
 
-        zoomBtns.forEach((btn, index) => {
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            openModal(index);
-          });
-        });
+        // Local Storage for favorites
+        function saveFavoritesToStorage() {
+          const favorites = galleryData.map((item) => item.favorite);
+          localStorage.setItem("gallery-favorites", JSON.stringify(favorites));
+        }
 
+        function loadFavoritesFromStorage() {
+          const savedFavorites = localStorage.getItem("gallery-favorites");
+          if (savedFavorites) {
+            const favorites = JSON.parse(savedFavorites);
+            favorites.forEach((isFavorite, index) => {
+              if (index < galleryData.length) {
+                galleryData[index].favorite = isFavorite;
+
+                const galleryItem = document.querySelector(
+                  `.gallery-item[data-index="${index}"]`
+                );
+                if (galleryItem) {
+                  galleryItem.dataset.favorite = isFavorite;
+                  const favoriteBtn =
+                    galleryItem.querySelector(".gallery-favorite");
+                  favoriteBtn.textContent = isFavorite ? "★" : "☆";
+                  favoriteBtn.classList.toggle("active", isFavorite);
+                }
+              }
+            });
+            updateFavoriteCount();
+          }
+        }
+
+        // Event listeners
         filters.forEach((filter) => {
           filter.addEventListener("click", () => {
             filters.forEach((f) => f.classList.remove("active"));
             filter.classList.add("active");
             filterGallery(filter.dataset.filter);
-          });
-        });
-
-        slideshowBtns.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            slideshowBtns.forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
-            slideSpeed = parseInt(btn.dataset.speed);
-            if (modal.style.display === "block") {
-              startAutoSlide();
-            }
           });
         });
 
@@ -551,6 +1181,10 @@
 
         modalDownload.addEventListener("click", () => {
           downloadImage(currentImageIndex);
+        });
+
+        modalShare.addEventListener("click", () => {
+          shareImage(currentImageIndex);
         });
 
         prevBtn.addEventListener("click", (e) => {
@@ -573,6 +1207,15 @@
           }
         });
 
+        selectAllBtn.addEventListener("click", selectAllFavorites);
+        deselectAllBtn.addEventListener("click", deselectAllFavorites);
+
+        startSlideshowBtn.addEventListener("click", () => {
+          if (galleryData.length > 0) {
+            openModal(0);
+          }
+        });
+
         function closeModal() {
           modal.style.display = "none";
           clearInterval(autoSlideInterval);
@@ -580,7 +1223,7 @@
 
         // Keyboard navigation
         document.addEventListener("keydown", (e) => {
-          if (modal.style.display === "block") {
+          if (modal.style.display === "flex") {
             if (e.key === "Escape") closeModal();
             if (e.key === "ArrowRight") {
               nextImage();
@@ -593,42 +1236,14 @@
             if (e.key === "f") {
               toggleFavorite(currentImageIndex);
             }
+            if (e.key === "d") {
+              downloadImage(currentImageIndex);
+            }
           }
         });
 
-        // Initialize favorites from localStorage
-        function initializeFavorites() {
-          galleryItems.forEach((item, index) => {
-            const savedFavorite = localStorage.getItem(
-              `gallery-favorite-${index}`
-            );
-            if (savedFavorite === "true") {
-              item.dataset.favorite = "true";
-              const favoriteBtn = item.querySelector(".gallery-favorite");
-              favoriteBtn.textContent = "★";
-              favoriteBtn.classList.add("active");
-            }
-          });
-          updateFavoriteCount();
-        }
-
-        // Save favorites to localStorage
-        function saveFavoriteToStorage(index, isFavorite) {
-          localStorage.setItem(
-            `gallery-favorite-${index}`,
-            isFavorite.toString()
-          );
-        }
-
-        // Update toggleFavorite function to save to localStorage
-        const originalToggleFavorite = toggleFavorite;
-        toggleFavorite = function (index) {
-          originalToggleFavorite(index);
-          const isFavorite = galleryItems[index].dataset.favorite === "true";
-          saveFavoriteToStorage(index, isFavorite);
-        };
-
-        initializeFavorites();
+        // Initialize the gallery
+        initializeGallery();
       });
     </script>
   </body>
